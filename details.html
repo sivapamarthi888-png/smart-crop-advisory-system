@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1024">
+    <title>AgriSeason - Details</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+
+        body { margin: 0; padding: 0; background: linear-gradient(135deg, #122216, #1f3b28, #122216); font-family: 'Poppins', sans-serif; overflow-x: hidden; min-height: 100vh; color: #f8fafc; }
+        
+        #axiomOverlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(15, 30, 20, 0.98);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 10000; color: white; text-align: center; backdrop-filter: blur(10px);
+        }
+        .axiom-face { font-size: 80px; margin-bottom: 20px; animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0% { transform: translateY(0); } 50% { transform: translateY(-15px); } 100% { transform: translateY(0); } }
+        
+        .lang-btn {
+            background: #22c55e; color: white; border: none; padding: 15px 40px; margin: 10px;
+            border-radius: 30px; font-size: 18px; font-weight: bold; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4); transition: transform 0.2s, background 0.3s;
+        }
+        .lang-btn:hover { background: #16a34a; transform: scale(1.05); }
+
+        #mainContent { display: none; padding: 40px 20px; max-width: 1000px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex; align-items: center; text-decoration: none;
+            background: rgba(255,255,255,0.1); color: #f8fafc; padding: 10px 25px;
+            border-radius: 30px; font-weight: bold; margin-bottom: 30px;
+            transition: all 0.3s; border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: rgba(255,255,255,0.2); transform: translateX(-5px); color: #22c55e; border-color: #22c55e; }
+
+        .page-title { text-align: center; color: #f8fafc; font-size: 40px; margin-bottom: 40px; text-shadow: 0 4px 10px rgba(0,0,0,0.4); letter-spacing: 1px; }
+
+        .detail-card {
+            background: rgba(20, 40, 25, 0.85); border-radius: 20px; padding: 30px; margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3); border-left: 6px solid #22c55e;
+            backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.3s; color: #f8fafc;
+        }
+        .detail-card:hover { transform: translateY(-5px); }
+        
+        .card-header { display: flex; align-items: center; border-bottom: 2px solid rgba(255,255,255,0.05); padding-bottom: 15px; margin-bottom: 20px; }
+        .card-icon { font-size: 40px; margin-right: 20px; background: rgba(255,255,255,0.1); padding: 15px; border-radius: 15px; }
+        .card-title { font-size: 26px; color: #f8fafc; margin: 0; }
+        .card-desc { font-size: 17px; color: #cbd5e1; line-height: 1.7; }
+        
+        .card-link { display: inline-block; margin-top: 20px; background: #22c55e; color: white; padding: 12px 25px; text-decoration: none; border-radius: 8px; font-weight: bold; transition: all 0.3s; }
+        .card-link:hover { background: #16a34a; box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4); transform: translateY(-2px); }
+        
+        .interactive-box { display: none; text-align: center; margin-bottom: 30px; background: rgba(0,0,0,0.2); padding: 30px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); }
+        .interactive-box input[type="text"] { width: 60%; padding: 15px; border-radius: 30px; border: 2px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); font-size: 16px; outline: none; color: white; transition: all 0.3s; margin-top: 15px; }
+        .interactive-box input[type="text"]:focus { border-color: #22c55e; background: rgba(255,255,255,0.1); }
+        .interactive-box input[type="file"] { display: none; }
+        
+        .upload-label { cursor: pointer; background: #3b82f6; color: white; padding: 15px 30px; border-radius: 30px; font-weight: bold; margin-right:10px; display:inline-block; transition: all 0.3s; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4); }
+        .upload-label:hover { background: #2563eb; transform: translateY(-2px); }
+        
+        .mic-btn { cursor: pointer; background: #fbbf24; color: white; padding: 15px; border-radius: 50%; font-size: 20px; border:none; margin-left:10px; margin-right: 10px; box-shadow: 0 4px 15px rgba(251, 191, 36, 0.4); transition: all 0.3s; }
+        .mic-btn:hover { transform: scale(1.1); }
+        
+        .send-btn { cursor: pointer; background: #22c55e; color: white; padding: 15px 30px; border-radius: 30px; border:none; font-weight: bold; font-size:16px; transition: all 0.3s; box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4); }
+        .send-btn:hover { background: #16a34a; transform: translateY(-2px); }
+        
+        .loading { font-size: 20px; color: #4ade80; font-weight: bold; display: none; margin-top: 20px; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
+        
+        .disease-cure-box { background: rgba(30, 60, 40, 0.9); border-left: 6px solid #22c55e; border-right: 1px solid rgba(255,255,255,0.1); border-top: 1px solid rgba(255,255,255,0.1); padding: 25px; border-radius: 15px; font-size: 18px; line-height: 1.8; color: #f8fafc; margin-top:20px; text-align: left; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+        .preview-img { max-width: 200px; border-radius: 15px; border: 3px solid #22c55e; box-shadow: 0 4px 15px rgba(0,0,0,0.3); display: none; margin: 15px auto; }
+
+    </style>
+    <script src="js/ai.js"></script>
+    <link rel="icon" href="data:,">
+</head>
+
+<body>
+    <div id="axiomOverlay">
+        <div class="axiom-face">🤖</div>
+        <h1>Good Day, Sir. I am AXIOM.<br>Please select your preferred language.</h1>
+        <div>
+            <button class="lang-btn" onclick="selectLang('en')">English</button>
+            <button class="lang-btn" onclick="selectLang('te')">తెలుగు</button>
+            <button class="lang-btn" onclick="selectLang('hi')">हिंदी</button>
+        </div>
+    </div>
+
+    <div id="mainContent">
+        <a href="index.html"
+            style="text-decoration: none; color: #555; font-weight: bold; margin-bottom:20px; display:inline-block;">⬅
+            Back to Dashboard</a>
+        <h1 class="page-title" id="pageTitle">...</h1>
+
+        <div id="interactiveBox" class="interactive-box">
+            <label class="upload-label">
+                📷 Upload Photo Of Crop
+                <input type="file" id="imageUpload" accept="image/*" onchange="handleImage(event)">
+            </label>
+            
+            <img id="imgPreview" class="preview-img">
+            <br>
+            <input type="text" id="diseaseInput"
+ placeholder="Or type crop name & symptoms here...">
+            <button class="mic-btn" onclick="startMic()">🎤</button>
+            <button class="send-btn" onclick="askDisease()">Ask AXIOM</button>
+            <div id="loadingIndicator" class="loading">AXIOM is analyzing... 🤖</div>
+        </div>
+
+        <div id="cardsContainer"></div>
+    </div>
+
+    
+
+
+<script>
+        const urlParams = new URLSearchParams(window.location.search);
+        let currentType = urlParams.get('type') || 'schemes';
+        var appCurrentLang = localStorage.getItem('language') || 'en';
+        let uploadedImageB64 = null;
+
+        const DATA = {
+            schemes: [
+                {
+                    icon: "💰",
+                    en: { title: "PM-KISAN", desc: "Income support scheme of ₹6,000 per year.", linkText: "Official Portal", url: "https://pmkisan.gov.in" },
+                    te: { title: "పీఎం కిసాన్", desc: "రైతులకు ఏడాదికి రూ.6,000 ఆర్థిక సాయం అందించే పథకం.", linkText: "అధికారిక వెబ్‌సైట్", url: "https://pmkisan.gov.in" },
+                    hi: { title: "पीएम किसान", desc: "सालाना ₹6,000 की वित्तीय सहायता प्रदान करने वाली योजना।", linkText: "आधिकारिक पोर्टल", url: "https://pmkisan.gov.in" }
+                },
+                {
+                    icon: "🛡️",
+                    en: { title: "PMFBY", desc: "Nationwide crop insurance protection against unforeseeable natural natural calamities.", linkText: "View Details", url: "https://pmfby.gov.in" },
+                    te: { title: "ఫసల్ బీమా యోజన", desc: "ప్రకృతి వైపరీత్యాల వల్ల పంట నష్టపోయిన రైతులకు కల్పించే జాతీయ పంట బీమా.", linkText: "వివరాలు చూడండి", url: "https://pmfby.gov.in" },
+                    hi: { title: "फसल बीमा योजना", desc: "प्राकृतिक आपदाओं से बचाने वाली फसल बीमा योजना।", linkText: "विवरण देखें", url: "https://pmfby.gov.in" }
+                },
+                {
+                    icon: "🌱",
+                    en: { title: "Soil Health Guidelines", desc: "Learn about optimal soil nutrition practices from verified national resources.", linkText: "Check Guidelines", url: "https://icar.org.in/" },
+                    te: { title: "మట్టి ఆరోగ్య మార్గదర్శకాలు", desc: "జాతీయ వనరుల నుండి సరైన మట్టి పోషణ పద్ధతుల గురించి తెలుసుకోండి.", linkText: "માర్గదర్శకాలు చూడండి", url: "https://icar.org.in/" },
+                    hi: { title: "मृदा स्वास्थ्य दिशानिर्देश", desc: "सत्यापित राष्ट्रीय संसाधनों से इष्टतम मिट्टी पोषण प्रथाओं के बारे में जानें।", linkText: "दिशानिर्देश देखें", url: "https://icar.org.in/" }
+                }
+            ],
+            services: [
+                {
+                    icon: "🚜",
+                    en: { title: "Kisan Call Center", desc: "Toll-free number 1800-180-1551 for expert agricultural advice.", linkText: "Call Now", url: "tel:18001801551" },
+                    te: { title: "కిసాన్ కాల్ సెంటర్", desc: "వ్యవసాయ సలహాల కోసం టోల్ ఫ్రీ నెంబర్ 1800-180-1551 కు కాల్ చేయండి.", linkText: "కాల్ చేయండి", url: "tel:18001801551" },
+                    hi: { title: "किसान कॉल सेंटर", desc: "विशेषज्ञ कृषि सलाह के लिए टोल-फ्री नंबर 1800-180-1551।", linkText: "अभी कॉल करें", url: "tel:18001801551" }
+                },
+                {
+                    icon: "🏢",
+                    en: { title: "ICAR Agricultural Hub", desc: "Connect with the Indian Council of Agricultural Research for verified farming resources.", linkText: "Visit ICAR", url: "https://icar.org.in/" },
+                    te: { title: "ICAR వ్యవసాయ కేంద్రం", desc: "వ్యవసాయ వనరుల కోసం భారతీయ వ్యవసాయ పరిశోధన మండలిని సంప్రదించండి.", linkText: "ICAR చూడండి", url: "https://icar.org.in/" },
+                    hi: { title: "ICAR कृषि केंद्र", desc: "सत्यापित कृषि संसाधनों के लिए भारतीय कृषि अनुसंधान परिषद से जुड़ें।", linkText: "ICAR पर जाएं", url: "https://icar.org.in/" }
+                },
+                {
+                    icon: "🔬",
+                    en: { title: "NABARD Rural Services", desc: "Access the National Bank for Agriculture and Rural Development for farm financial and soil infrastructure support.", linkText: "Visit NABARD", url: "https://www.nabard.org/" },
+                    te: { title: "నాబార్డ్ గ్రామీణ సేవలు", desc: "వ్యవసాయ ఆర్థిక మరియు మౌలిక సదుపాయాల మద్దతు కోసం నాబార్డ్ ను పొందండి.", linkText: "నాబార్డ్ చూడండి", url: "https://www.nabard.org/" },
+                    hi: { title: "नाबार्ड ग्रामीण सेवाएं", desc: "कृषि वित्तीय और बुनियादी ढांचे के समर्थन के लिए नाबार्ड तक पहुंचें।", linkText: "नाबार्ड पर जाएं", url: "https://www.nabard.org/" }
+                }
+            ],
+            market: [
+                {
+                    icon: "📊",
+                    en: { title: "e-NAM", desc: "A pan-India electronic trading portal for farm produce. Connects APMCs securely.", linkText: "View Live Prices", url: "https://enam.gov.in" },
+                    te: { title: "ఈ-నామ్ (e-NAM)", desc: "పంట ఉత్పత్తుల కోసం పాన్-ఇండియా ఎలక్ట్రానిక్ ట్రేడింగ్ పోర్టల్.", linkText: "ధరలు చూడండి", url: "https://enam.gov.in" },
+                    hi: { title: "ई-नाम (e-NAM)", desc: "कृषि उपज के लिए भारत का इलेक्ट्रॉनिक ट्रेडिंग पोर्टल।", linkText: "लाइव कीमतें देखें", url: "https://enam.gov.in" }
+                },
+                {
+                    icon: "🏢",
+                    en: { title: "Agmarknet", desc: "Daily market prices and arrivals for agricultural commodities across all states.", linkText: "Check Agmarknet", url: "https://agmarknet.gov.in" },
+                    te: { title: "అగ్మార్‌నెట్ (Agmarknet)", desc: "అన్ని రాష్ట్రాల్లో రోజువారీ వ్యవసాయ మార్కెట్ ధరలు ఇక్కడ పొందండి.", linkText: "అగ్మార్‌నెట్ చూడండి", url: "https://agmarknet.gov.in" },
+                    hi: { title: "एगमार्कनेट", desc: "सभी राज्यों में दैनिक बाजार मूल्य और कृषि वस्तुओं की जानकारी।", linkText: "एगमार्कनेट चेक करें", url: "https://agmarknet.gov.in" }
+                }
+            ]
+        };
+
+        function selectLang(l) {
+            appCurrentLang = l;
+            document.getElementById('axiomOverlay').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
+            initPage(currentType);
+        }
+
+        function initPage(type) {
+            currentType = type;
+            document.getElementById('interactiveBox').style.display = 'none';
+            document.getElementById('cardsContainer').innerHTML = '';
+            document.getElementById('loadingIndicator').style.display = 'none';
+
+            let lang = appCurrentLang;
+
+            const titles = {
+                'schemes': { en: 'Government Schemes', te: 'ప్రభుత్వ పథకాలు', hi: 'सरकारी योजनाएं' },
+                'services': { en: 'Nearby Services', te: 'సమీప వ్యవసాయ సేవలు', hi: 'आसपास की कृषि सेवाएं' },
+                'disease': { en: 'Disease Detection', te: 'పంట వ్యాధి గుర్తింపు', hi: 'फसल रोग पहचान' },
+                'weather': { en: 'Weather Intelligence', te: 'వాతావరణ నివేదిక', hi: 'मौसम की जानकारी' },
+                'market': { en: 'Market Intelligence', te: 'మార్కెట్ ధరలు', hi: 'बाज़ार मूल्य' }
+            };
+            
+            let titleEl = document.getElementById('pageTitle');
+            if (!titleEl) {
+                titleEl = document.createElement('h1');
+                titleEl.id = 'pageTitle';
+                titleEl.className = 'page-title';
+                document.getElementById('mainContent').insertBefore(titleEl, document.getElementById('loadingIndicator'));
+            }
+            titleEl.innerText = titles[type] ? titles[type][lang] : '';
+
+            if (type === 'schemes' || type === 'services') {
+                buildStatic(DATA[type]);
+                if(typeof speakText === 'function') {
+                    speakText(lang === 'en' ? "Accessing " + titles[type].en : (lang === 'te' ? titles[type].te + " చూస్తున్నాను" : titles[type].hi + " दिखा रहा हूँ"));
+                }
+            } else if (type === 'market') {
+                document.getElementById('loadingIndicator').style.display = 'block';
+                document.getElementById('loadingIndicator').innerText = "AXIOM is connecting to live databases...";
+                if(typeof speakText === 'function') {
+                    speakText(lang === 'en' ? "Accessing live trade markets." : (lang === 'te' ? "లైవ్ మార్కెట్ డేటాను చూస్తున్నాను" : "लाइव मार्केट डेटा एक्सेस कर रहा हूँ"));
+                }
+                setTimeout(() => generateMarketLive(), 1000);
+            } else if (type === 'disease') {
+                document.getElementById('interactiveBox').style.display = 'block';
+                // Silenced greeting for disease detection
+            } else if (type === 'weather') {
+                document.getElementById('loadingIndicator').style.display = 'block';
+                document.getElementById('loadingIndicator').innerText = "AXIOM is activating Regional Radar...";
+                if(typeof speakText === 'function') {
+                    speakText(lang === 'en' ? "Accessing Meteo Satellites." : (lang === 'te' ? "వాతావరణ డేటాను చూస్తున్నాను" : "मौसम डेटा प्राप्त कर रहा हूँ"));
+                }
+                
+                generateWeatherSuggestions();
+            }
+        }
+
+        async function extractBase64(file) {
+            return new Promise((resolve) => {
+                let reader = new FileReader();
+                let fType = file.type || "image/jpeg";
+                reader.onloadend = () => resolve({ b64: reader.result.split(',')[1], mime: fType });
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function handleImage(e) {
+            if(e.target.files[0]) {
+                extractBase64(e.target.files[0]).then(res => {
+                    uploadedImageB64 = res;
+                    let preview = document.getElementById('imgPreview');
+                    preview.src = "data:" + res.mime + ";base64," + res.b64;
+                    preview.style.display = 'block';
+                });
+            }
+        }
+
+        async function askDisease() {
+            document.getElementById('loadingIndicator').style.display = 'block';
+            document.getElementById('cardsContainer').innerHTML = '';
+            
+            let query = document.getElementById('diseaseInput').value.trim();
+            if (!query && !uploadedImageB64) {
+                document.getElementById('loadingIndicator').innerText = "Please upload an image or type a query!";
+                return;
+            }
+
+            let langName = appCurrentLang === 'te' ? 'Telugu' : (appCurrentLang === 'hi' ? 'Hindi' : 'English');
+            let prompt = "You are AXIOM, an expert agricultural AI. The user is asking about a disease.\nLanguage: " + langName + "\nUser text/query: " + query + "\n\nCRITICAL INSTRUCTION: Analyze the image. If the user mentions a specific crop name, diagnose the disease for THAT crop. Give exact disease name and chemical cures entirely converted to native script.";
+            
+            let bodyData = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
+
+            if (uploadedImageB64) {
+                bodyData.contents[0].parts.push({ inline_data: { mime_type: uploadedImageB64.mime, data: uploadedImageB64.b64 } });
+            }
+
+            try {
+                let apiKey = GEMINI_API_KEY || (typeof config !== 'undefined' ? config.GEMINI_API_KEY : '');
+                let res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(bodyData)
+                });
+                
+                let data = await res.json();
+                let reply = data.candidates[0].content.parts[0].text;
+                
+                document.getElementById('loadingIndicator').style.display = 'none';
+                let imgHtml = uploadedImageB64 ? `<img src="data:${uploadedImageB64.mime};base64,${uploadedImageB64.b64}" style="max-width:200px; border-radius:10px; margin-bottom:15px; display:block;">` : '';
+                document.getElementById('cardsContainer').innerHTML = `<div class="disease-cure-box">${imgHtml}${reply.replace(/\n/g, '<br>')}</div>`;
+                uploadedImageB64 = null;
+                document.getElementById('imgPreview').style.display = 'none';
+                
+            } catch (e) {
+                document.getElementById('loadingIndicator').innerText = "Network Error. Please try again.";
+            }
+        }
+
+        function buildStatic(items) {
+             let container = document.getElementById('cardsContainer');
+             let markup = "";
+             items.forEach(item => {
+                 let data = item[appCurrentLang] || item['en'];
+                 markup += `<div class="detail-card">
+                     <div class="card-header"><div class="card-icon">${item.icon}</div><h2 class="card-title">${data.title}</h2></div>
+                     <p class="card-desc">${data.desc}</p>
+                     <a href="${data.url}" class="card-link" target="_blank">${data.linkText} →</a>
+                 </div>`;
+             });
+             container.innerHTML = markup;
+        }
+
+        async function generateMarketLive() {
+             try {
+                 let langName = appCurrentLang === 'te' ? 'Telugu' : (appCurrentLang === 'hi' ? 'Hindi' : 'English');
+                 let prompt = "You are AXIOM. Act as a live Indian agricultural market board. Provide today's realistic, estimated wholesale market prices (in ₹/Quintal) for 3 major seasonal crops. Give 3 bullet points with prices and one trend sentence. Output ONLY in " + langName + " without asterisks.";
+                 let apiKey = GEMINI_API_KEY || (typeof config !== 'undefined' ? config.GEMINI_API_KEY : '');
+                 let geminiRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`, {
+                     method: 'POST',
+                     headers: {'Content-Type':'application/json'},
+                     body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: prompt }] }] })
+                 });
+                 let geminiData = await geminiRes.json();
+                 let reply = geminiData.candidates[0].content.parts[0].text;
+                 
+                 document.getElementById('loadingIndicator').style.display = 'none';
+                 
+                 let marketLinks = "";
+                 DATA.market.forEach(item => {
+                     let data = item[appCurrentLang] || item['en'];
+                     marketLinks += `<div class="detail-card">
+                         <div class="card-header"><div class="card-icon">${item.icon}</div><h2 class="card-title">${data.title}</h2></div>
+                         <p class="card-desc">${data.desc}</p>
+                         <a href="${data.url}" class="card-link" target="_blank">${data.linkText} →</a>
+                     </div>`;
+                 });
+                 
+                 document.getElementById('cardsContainer').innerHTML = `
+                   <div class="disease-cure-box" style="border-color:#fbbf24; margin-bottom:30px;">
+                       <h2 style="margin-top:0; color:#fbbf24;">📈 Market Prices Today</h2>
+                       ${reply.replace(/\n/g, '<br>')}
+                   </div>
+                   ${marketLinks}
+                 `;
+                 if(typeof speakText === 'function') speakText(reply);
+             } catch(e) {
+                 document.getElementById('loadingIndicator').innerText = "Market Network Error!";
+             }
+        }
+
+        async function generateWeatherSuggestions() {
+             try {
+                 let currentTime = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', hour12: true });
+                 
+                 let res1 = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=17.3850&longitude=78.4867&current_weather=true`);
+                 let data1 = await res1.json();
+                 let tempHyd = data1.current_weather.temperature;
+                 let wc1 = data1.current_weather.weathercode;
+                 let wNameHyd = wc1 <= 3 ? "Clear" : wc1 <= 48 ? "Cloudy" : wc1 <= 67 ? "Rainy" : "Stormy";
+
+                 let res2 = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=16.5062&longitude=80.6480&current_weather=true`);
+                 let data2 = await res2.json();
+                 let tempAP = data2.current_weather.temperature;
+                 let wc2 = data2.current_weather.weathercode;
+                 let wNameAP = wc2 <= 3 ? "Clear" : wc2 <= 48 ? "Cloudy" : wc2 <= 67 ? "Rainy" : "Stormy";
+
+                 let langName = appCurrentLang === 'te' ? 'Telugu' : (appCurrentLang === 'hi' ? 'Hindi' : 'English');
+                 
+                 let prompt = "You are AXIOM, a highly precise agricultural weather intelligence array. The current Local Time is " + currentTime + ". The live localized temperatures are:\n1. Hyderabad (Telangana): " + tempHyd + "°C, " + wNameHyd + "\n2. Amaravati (Andhra Pradesh): " + tempAP + "°C, " + wNameAP + "\n\nProvide a synchronized, time-aware farming advisory. Mention the time and the two cities explicitly. Output entirely in " + langName + " language with no asterisks. Use 4 short bullet points.";
+                 
+                 let apiKey = GEMINI_API_KEY || (typeof config !== 'undefined' ? config.GEMINI_API_KEY : '');
+                 let geminiRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`, {
+                     method: 'POST',
+                     headers: {'Content-Type': 'application/json'},
+                     body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: prompt }] }] })
+                 });
+                 let geminiData = await geminiRes.json();
+                 let reply = geminiData.candidates[0].content.parts[0].text;
+                 
+                 document.getElementById('loadingIndicator').style.display = 'none';
+                 document.getElementById('cardsContainer').innerHTML = `<div class="disease-cure-box" style="border-color:#3b82f6;"><h2 style="margin-top:0; color:#3b82f6;">🌤️ Regional Weather Matrix</h2><p style="font-weight:bold; color:#555;">📍 Hyderabad: ${tempHyd}°C | 📍 Andhra Pradesh: ${tempAP}°C | 🕒 ${currentTime}</p><hr style="border:0; border-top:1px solid #ddd; margin: 10px 0;">${reply.replace(/\n/g, '<br>')}</div>`;
+                 if(typeof speakText === 'function') speakText(reply);
+             } catch(e) {
+                 document.getElementById('loadingIndicator').innerText = "Weather Network Error.";
+             }
+        }
+    </script>
+</body>
+</html>

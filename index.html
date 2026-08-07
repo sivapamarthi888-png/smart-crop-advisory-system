@@ -1,0 +1,1836 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=1024">
+
+
+    <title>
+        Smart Crop Advisory System
+    </title>
+
+
+    <!-- Google Font -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" href="data:,">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Required Scripts -->
+    <script src="js/config.js"></script>
+    
+
+</head>
+
+
+<body>
+
+
+
+    <!-- =====================================================
+                     NAVBAR
+===================================================== -->
+
+
+    <header>
+
+        <nav class="navbar">
+
+
+            <div class="logo">
+
+                <span>
+                    🌱
+                </span>
+
+                <h2 data-key="siteName">
+                    Smart Crop
+                </h2>
+
+            </div>
+
+
+
+            <ul class="nav-links">
+
+
+                <li>
+                    <a href="#home" data-key="home">
+                        Home
+                    </a>
+                </li>
+
+
+                <li>
+                    <a href="#crops" data-key="crops">
+                        Crops
+                    </a>
+                </li>
+
+
+                <li>
+                    <a href="details.html?type=weather" data-key="weather">
+                        Weather
+                    </a>
+                </li>
+
+
+                <li>
+                    <a href="details.html?type=market" data-key="market">
+                        Market
+                    </a>
+                </li>
+
+
+                <li>
+                    <a href="#services" data-key="services">
+                        Services
+                    </a>
+                </li>
+
+
+                <li>
+                    <a href="#about" data-key="about">
+                        About
+                    </a>
+                </li>
+
+
+            </ul>
+
+
+
+
+
+            <!-- LANGUAGE BUTTONS -->
+
+            <div class="language-switch">
+
+
+                <button onclick="changeLanguage('en')">
+
+                    English
+
+                </button>
+
+
+
+                <button onclick="changeLanguage('te')">
+
+                    తెలుగు
+
+                </button>
+
+
+            </div>
+
+
+
+        </nav>
+
+
+    </header>
+
+
+
+
+
+
+
+
+
+    <!-- =====================================================
+                     HERO SECTION
+===================================================== -->
+
+
+    <section class="hero" id="home">
+
+
+
+        <div class="hero-content">
+
+
+            <div class="hero-badge" data-key="heroBadge">
+
+                🌱 AI Powered Agriculture Platform
+
+            </div>
+
+
+
+
+            <h1 data-key="heroTitle">
+
+                Smart Farming Starts With Smart Decisions
+
+            </h1>
+
+<div class="farmer-quote" style="text-align:center; padding: 25px; margin-top: 30px; margin-bottom: 20px; font-size: 1.5rem; font-weight: 800; font-family: 'Poppins', sans-serif; background: rgba(255,255,255,0.1); border-radius: 15px; border-left: 5px solid #FF9933; border-right: 5px solid #138808; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+    <span data-key="farmerQuote" style="color: #ffffff; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">"A farmer is a magician who produces money from the mud."</span>
+    <br><span style="font-size: 1.1rem; color: #ffffff; font-weight: normal; margin-top: 10px; display: block; font-style: italic; letter-spacing: 2px;">🚜 Jai Jawan, Jai Kisan 🇮🇳</span>
+</div>
+
+
+
+
+
+
+            <h3 data-key="heroLine">
+
+                AI Based Crop Recommendation System
+
+            </h3>
+
+
+
+
+
+            <p data-key="heroDescription">
+
+                Select the best crops based on season,
+                soil type and water availability using
+                intelligent agricultural guidance.
+
+            </p>
+
+
+
+
+
+            <button class="primary-btn" onclick="scrollToCrops()">
+
+
+                <span data-key="exploreBtn">
+
+                    Explore Crops 🌾
+
+                </span>
+
+
+            </button>
+
+
+
+        </div>
+
+
+
+
+
+
+
+        <!-- AI CARD -->
+
+
+        <div class="ai-card">
+
+
+
+            <div class="ai-icon">
+
+                🤖
+
+            </div>
+
+
+
+            <h2 data-key="aiAssistant">
+
+                AgriAI Assistant
+
+            </h2>
+
+
+
+
+            <p data-key="aiAssistantDesc">
+
+                Ask agriculture questions through voice or text.
+
+            </p>
+
+
+
+
+            <div class="ai-status">
+
+                <span></span>
+
+                <span data-key="aiOnline">AI Online</span>
+
+            </div>
+
+
+
+        </div>
+
+
+
+    </section>
+
+
+
+
+
+
+
+
+
+    <!-- =====================================================
+                     FLOATING AI MICROPHONE
+===================================================== -->
+
+
+    <a href="chat.html" id="aiMic" style="position: fixed; bottom: 20px; right: 20px; text-decoration: none; display: flex; align-items: center; justify-content: center; width: 60px; height: 60px; border-radius: 50%; background: #4CAF50; color: white; font-size: 24px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 9999;">🎤</a>
+
+
+
+
+
+
+
+
+
+    <!-- =====================================================
+                     STATISTICS
+===================================================== -->
+
+
+    <section class="stats">
+
+
+
+        <div class="stat-box">
+
+
+            <h2>
+                30+
+            </h2>
+
+
+            <p data-key="totalCrops">
+
+                Crops
+
+            </p>
+
+
+        </div>
+
+
+
+
+
+
+
+        <div class="stat-box">
+
+
+            <h2>
+                3
+            </h2>
+
+
+            <p data-key="seasonCount">
+
+                Seasons
+
+            </p>
+
+
+        </div>
+
+
+
+
+
+
+
+        <div class="stat-box">
+
+
+            <h2>
+                5
+            </h2>
+
+
+            <p data-key="soilCount">
+
+                Soil Types
+
+            </p>
+
+
+        </div>
+
+
+
+
+
+
+
+        <div class="stat-box">
+
+
+            <h2>
+                100%
+            </h2>
+
+
+            <p data-key="smartCount">
+
+                Smart Guidance
+
+            </p>
+
+
+        </div>
+
+
+
+    </section>
+
+
+
+
+
+
+
+
+
+    <!-- =====================================================
+                     AI FEATURES DASHBOARD
+===================================================== -->
+
+
+    <section class="features">
+
+
+
+        <div class="feature-card">
+
+
+            <div class="feature-icon">
+
+                🌾
+
+            </div>
+
+
+            <h3 data-key="cropRecommendation">
+
+                Crop Recommendation
+
+            </h3>
+
+
+            <p data-key="cropRecommendationDesc">
+
+                Find suitable crops based on season,
+                soil and water availability.
+
+            </p>
+
+
+        </div>
+
+
+
+
+
+
+
+        <div class="feature-card">
+
+
+            <div class="feature-icon">
+
+                🌦
+
+            </div>
+
+
+            <h3 data-key="weatherIntelligence">
+
+                Weather Intelligence
+
+            </h3>
+
+
+            <p data-key="weatherDesc">
+
+                Get farming suggestions based on weather conditions.
+
+            </p>
+
+
+        </div>
+
+
+
+
+
+
+
+        <div class="feature-card">
+
+
+            <div class="feature-icon">
+
+                📈
+
+            </div>
+
+
+            <h3 data-key="marketTitle">
+
+                Market Intelligence
+
+            </h3>
+
+
+            <p data-key="marketDesc">
+
+                Know crop prices and market information.
+
+            </p>
+
+
+        </div>
+
+
+
+
+
+
+
+        <div class="feature-card">
+
+
+            <div class="feature-icon">
+
+                🦠
+
+            </div>
+
+
+            <h3 data-key="diseaseDetection">
+
+                Disease Detection
+
+            </h3>
+
+
+            <p data-key="diseaseDetectionDesc">
+
+                Identify crop diseases and treatment methods.
+
+            </p>
+
+
+        </div>
+
+
+
+
+    </section>
+    <!-- =====================================================
+             SMART CROP RECOMMENDATION SECTION
+===================================================== -->
+
+
+    <section class="recommend-section" id="crops">
+
+
+
+        <div class="section-header">
+
+
+            <h2 data-key="recommendTitle">
+
+                🌾 Smart Crop Recommendation
+
+            </h2>
+
+
+
+            <p data-key="recommendSubtitle">
+
+                Choose your farming conditions
+
+            </p>
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+        <!-- ================= FILTER DASHBOARD ================= -->
+
+
+        <div class="dashboard-card" id="filters">
+
+
+
+            <div class="filter-grid">
+
+
+
+
+
+                <!-- SEASON -->
+
+                <div class="filter-item">
+
+
+                    <label data-key="season">
+
+                        Season
+
+                    </label>
+
+
+
+                    <select id="seasonSelect">
+                        <option value="" data-key="allSeasons">All Seasons</option>
+                        <option value="Kharif" data-key="kharif">Kharif</option>
+                        <option value="Rabi" data-key="rabi">Rabi</option>
+                        <option value="Zaid" data-key="zaid">Zaid</option>
+                    </select>
+                </div>
+
+                <!-- SOIL -->
+                <div class="filter-item">
+                    <label data-key="soil">Soil Type</label>
+                    <select id="soilSelect">
+                        <option value="" data-key="allSoils">All Soil Types</option>
+                        <option value="Black Soil" data-key="blackSoil">Black Soil</option>
+                        <option value="Red Soil" data-key="redSoil">Red Soil</option>
+                        <option value="Loamy Soil" data-key="loamySoil">Loamy Soil</option>
+                        <option value="Sandy Soil" data-key="sandySoil">Sandy Soil</option>
+                        <option value="Alluvial Soil" data-key="alluvialSoil">Alluvial Soil</option>
+                    </select>
+                </div>
+
+                <!-- WATER -->
+                <div class="filter-item">
+                    <label data-key="water">Water Availability</label>
+                    <select id="waterSelect">
+                        <option value="" data-key="allWater">All Water Levels</option>
+                        <option value="High" data-key="high">High</option>
+                        <option value="Medium" data-key="medium">Medium</option>
+                        <option value="Low" data-key="low">Low</option>
+                    </select>
+                </div>
+
+
+
+
+
+            </div>
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+        <!-- ================= SEARCH ================= -->
+
+
+        <div class="search-area">
+
+
+            <input type="text" id="cropSearch" data-placeholder="searchPlaceholder" placeholder="Search crop...">
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+        <!-- ================= RESULT HEADER ================= -->
+
+
+        <div class="crop-result-header">
+
+
+            <h2 data-key="recommendedCrops">
+
+                Recommended Crops 🌱
+
+            </h2>
+
+
+
+            <span id="cropCountDisplay">
+
+            </span>
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+        <!-- ================= CROPS GRID ================= -->
+
+
+        <div class="crop-container" id="cropContainer">
+
+
+            <!-- crops.js will load crop cards here -->
+
+
+        </div>
+
+
+
+
+
+
+    </section>
+
+
+
+
+
+
+
+
+
+    <!-- =====================================================
+                  CROP DETAILS POPUP
+===================================================== -->
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <button class="close-btn" onclick="closePopup()">×</button>
+            <h2 id="cropTitle">Crop Details</h2>
+            <!-- IMAGE -->
+            <div class="popup-image">
+                <img id="cropImage" src="" alt="Crop Image">
+            </div>
+            <!-- BASIC DETAILS -->
+            <div id="cropInfo" class="details-grid"></div>
+            <!-- DESCRIPTION -->
+            <div class="detail-section">
+                <h3 data-key="description">Description</h3>
+                <p id="cropDescription"></p>
+            </div>
+            <!-- FERTILIZER -->
+            <div class="detail-section">
+                <h3 data-key="fertilizer">Recommended Fertilizers</h3>
+                <div id="fertilizerContainer" class="fertilizer-grid"></div>
+            </div>
+            <!-- DISEASE -->
+            <div class="detail-section">
+                <h3 data-key="diseases">Major Diseases</h3>
+                <div id="diseaseContainer" class="disease-grid"></div>
+            </div>
+            <!-- LOCATION -->
+            <div class="detail-section">
+                <h3 data-key="growingPlaces">Major Growing Places</h3>
+                <div id="growingPlaces"></div>
+            </div>
+        </div>
+    </div>
+    <!-- =====================================================
+                    WEATHER SECTION
+===================================================== -->
+
+
+    <section class="weather-section" id="weather">
+
+
+        <div class="section-header">
+
+
+            <h2 data-key="weatherTitle">
+
+                🌦 Weather Intelligence
+
+            </h2>
+
+
+            <p data-key="weatherGuidance">
+
+                Real time farming weather guidance
+
+            </p>
+
+
+        </div>
+
+
+
+
+
+        <div class="weather-dashboard">
+
+
+
+
+
+            <div class="weather-card">
+
+
+                <div class="weather-top">
+
+
+                    <h3 data-key="today">
+
+                        Today
+
+                    </h3>
+
+
+                    <span>
+
+                        ☀️
+
+                    </span>
+
+
+                </div>
+
+
+
+                <h2 id="todayTemp">
+
+                    --
+
+                </h2>
+
+
+
+                <p id="todayWeather">
+
+                    Loading weather...
+
+                </p>
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+            <div class="weather-card">
+
+
+                <div class="weather-top">
+
+
+                    <h3 data-key="tomorrow">
+
+                        Tomorrow
+
+                    </h3>
+
+
+                    <span>
+
+                        🌤
+
+                    </span>
+
+
+                </div>
+
+
+
+                <h2 id="tomorrowTemp">
+
+                    --
+
+                </h2>
+
+
+
+                <p id="tomorrowWeather">
+
+                    Loading weather...
+
+                </p>
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+            <div class="weather-card">
+
+
+                <div class="weather-top">
+
+
+                    <h3 data-key="nextDay">
+
+                        Day After Tomorrow
+
+                    </h3>
+
+
+                    <span>
+
+                        🌧
+
+                    </span>
+
+
+                </div>
+
+
+
+                <h2 id="nextTemp">
+
+                    --
+
+                </h2>
+
+
+
+                <p id="nextWeather">
+
+                    Loading weather...
+
+                </p>
+
+
+
+            </div>
+
+
+
+
+
+
+        </div>
+
+
+    </section>
+
+
+
+
+
+
+
+
+
+    <!-- =====================================================
+                    MARKET SECTION
+===================================================== -->
+
+
+    <section class="market-section" id="market">
+
+
+
+        <div class="section-header">
+
+
+            <h2 data-key="marketTitle">
+
+                📈 Market Intelligence
+
+            </h2>
+
+
+
+            <p data-key="marketCurrent">
+
+                Current Crop Market Prices
+
+            </p>
+
+
+        </div>
+
+
+
+
+
+
+
+        <div class="market-grid">
+
+
+
+
+
+            <div class="market-card">
+
+
+                <div class="market-icon">
+
+                    🌾
+
+                </div>
+
+
+                <h3 data-key="riceCrop">
+
+                    Rice
+
+                </h3>
+
+
+
+                <h2 data-key="priceRice">
+
+                    ₹2200 / Quintal
+
+                </h2>
+
+
+
+                <p data-key="apMarket">
+
+                    Andhra Pradesh Market
+
+                </p>
+
+
+            </div>
+
+
+
+
+
+
+
+
+            <div class="market-card">
+
+
+                <div class="market-icon">
+
+                    🌽
+
+                </div>
+
+
+                <h3 data-key="maizeCrop">
+
+                    Maize
+
+                </h3>
+
+
+
+                <h2 data-key="priceMaize">
+
+                    ₹1900 / Quintal
+
+                </h2>
+
+
+
+                <p data-key="tsMarket">
+
+                    Telangana Market
+
+                </p>
+
+
+            </div>
+
+
+
+
+
+
+
+
+            <div class="market-card">
+
+
+                <div class="market-icon">
+
+                    🌱
+
+                </div>
+
+
+                <h3 data-key="cottonCrop">
+
+                    Cotton
+
+                </h3>
+
+
+
+                <h2 data-key="priceCotton">
+
+                    ₹7500 / Quintal
+
+                </h2>
+
+
+
+                <p data-key="gunturMarket">
+
+                    Guntur Market
+
+                </p>
+
+
+            </div>
+
+
+
+
+
+        </div>
+
+
+    </section>
+
+
+
+
+
+
+
+
+
+    <!-- =====================================================
+                GOVERNMENT SCHEMES
+===================================================== -->
+
+
+    <section class="scheme-section">
+
+
+
+        <div class="section-header">
+
+
+            <h2 data-key="governmentSchemes">
+
+                🏛 Government Schemes
+
+            </h2>
+
+
+
+            <p data-key="farmerSupport">
+
+                Farmer support programs
+
+            </p>
+
+
+        </div>
+
+
+
+
+
+
+
+        <div class="scheme-grid">
+
+
+
+
+
+            <div class="scheme-card">
+
+
+                <div class="scheme-icon">
+
+                    💰
+
+                </div>
+
+
+
+                <h3 data-key="pmKisan">
+
+                    PM-KISAN
+
+                </h3>
+
+
+
+                <p data-key="pmKisanDesc">
+
+                    Income support scheme for farmers.
+
+                </p>
+
+
+
+                <button data-key="learnMore">
+
+                    Learn More
+
+                </button>
+
+
+            </div>
+
+
+
+
+
+
+
+
+            <div class="scheme-card">
+
+
+                <div class="scheme-icon">
+
+                    🛡
+
+                </div>
+
+
+
+                <h3 data-key="pmfby">
+
+                    PMFBY
+
+                </h3>
+
+
+
+                <p data-key="pmfbyDesc">
+
+                    Crop insurance protection.
+
+                </p>
+
+
+
+                <button data-key="learnMore">
+
+                    Learn More
+
+                </button>
+
+
+            </div>
+
+
+
+
+
+
+
+
+            <div class="scheme-card">
+
+
+                <div class="scheme-icon">
+
+                    🌱
+
+                </div>
+
+
+
+                <h3 data-key="soilCard">
+
+                    Soil Health Card
+
+                </h3>
+
+
+
+                <p data-key="soilCardDesc">
+
+                    Improve soil productivity.
+
+                </p>
+
+
+
+                <button data-key="learnMore">
+
+                    Learn More
+
+                </button>
+
+
+            </div>
+
+
+
+
+
+        </div>
+
+
+    </section>
+
+
+
+
+
+
+
+
+
+    <!-- =====================================================
+                    SERVICES SECTION
+===================================================== -->
+
+
+    <section class="services-section" id="services">
+
+
+
+        <div class="section-header">
+
+
+            <h2 data-key="nearbyServices">
+
+                🌐 Nearby Agriculture Services
+
+            </h2>
+
+
+
+            <p data-key="servicesDesc">
+
+                Find useful farming services near you.
+
+            </p>
+
+
+        </div>
+
+
+
+
+
+
+
+        <div class="service-grid">
+
+
+
+
+
+            <div class="service-card">
+
+
+                <div class="service-icon">
+
+                    🧪
+
+                </div>
+
+
+
+                <h3 data-key="soilTesting">
+
+                    Soil Testing Centers
+
+                </h3>
+
+
+
+                <p data-key="soilTestingDesc">
+
+                    Check soil nutrients and quality.
+
+                </p>
+
+
+
+                <button data-key="findNearby">
+
+                    Find Nearby
+
+                </button>
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+            <div class="service-card">
+
+
+                <div class="service-icon">
+
+                    🏪
+
+                </div>
+
+
+
+                <h3 data-key="fertilizerStore">
+
+                    Fertilizer Stores
+
+                </h3>
+
+
+
+                <p data-key="fertStoreDesc">
+
+                    Buy recommended fertilizers.
+
+                </p>
+
+
+
+                <button data-key="findNearby">
+
+                    Find Nearby
+
+                </button>
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+            <div class="service-card">
+
+
+                <div class="service-icon">
+
+                    🏫
+
+                </div>
+
+
+
+                <h3 data-key="kvkCenters">
+
+                    Krishi Vigyan Kendras
+
+                </h3>
+
+
+
+                <p data-key="kvkDesc">
+
+                    Expert agricultural guidance.
+
+                </p>
+
+
+
+                <button data-key="findNearby">
+
+                    Find Nearby
+
+                </button>
+
+
+            </div>
+
+
+
+
+
+        </div>
+
+
+    </section>
+
+
+
+
+
+
+
+
+
+    <!-- =====================================================
+                    ABOUT AGRI AI
+===================================================== -->
+
+
+    <section class="about-section" id="about">
+
+
+
+        <div class="about-container">
+
+
+
+            <h2 data-key="meetAI">
+
+                🤖 Meet AgriAI
+
+            </h2>
+
+
+
+
+            <h3 data-key="personalAssistant">
+
+                Your Personal Farming Assistant
+
+            </h3>
+
+
+
+
+
+            <p data-key="aiDescription">
+
+                AgriAI provides crop recommendation,
+                fertilizer guidance, disease management
+                and market information.
+
+            </p>
+
+
+
+
+
+
+
+            <div class="about-features">
+
+
+
+                <div>
+
+                    🎤
+
+                    <span data-key="voiceConversation">
+
+                        Voice Conversation
+
+                    </span>
+
+                </div>
+
+
+
+
+                <div>
+
+                    🌍
+
+                    <span data-key="languageSupport">
+
+                        English Telugu Support
+
+                    </span>
+
+                </div>
+
+
+
+
+
+                <div>
+
+                    🌱
+
+                    <span data-key="fertilizerGuidance">
+
+                        Fertilizer Guidance
+
+                    </span>
+
+                </div>
+
+
+
+
+
+                <div>
+
+                    📈
+
+                    <span data-key="marketInformation">
+
+                        Market Information
+
+                    </span>
+
+                </div>
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+            <a href="chat.html" class="ai-start-btn" id="startAI" style="text-decoration:none; display:inline-block;">
+
+                Start AI Conversation
+
+            </a>
+
+
+
+        </div>
+
+
+    </section>
+    <!-- =====================================================
+                        FOOTER
+===================================================== -->
+
+
+    <footer class="footer">
+
+
+        <div class="footer-grid">
+
+
+
+            <div class="footer-brand">
+
+
+                <h2>
+
+                    🌱 Smart Crop
+
+                </h2>
+
+
+
+                <p data-key="footerText">
+
+                    AI Powered Smart Agriculture Platform
+
+                </p>
+
+
+
+            </div>
+
+
+
+
+
+
+            <div class="footer-links">
+
+
+                <h3>
+
+                    Quick Links
+
+                </h3>
+
+
+                <a href="#home" data-key="home">
+                    Home
+                </a>
+
+
+                <a href="#crops" data-key="crops">
+                    Crops
+                </a>
+
+
+                <a href="details.html?type=weather" data-key="weather">
+                    Weather
+                </a>
+
+
+                <a href="details.html?type=market" data-key="market">
+                    Market
+                </a>
+
+
+                <a href="#services" data-key="services">
+                    Services
+                </a>
+
+
+            </div>
+
+
+
+
+
+
+            <div class="footer-contact">
+
+
+                <h3>
+
+                    Contact
+
+                </h3>
+
+
+
+
+
+                <p>
+
+                    📍 India
+
+                </p>
+
+
+            </div>
+
+
+
+
+
+        </div>
+
+
+
+
+
+
+        <div class="copyright">
+
+
+            <p>
+
+                © 2026 Smart Crop Advisory System
+
+            </p>
+
+
+        </div>
+
+
+
+    </footer>
+
+
+
+
+
+
+
+
+    <!-- =====================================================
+                    JAVASCRIPT FILES
+===================================================== -->
+
+
+    <script src="js/translations.js"></script>
+
+    <script src="js/crops.js"></script>
+
+    <script src="js/script.js"></script>
+
+
+
+
+
+
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    
+    // Wire up all "Learn More" and "Find Nearby" buttons to open Dedicated Details Page
+    document.querySelectorAll('button').forEach(btn => {
+        let txt = btn.innerText.toLowerCase();
+        if (txt.includes('learn more')) {
+            btn.onclick = (e) => { e.preventDefault(); window.location.href = 'details.html?type=schemes'; };
+        }
+        if (txt.includes('find nearby') || txt.includes('find nearby')) {
+            btn.onclick = (e) => { e.preventDefault(); window.location.href = 'details.html?type=services'; };
+        }
+    });
+
+    // Wire up the Main Feature Cards!
+    document.querySelectorAll('.feature-card').forEach(card => {
+        card.style.cursor = 'pointer';
+        card.onclick = () => {
+            let title = card.innerText.toLowerCase();
+            if (title.includes('disease')) window.location.href = 'details.html?type=disease';
+            else if (title.includes('market')) window.location.href = 'details.html?type=market';
+            else if (title.includes('weather')) window.location.href = 'details.html?type=weather';
+            else if (title.includes('crop')) window.location.href = '#crops';
+        };
+    });
+
+    // Make Market Price widget cards clickable to details
+    document.querySelectorAll('.market-card').forEach(card => {
+        card.style.cursor = 'pointer';
+        card.onclick = (e) => { window.location.href = 'details.html?type=market'; };
+    });
+
+});
+</script>
+
+
+
+
+
+</body>
+
+
+
+</html>

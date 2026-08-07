@@ -1,0 +1,2868 @@
+/* =====================================================
+   SMART CROP AI AGRICULTURE PLATFORM
+   MODERN DASHBOARD DESIGN
+===================================================== */
+
+
+/* ================= ROOT ================= */
+
+
+:root {
+
+    --primary: #1b8f3a;
+    --primary-dark: #11652a;
+    --secondary: #4caf50;
+
+    --bg: #f4f8f3;
+    --surface: #ffffff;
+
+    --text: #1f2937;
+    --muted: #64748b;
+
+    --border: #e2e8f0;
+
+    --shadow:
+        0 20px 50px rgba(0, 0, 0, 0.08);
+
+    --radius: 20px;
+
+    --glass:
+        rgba(255, 255, 255, 0.75);
+
+}
+
+
+
+
+
+/* ================= RESET ================= */
+
+
+* {
+
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    font-family:
+        'Poppins',
+        sans-serif;
+
+}
+
+
+
+html {
+
+    scroll-behavior: smooth;
+
+}
+
+
+
+body {
+    background-color: #0b2e1a;
+    background-image:
+        radial-gradient(ellipse at top left, rgba(26, 143, 76, 0.5) 0%, transparent 60%),
+        radial-gradient(ellipse at bottom right, rgba(139, 90, 43, 0.4) 0%, transparent 60%),
+        url('https://www.transparenttextures.com/patterns/natural-paper.png');
+    background-attachment: fixed;
+    color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* FIX: Ensure that text inside all white cards and popups is universally legible */
+.crop-card,
+.crop-card *,
+.market-card,
+.market-card *,
+.scheme-card,
+.scheme-card *,
+.weather-card,
+.weather-card *,
+.dashboard-card,
+.dashboard-card *,
+.popup-content,
+.popup-content *,
+.detail-card,
+.detail-card *,
+.contact-card,
+.contact-card * {
+    color: #1f2937;
+}
+
+
+
+
+
+
+
+a {
+
+    text-decoration: none;
+    color: inherit;
+
+}
+
+
+
+button {
+
+    border: none;
+    cursor: pointer;
+
+    font-family: inherit;
+
+}
+
+
+
+
+
+
+
+/* =====================================================
+                     NAVBAR
+===================================================== */
+
+
+header {
+
+    position: sticky;
+    top: 0;
+
+    z-index: 1000;
+
+}
+
+
+
+.navbar {
+
+
+    width: 90%;
+    margin: 20px auto;
+
+    height: 75px;
+
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+
+    padding: 0 30px;
+
+
+    background:
+        rgba(255, 255, 255, 0.85);
+
+
+    backdrop-filter:
+        blur(15px);
+
+
+
+    border:
+
+        1px solid rgba(255, 255, 255, .6);
+
+
+
+    border-radius: 25px;
+
+
+    box-shadow:
+
+        0 15px 40px rgba(0, 0, 0, .08);
+
+
+
+}
+
+
+
+
+
+.logo {
+
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+
+}
+
+
+
+.logo span {
+
+    font-size: 35px;
+
+}
+
+
+
+.logo h2 {
+
+
+    font-size: 25px;
+
+    font-weight: 700;
+
+    color: var(--primary);
+
+
+}
+
+
+
+
+
+
+
+.nav-links {
+
+
+    display: flex;
+
+    gap: 35px;
+
+    list-style: none;
+
+
+}
+
+
+
+.nav-links a {
+
+
+    font-size: 15px;
+
+    font-weight: 500;
+
+
+    color: #374151;
+
+
+    transition: .3s;
+
+
+}
+
+
+
+.nav-links a:hover {
+
+
+    color: var(--primary);
+
+
+}
+
+
+
+
+
+.language-switch {
+
+
+    display: flex;
+
+    gap: 10px;
+
+
+}
+
+
+
+.language-switch button {
+
+
+    padding: 10px 18px;
+
+
+    border-radius: 30px;
+
+
+    background:
+
+        #e8f5e9;
+
+
+    color:
+
+        var(--primary);
+
+
+    font-weight: 600;
+
+
+    transition: .3s;
+
+
+}
+
+
+
+.language-switch button:hover {
+
+
+    background:
+
+        var(--primary);
+
+
+    color: white;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =====================================================
+                     HERO
+===================================================== */
+
+
+.hero {
+
+
+    width: 90%;
+
+    margin: 50px auto;
+
+
+    min-height: 600px;
+
+
+    display: grid;
+
+
+    grid-template-columns:
+
+        1.2fr .8fr;
+
+
+
+    align-items: center;
+
+
+    gap: 50px;
+
+
+}
+
+
+
+
+
+.hero-content {
+
+
+    padding: 30px;
+
+}
+
+
+
+.hero-badge {
+
+
+    display: inline-block;
+
+
+    padding: 12px 22px;
+
+
+    background: #dcfce7;
+
+
+    color: #15803d;
+
+
+    border-radius: 50px;
+
+
+    font-size: 14px;
+
+
+    font-weight: 600;
+
+
+    margin-bottom: 25px;
+
+
+}
+
+
+
+
+
+.hero h1 {
+    font-size: clamp(40px, 5vw, 65px);
+    line-height: 1.1;
+    font-weight: 800;
+    color: #ffffff;
+    /* FIXED: Bright white to stand out */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+
+
+.hero h3 {
+    margin-top: 20px;
+    font-size: 25px;
+    color: #FF9933;
+    /* FIXED: Saffron golden highlight! */
+}
+
+
+
+.hero p {
+    margin-top: 20px;
+    max-width: 600px;
+    color: #e2e8f0;
+    /* FIXED: Light silvery white */
+    font-size: 17px;
+    line-height: 1.8;
+}
+
+
+
+
+
+
+
+.primary-btn {
+
+
+    margin-top: 35px;
+
+
+    padding: 16px 35px;
+
+
+    border-radius: 40px;
+
+
+    background:
+
+        var(--primary);
+
+
+    color: white;
+
+
+    font-size: 16px;
+
+
+    font-weight: 600;
+
+
+    transition: .3s;
+
+
+}
+
+
+
+.primary-btn:hover {
+
+
+    transform: translateY(-4px);
+
+
+    background:
+
+        var(--primary-dark);
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =====================================================
+                  AI ASSISTANT CARD
+===================================================== */
+
+
+.ai-card {
+
+
+    background:
+
+        linear-gradient(145deg,
+            #ffffff,
+            #ecfdf5);
+
+
+    border-radius: 35px;
+
+
+    padding: 45px;
+
+
+    text-align: center;
+
+
+    box-shadow:
+
+        var(--shadow);
+
+
+    border:
+
+        1px solid #dcfce7;
+
+
+}
+
+
+
+.ai-icon {
+
+
+    font-size: 80px;
+
+
+    margin-bottom: 20px;
+
+
+}
+
+
+
+.ai-card h2 {
+
+
+    color:
+
+        var(--primary);
+
+
+}
+
+
+
+.ai-card p {
+
+
+    margin: 15px 0;
+
+
+    color: var(--muted);
+
+
+}
+
+
+
+
+.ai-status {
+
+
+    display: inline-flex;
+
+
+    gap: 8px;
+
+
+    align-items: center;
+
+
+    padding: 10px 20px;
+
+
+    background: #dcfce7;
+
+
+    border-radius: 30px;
+
+
+    color: #15803d;
+
+
+    font-weight: 600;
+
+
+}
+
+
+
+.ai-status span:first-child {
+    width: 10px;
+    height: 10px;
+    background: #22c55e;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.ai-status span:last-child {
+    width: auto;
+    height: auto;
+    background: transparent;
+    border-radius: 0;
+}
+
+
+
+
+
+
+
+
+/* =====================================================
+             FLOATING AI MICROPHONE
+===================================================== */
+
+
+#aiMic {
+
+
+    position: fixed;
+
+
+    right: 35px;
+
+
+    top: 50%;
+
+
+    transform: translateY(-50%);
+
+
+
+    width: 75px;
+
+
+    height: 75px;
+
+
+    border-radius: 50%;
+
+
+    background:
+
+        var(--primary);
+
+
+    color: white;
+
+
+    font-size: 32px;
+
+
+
+    display: flex;
+
+
+    align-items: center;
+
+
+    justify-content: center;
+
+
+
+    box-shadow:
+
+        0 20px 40px rgba(27, 143, 58, .35);
+
+
+
+    z-index: 2000;
+
+
+    animation: pulse 2s infinite;
+
+
+}
+
+
+
+#aiMic:hover {
+
+
+    transform:
+
+        translateY(-50%) scale(1.1);
+
+
+}
+
+
+
+
+
+
+@keyframes pulse {
+
+
+    0% {
+
+        box-shadow:
+            0 0 0 0 rgba(27, 143, 58, .5);
+
+    }
+
+
+
+    70% {
+
+        box-shadow:
+            0 0 0 25px rgba(27, 143, 58, 0);
+
+    }
+
+
+
+    100% {
+
+        box-shadow:
+            0 0 0 0 rgba(27, 143, 58, 0);
+
+    }
+
+
+}
+
+/* =====================================================
+                     STATISTICS DASHBOARD
+===================================================== */
+
+
+.stats {
+
+
+    width: 90%;
+
+    margin: 30px auto 80px;
+
+
+    display: grid;
+
+
+    grid-template-columns:
+
+        repeat(4, 1fr);
+
+
+    gap: 25px;
+
+
+}
+
+
+
+.stat-box {
+
+
+    background: white;
+
+
+    padding: 35px 25px;
+
+
+    border-radius: 25px;
+
+
+    text-align: center;
+
+
+    box-shadow:
+
+        var(--shadow);
+
+
+    border:
+
+        1px solid var(--border);
+
+
+    transition: .3s;
+
+
+}
+
+
+
+.stat-box:hover {
+
+
+    transform:
+
+        translateY(-8px);
+
+
+}
+
+
+
+.stat-box h2 {
+
+
+    font-size: 42px;
+
+
+    color: var(--primary);
+
+
+}
+
+
+
+.stat-box p {
+
+
+    margin-top: 10px;
+
+
+    color: var(--muted);
+
+
+    font-weight: 500;
+
+
+}
+
+
+
+
+
+
+
+
+/* =====================================================
+                    AI FEATURES
+===================================================== */
+
+
+.features {
+
+
+    width: 90%;
+
+
+    margin:
+
+        0 auto 90px;
+
+
+    display: grid;
+
+
+    grid-template-columns:
+
+        repeat(4, 1fr);
+
+
+    gap: 25px;
+
+
+}
+
+
+
+.feature-card {
+
+
+    background: white;
+
+
+    padding: 35px;
+
+
+    border-radius: 25px;
+
+
+    border:
+
+        1px solid var(--border);
+
+
+    box-shadow:
+
+        0 15px 40px rgba(0, 0, 0, .06);
+
+
+    transition: .3s;
+
+
+}
+
+
+
+.feature-card:hover {
+
+
+    transform:
+
+        translateY(-10px);
+
+
+}
+
+
+
+.feature-icon {
+
+
+    width: 65px;
+
+
+    height: 65px;
+
+
+    display: flex;
+
+
+    justify-content: center;
+
+
+    align-items: center;
+
+
+    border-radius: 20px;
+
+
+    background: #dcfce7;
+
+
+    font-size: 32px;
+
+
+    margin-bottom: 20px;
+
+
+}
+
+
+
+.feature-card h3 {
+
+
+    color: #14532d;
+
+
+    margin-bottom: 12px;
+
+
+}
+
+
+
+.feature-card p {
+
+
+    color: var(--muted);
+
+
+    line-height: 1.7;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =====================================================
+              SECTION COMMON DESIGN
+===================================================== */
+
+
+.section-header {
+
+
+    text-align: center;
+
+
+    margin-bottom: 45px;
+
+
+}
+
+
+
+.section-header h2 {
+
+
+    font-size: 38px;
+
+
+    color: #14532d;
+
+
+}
+
+
+
+.section-header p {
+
+
+    margin-top: 10px;
+
+
+    color: var(--muted);
+
+
+    font-size: 17px;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =====================================================
+              CROP RECOMMENDATION
+===================================================== */
+
+
+.recommend-section {
+
+
+    width: 90%;
+
+
+    margin: auto;
+
+
+    padding: 80px 0;
+
+
+}
+
+
+
+
+
+.dashboard-card {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 35px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    border-top: 5px solid #FF9933;
+    margin-bottom: 35px;
+    color: #064e3b;
+}
+
+
+
+
+
+
+
+.filter-grid {
+
+
+    display: grid;
+
+
+    grid-template-columns:
+
+        repeat(3, 1fr);
+
+
+    gap: 30px;
+
+
+}
+
+
+
+
+
+.filter-item {
+
+
+    display: flex;
+
+
+    flex-direction: column;
+
+
+    gap: 12px;
+
+
+}
+
+
+
+.filter-item label {
+
+
+    font-weight: 600;
+
+
+    color: #166534;
+
+
+}
+
+
+
+.filter-item select {
+
+
+    padding: 15px;
+
+
+    border-radius: 15px;
+
+
+    border:
+
+        1px solid #d1d5db;
+
+
+    background: #f9fafb;
+
+
+    font-size: 15px;
+
+
+    outline: none;
+
+
+}
+
+
+
+.filter-item select:focus {
+
+
+    border-color:
+
+        var(--primary);
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =====================================================
+                     SEARCH
+===================================================== */
+
+
+.search-area {
+
+
+    margin:
+
+        30px 0;
+
+
+}
+
+
+
+.search-area input {
+
+
+    width: 100%;
+
+
+    padding: 18px 25px;
+
+
+    border-radius: 20px;
+
+
+    border:
+
+        1px solid var(--border);
+
+
+    background: white;
+
+
+    font-size: 16px;
+
+
+    box-shadow:
+
+        0 10px 30px rgba(0, 0, 0, .05);
+
+
+    outline: none;
+
+
+}
+
+
+
+.search-area input:focus {
+
+
+    border-color:
+
+        var(--primary);
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =====================================================
+                CROP RESULT HEADER
+===================================================== */
+
+
+.crop-result-header {
+
+
+    display: flex;
+
+
+    justify-content: space-between;
+
+
+    align-items: center;
+
+
+    margin-bottom: 30px;
+
+
+}
+
+
+
+.crop-result-header h2 {
+
+
+    color: #14532d;
+
+
+    font-size: 30px;
+
+
+}
+
+
+
+#cropCountDisplay {
+
+
+    padding: 10px 20px;
+
+
+    background: #dcfce7;
+
+
+    color: #15803d;
+
+
+    border-radius: 30px;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =====================================================
+                    CROP GRID
+===================================================== */
+
+
+.crop-container {
+
+
+    display: grid;
+
+
+    grid-template-columns:
+
+        repeat(4, 1fr);
+
+
+    gap: 25px;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =====================================================
+                  CROP CARD
+===================================================== */
+
+
+.crop-card {
+
+
+    background: white;
+
+
+    border-radius: 25px;
+
+
+    overflow: hidden;
+
+
+    box-shadow:
+
+        0 15px 40px rgba(0, 0, 0, .08);
+
+
+    border:
+
+        1px solid var(--border);
+
+
+    transition: .3s;
+
+
+}
+
+
+
+.crop-card:hover {
+
+
+    transform:
+
+        translateY(-10px);
+
+
+    box-shadow:
+
+        0 25px 50px rgba(0, 0, 0, .12);
+
+
+}
+
+
+
+
+
+
+
+.crop-card img {
+
+
+    width: 100%;
+
+
+    height: 220px;
+
+
+    object-fit: cover;
+
+
+}
+
+
+
+
+
+
+
+.crop-card-body {
+
+
+    padding: 25px;
+
+
+}
+
+
+
+.crop-card h3 {
+
+
+    color: #14532d;
+
+
+    font-size: 23px;
+
+
+    margin-bottom: 15px;
+
+
+}
+
+
+
+.crop-card p {
+
+
+    color: var(--muted);
+
+
+    margin: 8px 0;
+
+
+    font-size: 14px;
+
+
+}
+
+
+
+
+
+.crop-card button {
+
+
+    margin-top: 20px;
+
+
+    width: 100%;
+
+
+    padding: 14px;
+
+
+    border-radius: 15px;
+
+
+    background:
+
+        var(--primary);
+
+
+    color: white;
+
+
+    font-weight: 600;
+
+
+    transition: .3s;
+
+
+}
+
+
+
+.crop-card button:hover {
+
+
+    background:
+
+        var(--primary-dark);
+
+
+}
+
+/* =====================================================
+                    CROP DETAILS POPUP
+===================================================== */
+
+
+.popup {
+
+    position: fixed;
+
+    inset: 0;
+
+    background:
+
+        rgba(0, 0, 0, .55);
+
+
+    display: none;
+
+    justify-content: center;
+
+    align-items: center;
+
+
+    padding: 30px;
+
+
+    z-index: 3000;
+
+
+    backdrop-filter: blur(8px);
+
+}
+
+
+
+.popup.active {
+
+    display: flex;
+
+}
+
+
+
+
+
+.popup-content {
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    width: 100%;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    padding: 3rem;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    animation: scaleUp 0.3s ease;
+}
+
+
+
+.close-btn {
+
+
+    position: absolute;
+
+
+    right: 25px;
+
+
+    top: 20px;
+
+
+    width: 45px;
+
+
+    height: 45px;
+
+
+    border-radius: 50%;
+
+
+    background: #fee2e2;
+
+
+    color: #dc2626;
+
+
+    font-size: 28px;
+
+
+}
+
+
+
+
+
+#cropTitle {
+
+
+    text-align: center;
+
+
+    color: #14532d;
+
+
+    font-size: 35px;
+
+
+    margin-bottom: 30px;
+
+
+}
+
+
+
+
+
+
+
+.popup-image {
+
+
+    width: 100%;
+
+
+    height: 300px;
+
+
+    overflow: hidden;
+
+
+    border-radius: 25px;
+
+
+    margin-bottom: 30px;
+
+
+}
+
+
+
+.popup-image img {
+
+
+    width: 100%;
+
+
+    height: 100%;
+
+
+    object-fit: cover;
+
+
+}
+
+
+
+
+
+
+
+.details-grid {
+
+
+    display: grid;
+
+
+    grid-template-columns:
+
+        repeat(3, 1fr);
+
+
+    gap: 20px;
+
+
+}
+
+
+
+.detail-box {
+
+
+    background: #f0fdf4;
+
+
+    padding: 20px;
+
+
+    border-radius: 18px;
+
+
+}
+
+
+
+.detail-box h4 {
+
+
+    color: #166534;
+
+
+}
+
+
+
+.detail-section {
+
+
+    margin-top: 35px;
+
+
+}
+
+
+
+.detail-section h3 {
+
+
+    color: #14532d;
+
+
+    margin-bottom: 20px;
+
+
+}
+
+
+
+
+
+
+
+/* =====================================================
+                FERTILIZER GRID
+===================================================== */
+
+
+.fertilizer-grid {
+
+
+    display: grid;
+
+
+    grid-template-columns:
+
+        repeat(3, 1fr);
+
+
+    gap: 20px;
+
+
+}
+
+
+
+.fertilizer-card {
+
+
+    background: #f8fafc;
+
+
+    padding: 20px;
+
+
+    border-radius: 20px;
+
+
+    border:
+
+        1px solid var(--border);
+
+
+}
+
+
+
+.fertilizer-card img {
+
+
+    width: 100%;
+
+
+    height: 150px;
+
+
+    object-fit: cover;
+
+
+    border-radius: 15px;
+
+
+}
+
+
+
+
+
+
+
+/* =====================================================
+                 DISEASE SECTION
+===================================================== */
+
+
+.disease-grid {
+
+
+    display: grid;
+
+
+    grid-template-columns:
+
+        repeat(2, 1fr);
+
+
+    gap: 20px;
+
+
+}
+
+
+
+.disease-card {
+
+
+    background: #fff7ed;
+
+
+    padding: 20px;
+
+
+    border-radius: 20px;
+
+
+    border-left:
+
+        5px solid #f97316;
+
+
+}
+
+
+
+
+
+/* =====================================================
+                  WEATHER DASHBOARD
+===================================================== */
+
+
+.weather-section {
+
+
+    width: 90%;
+
+
+    margin: auto;
+
+
+    padding: 80px 0;
+
+
+}
+
+
+
+
+.weather-dashboard {
+
+
+    display: grid;
+
+
+    grid-template-columns:
+
+        repeat(3, 1fr);
+
+
+    gap: 30px;
+
+
+}
+
+
+
+
+
+.weather-card {
+
+
+    background: white;
+
+
+    padding: 35px;
+
+
+    border-radius: 30px;
+
+
+    box-shadow:
+
+        var(--shadow);
+
+
+    border:
+
+        1px solid var(--border);
+
+
+}
+
+
+
+.weather-top {
+
+
+    display: flex;
+
+
+    justify-content: space-between;
+
+
+    align-items: center;
+
+
+}
+
+
+
+.weather-top h3 {
+
+
+    color: #14532d;
+
+
+}
+
+
+
+.weather-top span {
+
+
+    font-size: 45px;
+
+
+}
+
+
+
+.weather-card h2 {
+
+
+    font-size: 45px;
+
+
+    color: var(--primary);
+
+
+    margin: 20px 0;
+
+
+}
+
+
+
+.weather-card p {
+
+
+    color: var(--muted);
+
+
+}
+
+
+
+
+
+
+
+
+/* =====================================================
+                 MARKET SECTION
+===================================================== */
+
+
+.market-section {
+
+
+    width: 90%;
+
+
+    margin: auto;
+
+
+    padding: 80px 0;
+
+
+}
+
+
+
+
+
+.market-grid {
+
+
+    display: grid;
+
+
+    grid-template-columns:
+
+        repeat(3, 1fr);
+
+
+    gap: 30px;
+
+
+}
+
+
+
+
+
+.market-card {
+
+
+    background: white;
+
+
+    padding: 35px;
+
+
+    border-radius: 30px;
+
+
+    box-shadow: var(--shadow);
+
+
+    text-align: center;
+
+
+    transition: .3s;
+
+
+}
+
+
+
+.market-card:hover {
+
+
+    transform: translateY(-8px);
+
+
+}
+
+
+
+.market-icon {
+
+
+    font-size: 55px;
+
+
+}
+
+
+
+.market-card h3 {
+
+
+    margin: 20px 0 10px;
+
+
+    color: #14532d;
+
+
+}
+
+
+
+.market-card h2 {
+
+
+    color: var(--primary);
+
+
+}
+
+
+
+
+
+
+
+
+/* =====================================================
+              GOVERNMENT SCHEMES
+===================================================== */
+
+
+.scheme-section {
+
+
+    width: 90%;
+
+
+    margin: auto;
+
+
+    padding: 80px 0;
+
+
+}
+
+
+
+
+.scheme-grid {
+
+
+    display: grid;
+
+
+    grid-template-columns:
+
+        repeat(3, 1fr);
+
+
+    gap: 30px;
+
+
+}
+
+
+
+.scheme-card {
+
+
+    background: white;
+
+
+    padding: 35px;
+
+
+    border-radius: 30px;
+
+
+    box-shadow: var(--shadow);
+
+
+}
+
+
+
+.scheme-icon {
+
+
+    font-size: 55px;
+
+
+    margin-bottom: 20px;
+
+
+}
+
+
+
+.scheme-card h3 {
+
+
+    color: #14532d;
+
+
+}
+
+
+
+.scheme-card p {
+
+
+    margin: 15px 0;
+
+
+    color: var(--muted);
+
+
+}
+
+
+
+.scheme-card button {
+
+
+    padding: 12px 25px;
+
+
+    border-radius: 30px;
+
+
+    background: var(--primary);
+
+
+    color: white;
+
+
+}
+
+
+
+
+
+
+
+/* =====================================================
+                 SERVICES
+===================================================== */
+
+
+.services-section {
+
+
+    width: 90%;
+
+
+    margin: auto;
+
+
+    padding: 80px 0;
+
+
+}
+
+
+
+.service-grid {
+
+
+    display: grid;
+
+
+    grid-template-columns:
+
+        repeat(3, 1fr);
+
+
+    gap: 30px;
+
+
+}
+
+
+
+.service-card {
+
+
+    background: white;
+
+
+    padding: 35px;
+
+
+    border-radius: 30px;
+
+
+    box-shadow: var(--shadow);
+
+
+}
+
+
+
+.service-icon {
+
+
+    font-size: 55px;
+
+
+}
+
+
+
+.service-card h3 {
+
+
+    margin: 20px 0;
+
+
+    color: #14532d;
+
+
+}
+
+
+
+.service-card p {
+
+
+    color: var(--muted);
+
+
+    margin-bottom: 20px;
+
+
+}
+
+
+
+.service-card button {
+
+
+    background: var(--primary);
+
+
+    color: white;
+
+
+    padding: 12px 25px;
+
+
+    border-radius: 30px;
+
+
+}
+
+
+
+
+
+
+/* =====================================================
+                  ABOUT AI
+===================================================== */
+
+
+.about-section {
+
+
+    width: 90%;
+
+
+    margin: auto;
+
+
+    padding: 90px 0;
+
+
+}
+
+
+
+.about-container {
+
+
+    background:
+
+
+        linear-gradient(135deg,
+
+            #14532d,
+
+            #22c55e);
+
+
+    color: white;
+
+
+    padding: 60px;
+
+
+    border-radius: 40px;
+
+
+    text-align: center;
+
+
+}
+
+
+
+
+.about-container h2 {
+
+
+    font-size: 45px;
+
+
+}
+
+
+
+.about-container h3 {
+
+
+    margin: 20px 0;
+
+
+    font-size: 28px;
+
+
+}
+
+
+
+.about-container p {
+
+
+    max-width: 800px;
+
+
+    margin: auto;
+
+
+    line-height: 1.8;
+
+
+}
+
+
+
+
+
+.about-features {
+
+
+    margin-top: 40px;
+
+
+    display: grid;
+
+
+    grid-template-columns:
+
+        repeat(4, 1fr);
+
+
+    gap: 20px;
+
+
+}
+
+
+
+.about-features div {
+
+
+    background:
+
+        rgba(255, 255, 255, .15);
+
+
+    padding: 20px;
+
+
+    border-radius: 20px;
+
+
+}
+
+
+
+
+
+
+.ai-start-btn {
+
+
+    margin-top: 35px;
+
+
+    padding: 16px 40px;
+
+
+    border-radius: 40px;
+
+
+    background: white;
+
+
+    color: #166534;
+
+
+    font-weight: 700;
+
+
+}
+
+
+
+
+
+
+/* =====================================================
+                    FOOTER
+===================================================== */
+
+
+.footer {
+
+
+    background: #052e16;
+
+
+    color: white;
+
+
+    padding: 60px 7% 20px;
+
+
+}
+
+
+
+.footer-container {
+
+
+    display: grid;
+
+
+    grid-template-columns:
+
+        repeat(3, 1fr);
+
+
+    gap: 40px;
+
+
+}
+
+
+
+.footer h2 {
+
+
+    color: #86efac;
+
+
+}
+
+
+
+.footer-links {
+
+
+    display: flex;
+
+
+    flex-direction: column;
+
+
+    gap: 12px;
+
+
+}
+
+
+
+.footer-links a {
+
+
+    color: #ffffff;
+
+
+}
+
+
+
+.footer-contact p {
+
+
+    margin: 10px 0;
+
+
+}
+
+
+
+.copyright {
+
+
+    margin-top: 40px;
+
+
+    padding-top: 20px;
+
+
+    text-align: center;
+
+
+    border-top:
+
+        1px solid rgba(255, 255, 255, .2);
+
+
+}
+
+
+
+
+
+
+
+/* =====================================================
+                    RESPONSIVE
+===================================================== */
+
+
+@media(max-width:1100px) {
+
+
+    .nav-links {
+
+        display: none;
+
+    }
+
+
+
+    .hero {
+
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+
+    .stats,
+    .features,
+    .crop-container {
+
+
+        grid-template-columns:
+
+            repeat(2, 1fr);
+
+
+    }
+
+
+
+    .filter-grid,
+    .weather-dashboard,
+    .market-grid,
+    .scheme-grid,
+    .service-grid {
+
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+
+    .about-features {
+
+
+        grid-template-columns:
+
+            repeat(2, 1fr);
+
+    }
+
+
+
+}
+
+
+
+@media(max-width:600px) {
+
+
+
+    .navbar {
+
+
+        width: 95%;
+
+
+    }
+
+
+
+    .hero h1 {
+
+
+        font-size: 38px;
+
+
+    }
+
+
+
+    .stats,
+    .features,
+    .crop-container {
+
+
+        grid-template-columns: 1fr;
+
+
+    }
+
+
+
+    .details-grid,
+    .fertilizer-grid,
+    .disease-grid {
+
+
+        grid-template-columns: 1fr;
+
+
+    }
+
+
+
+    #aiMic {
+
+
+        right: 20px;
+
+
+        width: 60px;
+
+
+        height: 60px;
+
+
+        font-size: 28px;
+
+
+    }
+
+
+
+    .footer-container {
+
+
+        grid-template-columns: 1fr;
+
+
+    }
+
+
+}
+
+.detail-item span,
+.detail-section h3,
+.detail-item strong,
+.detail-section p,
+.fert-item h4,
+.fert-item p,
+.disease-item h4,
+.disease-item p,
+#cropTitle {
+    color: #222222 !important;
+}
+
+
+.section-header h2,
+.section-header p,
+h2[data-key="recommendedCrops"] {
+    color: #ffffff !important;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.market-card h3,
+.market-card p,
+.scheme-card h3,
+.scheme-card p,
+.weather-card h3,
+.weather-card p {
+    color: #333333 !important;
+    /* Forces dark text on the white data cards */
+}
+
+
+/* Force popup text to be universally dark grey - absolute failsafe */
+.popup-content * {
+    color: #1a1a1a !important;
+}
+
+/* Indian Flag Animated Background for Chat Box */
+@keyframes flagGradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.chat-flag-bg {
+    background: linear-gradient(120deg, #FF9933 0%, #FFFFFF 50%, #138808 100%);
+    background-size: 300% 300%;
+    animation: flagGradient 8s ease infinite;
+}
+
+/* Guarantee Recommended crops header is white */
+
+/* Target exactly the section headers to be white, never the white-card headers */
+
+.dashboard-card h3,
+.dashboard-card h4,
+.detail-item strong,
+.detail-section h3 {
+    color: #064e3b !important;
+    /* Force crop names inside white cards to be dark green */
+}
+
+
+.section-header h2,
+.section-header p,
+h2[data-key="recommendedCrops"] {
+    color: #ffffff !important;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+
+
+/* Guarantee Recommended crops header is white */
+
+/* FORCE 3 COLUMNS ON MOBILE */
+@media (max-width: 768px) {
+    .crops-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+        grid-gap: 5px !important;
+        gap: 5px !important;
+    }
+    .crop-card {
+        padding: 5px !important;
+        min-width: 0 !important;
+    }
+    .crop-card img {
+        height: 60px !important;
+    }
+    .crop-title {
+        font-size: 11px !important;
+        margin: 5px 0 !important;
+    }
+    .crop-details {
+        font-size: 9px !important;
+    }
+    .btn {
+        padding: 4px 6px !important;
+        font-size: 10px !important;
+    }
+}
+
+
+/* ENSURE ALL HTML TABLES ARE VISIBLE */
+.disease-cure-box table {
+    background: #ffffff !important;
+}
+.disease-cure-box th, .disease-cure-box td {
+    color: #111111 !important;
+    text-shadow: none !important;
+    border: 1px solid #2e7d32 !important;
+}
+.disease-cure-box th {
+    background-color: #e8f5e9 !important;
+}

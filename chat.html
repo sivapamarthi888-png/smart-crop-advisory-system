@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1024">
+    <title>AgriAI Assistant</title>
+    <link href="css/style.css" rel="stylesheet">
+    <style>
+        /* SKEUOMORPHIC DESIGN */
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(-45deg, #FFD166, #06D6A0, #118AB2, #8B5A2B);
+            background-size: 400% 400%;
+            animation: farmerGradient 15s ease infinite;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            font-family: 'Georgia', serif;
+            overflow: hidden;
+        }
+
+        @keyframes farmerGradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .chat-app {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100dvh;
+            background: transparent;  /* Allows the gorgeous gradient to show through! */
+            position: relative;
+            z-index: 2;
+        }
+
+        .chat-header {
+            /* Metallic bezel header */
+            background: linear-gradient(to bottom, #f0f0f0 0%, #d1d1d1 50%, #b8b8b8 51%, #d9d9d9 100%);
+            border-bottom: 2px solid #888;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            color: #333;
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.7);
+            z-index: 10;
+        }
+
+        .header-title-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .ai-avatar {
+            font-size: 30px;
+            background: linear-gradient(135deg, #a5d6a7, #4caf50);
+            padding: 8px;
+            border-radius: 50%;
+            /* 3D button effect for avatar */
+            border: 2px solid #388e3c;
+            box-shadow:
+                inset 0 2px 4px rgba(255, 255, 255, 0.7),
+                isset 0 -2px 4px rgba(0, 0, 0, 0.3),
+                0 3px 5px rgba(0, 0, 0, 0.4);
+            position: relative;
+            text-shadow: none;
+        }
+
+        .header-title-container h3 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            color: #1b5e20;
+        }
+
+        .header-title-container p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #444;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .back-btn {
+            /* Realistic pushed button */
+            background: linear-gradient(to bottom, #fafafa, #e0e0e0);
+            border: 1px solid #aaa;
+            padding: 8px 18px;
+            border-radius: 4px;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            box-shadow:
+                inset 0 1px 0px white,
+                0 2px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-btn:active {
+            background: linear-gradient(to bottom, #d0d0d0, #e0e0e0);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+            transform: translateY(1px);
+        }
+
+        .chat-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            background: transparent;
+            /* Ruled paper effect */
+            background-image: repeating-linear-gradient(transparent, transparent 29px, rgba(0, 0, 0, 0.1) 30px);
+            background-attachment: local;
+            padding-top: 10px;
+        }
+
+        .chat-container::-webkit-scrollbar {
+            width: 14px;
+        }
+
+        .chat-container::-webkit-scrollbar-track {
+            background: #e0e0e0;
+            border-left: 1px solid #ccc;
+        }
+
+        .chat-container::-webkit-scrollbar-thumb {
+            background: linear-gradient(to right, #cfcfcf, #999);
+            border: 1px solid #777;
+            border-radius: 8px;
+        }
+
+        .ai-message,
+        .user-message {
+            padding: 12px 18px;
+            border-radius: 6px;
+            max-width: 80%;
+            line-height: 1.5;
+            font-size: 16px;
+            word-wrap: break-word;
+            font-family: 'Arial', sans-serif;
+            position: relative;
+        }
+
+        .user-message {
+            align-self: flex-end;
+            /* Sticky note or physical card effect */
+            background: #fff9c4;
+            color: #333;
+            border: 1px solid #ccc;
+            box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .user-message::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            right: 15px;
+            border-width: 10px 10px 0 0;
+            border-style: solid;
+            border-color: #fff9c4 transparent transparent transparent;
+        }
+
+        .ai-message {
+            align-self: flex-start;
+            background: #fdfdfd;
+            color: #222;
+            border: 1px solid #bbb;
+            box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .ai-message::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 15px;
+            border-width: 10px 0 0 10px;
+            border-style: solid;
+            border-color: #fdfdfd transparent transparent transparent;
+        }
+
+        .chat-input-container {
+            /* Metallic keyboard tray effect */
+            background: linear-gradient(to bottom, #dcdcdc, #c0c0c0);
+            padding: 15px;
+            border-top: 2px solid #888;
+            box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .input-wrapper {
+            display: flex;
+            width: 100%;
+            gap: 12px;
+            align-items: center;
+        }
+
+        #chatInput {
+            flex: 1;
+            padding: 15px;
+            /* Inset screen or indented text area look */
+            background: #e8ecd8;
+            border: 2px solid #888;
+            border-bottom: 1px solid #eee;
+            border-right: 1px solid #eee;
+            box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+            outline: none;
+            font-size: 16px;
+            font-family: 'Arial', sans-serif;
+            color: #222;
+        }
+
+        .btn {
+            border: 1px solid #555;
+            padding: 0;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 50px;
+            height: 50px;
+            font-size: 22px;
+            /* Heavy 3D physical button */
+            box-shadow:
+                inset 0 4px 5px rgba(255, 255, 255, 0.4),
+                inset 0 -3px 5px rgba(0, 0, 0, 0.2),
+                0 4px 6px rgba(0, 0, 0, 0.5);
+        }
+
+        .btn:active {
+            box-shadow:
+                inset 0 3px 6px rgba(0, 0, 0, 0.4),
+                0 1px 2px rgba(0, 0, 0, 0.2);
+            transform: translateY(2px);
+        }
+
+        #sendMessage {
+            background: linear-gradient(to bottom, #66bb6a, #2e7d32);
+            border-color: #1b5e20;
+        }
+
+        #aiMicBtn {
+            background: linear-gradient(to bottom, #ff7043, #d84315);
+            border-color: #bf360c;
+        }
+
+        .rich-card {
+            border-top: 1px dashed #aaa;
+            margin-top: 10px;
+            padding-top: 10px;
+            font-size: 0.95em;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 10px 0;
+            background: #fff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background: #f4f4f4;
+        }
+
+        /* Mobile Keyboard & Screen Fixes */
+        html,
+        body {
+            height: 100%;
+            height: 100dvh;
+            margin: 0;
+            padding: 0;
+        }
+
+        @media (max-width: 768px) {
+            .chat-app {
+                width: 100vw;
+                max-width: 100vw;
+                height: 100dvh;
+                margin: 0;
+                border-radius: 0;
+                border: none;
+                box-shadow: none;
+            }
+
+            .chat-input-container {
+                padding-bottom: max(15px, env(safe-area-inset-bottom));
+            }
+        }
+    
+        /* AGGRESSIVE MOBILE OVERRIDES */
+        @media (max-width: 768px) {
+            .chat-header {
+                padding: 5px 10px !important;
+                height: auto !important;
+                flex-direction: row !important;
+                align-items: center !important;
+            }
+            .header-title-container h1 {
+                font-size: 16px !important;
+                margin: 0 !important;
+            }
+            .header-title-container p {
+                font-size: 10px !important;
+                margin: 0 !important;
+                white-space: nowrap !important;
+            }
+            .chat-header img {
+                width: 35px !important;
+                height: 35px !important;
+            }
+            .btn {
+                padding: 4px 8px !important;
+                font-size: 10px !important;
+            }
+            .chat-history {
+                padding: 10px !important;
+            }
+            .message .msg-bubble {
+                white-space: pre-wrap;
+                overflow-x: auto;
+                font-size: 13px !important;
+                padding: 8px 12px !important;
+                max-width: 85% !important;
+            
+                color: #000000 !important;
+                font-weight: 500 !important;
+                text-shadow: none !important;
+}
+            .chat-input-container {
+                padding: 5px !important;
+                height: 50px !important;
+            }
+            .chat-input {
+                font-size: 14px !important;
+            }
+            .ai-start-btn, .chat-send-btn {
+                width: 35px !important;
+                height: 35px !important;
+                font-size: 14px !important;
+            }
+            /* Make sure the flag background is actually visibly sized */
+            .chat-flag-bg {
+                background-size: cover !important;
+                background-position: center !important;
+            }
+            .message-bot .msg-bubble, .disease-cure-box, .detail-card {
+                font-size: 13px !important;
+            }
+            .disease-cure-box td, .disease-cure-box th {
+                padding: 4px 6px !important;
+                font-size: 12px !important;
+            }
+        }
+
+
+        /* --- MASTER UI OVERRIDES --- */
+        
+        /* 1. Restore exactly the old physical Chat Bubble design but keep the transparent gradient background */
+        .message-bot .msg-bubble {
+            background: #ffffff !important;
+            border: 1px solid #dcd3b6 !important;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1) !important;
+            color: #333333 !important;
+            font-family: 'Georgia', serif !important;
+            text-shadow: none !important;
+            font-weight: normal !important;
+            white-space: pre-wrap !important;
+        }
+
+        .message-user .msg-bubble {
+            background: #fff3b0 !important;
+            border: 1px solid #dcd3b6 !important;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1) !important;
+            color: #333333 !important;
+            font-family: 'Georgia', serif !important;
+            text-shadow: none !important;
+            font-weight: normal !important;
+            white-space: pre-wrap !important;
+        }
+
+        /* 2. Fix the invisible/white text inside the HTML Tables (Empty Table Bug) */
+        .disease-cure-box {
+            background: #ffffff !important;
+            color: #333333 !important;
+        }
+        
+        .disease-cure-box table, 
+        .disease-cure-box th, 
+        .disease-cure-box td {
+            color: #333333 !important;
+            border-color: #8B5A2B !important;
+        }
+        
+        /* 3. Re-enforce mobile rules carefully */
+        @media (max-width: 768px) {
+            .message-bot .msg-bubble, .message-user .msg-bubble {
+                font-size: 13px !important;
+            }
+        }
+        /* -------------------------- */
+
+
+        /* --- ALIGNMENT FIX (User Right, Bot Left) --- */
+        .message {
+            display: flex;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        .message-user {
+            justify-content: flex-end;
+        }
+        .message-bot {
+            justify-content: flex-start;
+        }
+        .message-user .msg-bubble {
+            margin-left: auto;
+            border-bottom-right-radius: 0 !important;
+            border-radius: 12px;
+        }
+        .message-bot .msg-bubble {
+            margin-right: auto;
+            border-bottom-left-radius: 0 !important;
+            border-radius: 12px;
+        }
+
+</style>
+    <link rel="icon" href="data:,">
+</head>
+
+<body class="chat-flag-bg">
+    <div class="chat-app">
+        <div class="chat-header">
+            <div class="header-title-container">
+                <div class="ai-avatar">🤖</div>
+                <div>
+                    <h3>AgriAI Assistant</h3>
+                    <p>Powered by Advanced Agriculture Intelligence</p>
+                </div>
+            </div>
+            <div style="display:flex; gap:10px; align-items:center;">
+                <button onclick="clearChat()" class="back-btn" style="font-weight: normal; font-size: 13px;">♻
+                    Clear</button>
+                <a href="index.html" class="back-btn">⬅ Back</a>
+            </div>
+        </div>
+
+        <div id="chatMessages" class="chat-container">
+            <!-- Chat History -->
+        </div>
+
+        <div class="chat-input-container">
+            <div class="input-wrapper">
+                <input type="text" id="chatInput" placeholder="Type or speak your farming query..."
+                    onkeypress="if(event.key === 'Enter' && typeof sendChatMessage === 'function') sendChatMessage()">
+                <button id="sendMessage" class="btn">➤</button>
+                <button id="aiMicBtn" class="btn">🎤</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Assets required for local fallback and UI variables -->
+    <script src="js/crops.js"></script>
+    <script src="js/translations.js"></script>
+    <script src="js/ai.js"></script>
+</body>
+
+</html>
