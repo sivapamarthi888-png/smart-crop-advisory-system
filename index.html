@@ -2,11 +2,32 @@
 <html lang="en">
 
 <head>
+    <meta name="google-site-verification" content="gUTVSRkju3gbhwPvzL51U-HrgQm60cpB-8RsfNhB5y8" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
 
     <meta charset="UTF-8">
 
     <meta name="viewport" content="width=1024">
 
+
+    
+    <!-- Google SEO Meta Tags -->
+    <meta name="title" content="AgriSeason - Advanced AI Crop Advisory & Farming Assistant">
+    <meta name="description" content="AgriSeason provides farmers with real-time agricultural intelligence, smart crop diagnostics, weather analysis, and retail market buyer prices.">
+    <meta name="keywords" content="agri, agri season, agriculture AI, farming assistant, crop prices india, smart farming, telugu agriculture app, hindi farming app">
+    <meta name="robots" content="index, follow">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="language" content="English">
+    <meta name="author" content="AXIOM Systems">
+    
+    <!-- Open Graph / Social Media Sharing -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://agri-season.vercel.app/">
+    <meta property="og:title" content="AgriSeason - Advanced AI Crop Advisory & Farming Assistant">
+    <meta property="og:description" content="Empowering farmers with Native Language AI, real-time market matrix, and hyper-accurate crop diagnostics.">
+    <meta property="og:image" content="https://agri-season.vercel.app/images/logo.png">
 
     <title>
         Smart Crop Advisory System
@@ -417,11 +438,8 @@
 
 
 
-        <div class="feature-card">
-
-
+        <div class="feature-card" onclick="window.location.href='#crops'" style="cursor:pointer">
             <div class="feature-icon">
-
                 🌾
 
             </div>
@@ -450,11 +468,8 @@
 
 
 
-        <div class="feature-card">
-
-
+        <div class="feature-card" onclick="window.location.href='details.html?type=weather'" style="cursor:pointer">
             <div class="feature-icon">
-
                 🌦
 
             </div>
@@ -482,11 +497,8 @@
 
 
 
-        <div class="feature-card">
-
-
+        <div class="feature-card" onclick="window.location.href='details.html?type=market'" style="cursor:pointer">
             <div class="feature-icon">
-
                 📈
 
             </div>
@@ -514,11 +526,8 @@
 
 
 
-        <div class="feature-card">
-
-
+        <div class="feature-card" onclick="window.location.href='details.html?type=disease'" style="cursor:pointer">
             <div class="feature-icon">
-
                 🦠
 
             </div>
@@ -691,9 +700,7 @@
 
 
 
-            <span id="cropCountDisplay">
-
-            </span>
+            
 
 
 
@@ -1210,7 +1217,7 @@
 
 
 
-                <button data-key="learnMore">
+                <button data-key="learnMore" onclick="window.location.href='details.html?type=schemes'">
 
                     Learn More
 
@@ -1253,7 +1260,7 @@
 
 
 
-                <button data-key="learnMore">
+                <button data-key="learnMore" onclick="window.location.href='details.html?type=schemes'">
 
                     Learn More
 
@@ -1296,7 +1303,7 @@
 
 
 
-                <button data-key="learnMore">
+                <button data-key="learnMore" onclick="window.location.href='details.html?type=schemes'">
 
                     Learn More
 
@@ -1390,7 +1397,7 @@
 
 
 
-                <button data-key="findNearby">
+                <button data-key="findNearby" onclick="window.location.href='details.html?type=services'">
 
                     Find Nearby
 
@@ -1434,7 +1441,7 @@
 
 
 
-                <button data-key="findNearby">
+                <button data-key="findNearby" onclick="window.location.href='details.html?type=services'">
 
                     Find Nearby
 
@@ -1478,7 +1485,7 @@
 
 
 
-                <button data-key="findNearby">
+                <button data-key="findNearby" onclick="window.location.href='details.html?type=services'">
 
                     Find Nearby
 
@@ -1624,7 +1631,7 @@
 
 
 
-            <a href="chat.html" class="ai-start-btn" id="startAI" style="text-decoration:none; display:inline-block;">
+            <a href="chat.html" class="ai-start-btn" id="startAI" data-key="startAIBtn" style="text-decoration:none; display:inline-block;">
 
                 Start AI Conversation
 
@@ -1805,16 +1812,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Wire up the Main Feature Cards!
-    document.querySelectorAll('.feature-card').forEach(card => {
-        card.style.cursor = 'pointer';
-        card.onclick = () => {
-            let title = card.innerText.toLowerCase();
-            if (title.includes('disease')) window.location.href = 'details.html?type=disease';
-            else if (title.includes('market')) window.location.href = 'details.html?type=market';
-            else if (title.includes('weather')) window.location.href = 'details.html?type=weather';
-            else if (title.includes('crop')) window.location.href = '#crops';
-        };
-    });
+    // Router logic handled flawlessly by raw HTML onclick instead of brittle innerText reads.
 
     // Make Market Price widget cards clickable to details
     document.querySelectorAll('.market-card').forEach(card => {

@@ -44,7 +44,57 @@ const translations = {
 
 
 
-        /* STATS */
+        
+        
+        /* STATIC SCHEMES IN INDEX.HTML */
+        pmKisan: "PM-KISAN",
+        pmKisanDesc: "Income support scheme for farmers.",
+        pmfby: "PMFBY",
+        pmfbyDesc: "Crop insurance protection.",
+        soilCard: "Soil Health Card",
+        soilCardDesc: "Improve soil productivity.",
+        learnMore: "Learn More",
+        
+        nearbyServices: "🌐 Nearby Agriculture Services",
+        servicesDesc: "Find useful farming services near you.",
+        soilTesting: "Soil Testing Centers",
+        soilTestingDesc: "Check soil nutrients and quality.",
+        fertilizerStore: "Fertilizer Stores",
+        fertStoreDesc: "Buy officially recommended fertilizers.",
+        kvkCenters: "Krishi Vigyan Kendras",
+        kvkDesc: "Get expert advice from KVK scientists.",
+        findNearby: "Find Nearby",
+
+        /* DASHBOARD FEATURES */
+        cropRecommendation: "Crop Recommendation",
+        cropRecommendationDesc: "Find suitable crops based on season, soil and water availability.",
+        weatherIntelligence: "Weather Intelligence",
+        weatherDesc: "Get farming suggestions based on weather conditions.",
+        marketTitle: "Market Intelligence",
+        marketDesc: "Know crop prices and market information.",
+        diseaseDetection: "Disease Detection",
+        diseaseDetectionDesc: "Identify crop diseases and treatment methods.",
+        
+        meetAgriAI: "Meet AgriAI",
+        aiSubT: "Your AI Personal Assistant",
+        aiDescBox: "AgriAI provides personalized crop recommendations, disease diagnosis, and climate intelligence.",
+        speakVoice: "🎤 Talk with Voice",
+        multiLang: "🌍 Supported Languages (Eng, Tel, Hin)",
+        fertRecommend: "🌱 Optimize Fertilizer usage",
+        cMarketInfo: "📈 Real-time Market Intelligence",
+        startConv: "Start AI Conversation",
+        
+        meetAI: "🤖 Meet AgriAI",
+        personalAssistant: "Your Personal Farming Assistant",
+        aiDescription: "AgriAI provides personalized crop recommendations, disease management, and market prices.",
+        voiceConversation: "Voice Conversation",
+        languageSupport: "English & Telugu Support",
+        fertilizerGuidance: "Fertilizer Guidance",
+        marketInformation: "Market Information",
+        startAIBtn: "Start AI Conversation",
+        footerText: "Empowering farmers with advanced technology.",
+
+/* STATS */
 
         totalCrops:
             "35+ Crops",
@@ -417,6 +467,46 @@ const translations = {
 
 
     te: {
+        /* DASHBOARD FEATURES */
+        
+        /* STATIC SCHEMES IN INDEX.HTML */
+        pmKisan: "పిఎం-కిసాన్",
+        pmKisanDesc: "రైతులకు ఆదాయ మద్దతు పథకం.",
+        pmfby: "ఫసల్ బీమా యోజన",
+        pmfbyDesc: "పంటల భీమా రక్షణ పథకం.",
+        soilCard: "సాయిల్ హెల్త్ కార్డ్",
+        soilCardDesc: "మట్టి సారం పెంపుదల.",
+        learnMore: "మరింత తెలుసుకోండి",
+        
+        nearbyServices: "🌐 సమీప వ్యవసాయ సేవలు",
+        servicesDesc: "మీకు ఉపయోగపడే సేవలను కనుగొనండి.",
+        soilTesting: "మట్టి పరీక్షా కేంద్రాలు",
+        soilTestingDesc: "మట్టి పోషకాల అంచనా.",
+        fertilizerStore: "ఎరువుల దుకాణాలు",
+        fertStoreDesc: "విశ్వసనీయ ఎరువులు కొనండి.",
+        kvkCenters: "కృషి విజ్ఞాన కేంద్రాలు",
+        kvkDesc: "నిపుణులచే సలహాలు పొందండి.",
+        findNearby: "దగ్గర్లో వెతకండి",
+
+        cropRecommendation: "పంటల సిఫార్సు",
+        cropRecommendationDesc: "కాలం, నేల ఆధారంగా పంటలను కనుగొనండి.",
+        weatherIntelligence: "వాతావరణ సమాచారం",
+        weatherDesc: "వాతావరణ పరిస్థితులను బట్టి సలహాలు.",
+        marketTitle: "మార్కెట్ సమాచారం",
+        marketDesc: "పంటల ధరలు, మార్కెట్ వివరాలు.",
+        diseaseDetection: "తెలుగు గుర్తింపు",
+        diseaseDetectionDesc: "ఆకుపచ్చ గురుతులు, నివారణ పద్ధతులు.",
+
+        meetAI: "🤖 AgriAI ని కలవండి",
+        personalAssistant: "మీ వ్యక్తిగత వ్యవసాయ సహాయకుడు",
+        aiDescription: "AgriAI పంటల సిఫార్సు, ఎరువులు మరియు మార్కెట్ ధరలను అందిస్తుంది.",
+        voiceConversation: "వాయిస్ తో మాట్లాడండి",
+        languageSupport: "తెలుగు & ఇంగ్లీష్ మద్దతు",
+        fertilizerGuidance: "సరైన ఎరువుల సిఫార్సు",
+        marketInformation: "మార్కెట్ గురించి",
+        startAIBtn: "AI తో సంభాషణ",
+        footerText: "రైతులకు అత్యాధునిక సాంకేతిక పరిజ్ఞానాన్ని అందించడం.",
+
 
 
         home: "హోమ్",

@@ -15,11 +15,17 @@ document.addEventListener('DOMContentLoaded', () => {
             let rec = new SpeechRec();
             
             // Smart Lang detection based on chat memory
-            let detectLang = localStorage.getItem("agriai_history") || "";
-            rec.lang = detectLang.includes("Telugu") || detectLang.includes("తెలుగు") ? 'te-IN' : (detectLang.includes("Hindi") || detectLang.includes("हिंदी") ? 'hi-IN' : 'en-US');
+            
             rec.interimResults = false;
             
             chatMicBtn.onclick = () => {
+                let currentMicrophoneLang = localStorage.getItem('language') || 'en';
+                rec.lang = currentMicrophoneLang === 'te' ? 'te-IN' : (currentMicrophoneLang === 'hi' ? 'hi-IN' : 'en-US');
+
+                // Dynamically select microphone language based on CURRENT state every single time they click it!
+                let currentSysLang = localStorage.getItem('language') || 'en';
+                rec.lang = currentSysLang === 'te' ? 'te-IN' : (currentSysLang === 'hi' ? 'hi-IN' : 'en-US');
+
                 // Instantly silence AI so user can speak!
                 if (window.speechSynthesis) window.speechSynthesis.cancel();
                 chatMicBtn.style.transform = 'scale(0.9)';
@@ -186,9 +192,9 @@ async function askGemini(userMessage) {
     }
 
     try {
-        const triggersTE = ['telugu', 'తెలుగు', 'in telugu', 'speak telugu'];
-        const triggersHI = ['hindi', 'हिंदी', 'in hindi', 'speak hindi'];
-        const triggersEN = ['english', 'ఇంగ్లీష్', 'in english', 'speak english'];
+        const triggersTE = ['telugu', 'తెలుగు', 'तेलुगु', 'in telugu', 'speak telugu'];
+        const triggersHI = ['hindi', 'हिंदी', 'హిందీ', 'హింది', 'in hindi', 'speak hindi'];
+        const triggersEN = ['english', 'ఇంగ్లీష్', 'ఇంగ్లీషు', 'ఆంగ్లం', 'in english', 'speak english'];
         
         let switchLang = null;
         if (triggersTE.some(w => cQuery.includes(w))) switchLang = 'te';
@@ -261,7 +267,7 @@ async function askGemini(userMessage) {
         let res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: promptText }] }] })
+            body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: promptText + ' CRITICAL RULE: For Retail Buyers & Market Demand, YOU MUST ONLY USE AUTHENTIC, EXISTING MARKET HUBS AND VERIFIED COMPANIES (e.g., e-NAM markets, Reliance Fresh, ITC Choupal). Do NOT invent fake phone numbers or fake company names; provide real local market locations/buyers instead.' }] }] })
         });
 
         let data = await res.json();
@@ -300,15 +306,22 @@ function scrollChatBottom() {
 function speakText(text) {
     try {
         if (window.speechSynthesis) window.speechSynthesis.cancel();
-        
         if (!('speechSynthesis' in window)) return;
         
-        // Strip HTML tags for clean audio
-        let cleanText = text.replace(/<[^>]+>/g, ' ').replace(/\*/g, '');
+        // Strict Mobile-Only Enforcer: Laptops lack regional voice packs!
+        const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        if (!isMobileDevice) {
+            console.log("Desktop detected: Voice Synthesis mechanically skipped. AI will only speak on Mobile phones.");
+            return;
+        }
+
+        // Force pause between table cells
+        let cleanText = text.replace(/<\/td>/gi, '. ').replace(/<\/th>/gi, '. ').replace(/<\/tr>/gi, '. ').replace(/<[^>]+>/g, ' ').replace(/\*/g, '');
         
-        let chunkLength = 120;
+        let chunkLength = 150;
         let pattRegex = new RegExp('^[\\s\\S]{1,' + chunkLength + '}(?:[\\.\\,\\?\\!]|$)', 'i');
         let txtArr = [];
+        
         while (cleanText.length > 0) {
             let arr = cleanText.match(pattRegex);
             if (arr === null || arr[0] === '') {
@@ -319,43 +332,43 @@ function speakText(text) {
                 cleanText = cleanText.substring(arr[0].length);
             }
         }
-        
-        let j = 0;
-        let setLang = localStorage.getItem('language') || 'en';
-        function playChunk() {
-            if (j < txtArr.length) {
-                let speech = new SpeechSynthesisUtterance(txtArr[j]);
-                speech.lang = setLang === 'te' ? 'te-IN' : (setLang === 'hi' ? 'hi-IN' : 'en-US');
-                let voices = window.speechSynthesis.getVoices();
-                let locLang = setLang === 'te' ? 'te-IN' : (setLang === 'hi' ? 'hi-IN' : 'en-US');
-                
-                // Absolute Premium Voice Mapping
-                let premiumNames = [];
-                if (setLang === 'te') premiumNames = ['te-in-x-ted-network', 'te-in-x-tec-network', 'Microsoft Shruti', 'Microsoft Tulasi', 'Google తెలుగు', 'te-IN'];
-                else if (setLang === 'hi') premiumNames = ['hi-in-x-hia-network', 'hi-in-x-hic-network', 'Microsoft Swara', 'Google हिन्दी', 'hi-IN'];
-                else premiumNames = ['Google UK English Male', 'Microsoft Mark', 'Microsoft David', 'Google US English', 'en-US'];
 
-                let targetVoice = null;
-                for (let name of premiumNames) {
-                    targetVoice = voices.find(v => v.name.includes(name) || v.voiceURI.includes(name));
-                    if (targetVoice) break;
-                }
-                
-                // Fallback to strict language match if premium strings fail
-                if (!targetVoice) targetVoice = voices.find(v => v.lang === locLang);
-                if (!targetVoice) targetVoice = voices.find(v => v.lang.includes(setLang));
-                
-                if (targetVoice) speech.voice = targetVoice;
-                
-                // Adjust pitch slightly for a deeper, more sophisticated AI persona
-                speech.pitch = 0.9;
-                speech.rate = 1.05;
-                speech.pitch = 1.0;
-                speech.rate = 1.0;
-                speech.volume = 1.0;
-                speech.onend = () => { j++; playChunk(); };
-                window.speechSynthesis.speak(speech);
+        let j = 0;
+        let sysLang = localStorage.getItem('language') || 'en';
+        
+        function playChunk() {
+            if (j >= txtArr.length) return;
+            let speech = new SpeechSynthesisUtterance(txtArr[j]);
+            
+            // Fluency matching: rigidly bind TTS language to selected language!
+            if (sysLang === 'te') {
+                speech.lang = 'te-IN';
+            } else if (sysLang === 'hi') {
+                speech.lang = 'hi-IN';
+            } else {
+                speech.lang = 'en-US';
             }
+            
+            let voices = window.speechSynthesis.getVoices();
+            // Enforce Pleasant Female Voice (Zira on Windows, Google on Android)
+            let targetVoice = voices.find(v => v.lang.includes(speech.lang) && (v.name.includes('Zira') || v.name.includes('Shruti') || v.name.includes('Google') || v.name.includes('Female') || v.name.includes('Natural')));
+            
+            // If the found voice happens to be Male (like David), try to skip it
+            if (targetVoice && (targetVoice.name.includes('Male') || targetVoice.name.includes('David') || targetVoice.name.includes('Ravi'))) {
+                let femaleFallback = voices.find(v => v.lang.includes(speech.lang) && (v.name.includes('Female') || v.name.includes('Zira') || v.name.includes('Shruti')));
+                if (femaleFallback) targetVoice = femaleFallback;
+            }
+
+            if (targetVoice) speech.voice = targetVoice;
+
+            speech.pitch = 1.0; 
+            speech.rate = 1.0;
+            speech.volume = 1.0;
+            
+            // Exactly 0.5s pause after every chunk!
+            speech.onend = () => { j++; setTimeout(playChunk, 500); };
+            
+            window.speechSynthesis.speak(speech);
         }
         playChunk();
     } catch (e) { console.error('TTS Error', e); }

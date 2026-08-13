@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://agri-season.vercel.app/sitemap.xml

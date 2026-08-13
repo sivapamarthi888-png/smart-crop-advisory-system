@@ -2,6 +2,10 @@
 <html lang="en">
 
 <head>
+    <meta name="google-site-verification" content="gUTVSRkju3gbhwPvzL51U-HrgQm60cpB-8RsfNhB5y8" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=1024">
     <title>AgriSeason - Details</title>
@@ -75,7 +79,7 @@
         .preview-img { max-width: 200px; border-radius: 15px; border: 3px solid #22c55e; box-shadow: 0 4px 15px rgba(0,0,0,0.3); display: none; margin: 15px auto; }
 
     </style>
-    <script src="js/ai.js"></script>
+    <script src="js/ai_core.js"></script>
     <link rel="icon" href="data:,">
 </head>
 
@@ -125,58 +129,18 @@
 
         const DATA = {
             schemes: [
-                {
-                    icon: "💰",
-                    en: { title: "PM-KISAN", desc: "Income support scheme of ₹6,000 per year.", linkText: "Official Portal", url: "https://pmkisan.gov.in" },
-                    te: { title: "పీఎం కిసాన్", desc: "రైతులకు ఏడాదికి రూ.6,000 ఆర్థిక సాయం అందించే పథకం.", linkText: "అధికారిక వెబ్‌సైట్", url: "https://pmkisan.gov.in" },
-                    hi: { title: "पीएम किसान", desc: "सालाना ₹6,000 की वित्तीय सहायता प्रदान करने वाली योजना।", linkText: "आधिकारिक पोर्टल", url: "https://pmkisan.gov.in" }
-                },
-                {
-                    icon: "🛡️",
-                    en: { title: "PMFBY", desc: "Nationwide crop insurance protection against unforeseeable natural natural calamities.", linkText: "View Details", url: "https://pmfby.gov.in" },
-                    te: { title: "ఫసల్ బీమా యోజన", desc: "ప్రకృతి వైపరీత్యాల వల్ల పంట నష్టపోయిన రైతులకు కల్పించే జాతీయ పంట బీమా.", linkText: "వివరాలు చూడండి", url: "https://pmfby.gov.in" },
-                    hi: { title: "फसल बीमा योजना", desc: "प्राकृतिक आपदाओं से बचाने वाली फसल बीमा योजना।", linkText: "विवरण देखें", url: "https://pmfby.gov.in" }
-                },
-                {
-                    icon: "🌱",
-                    en: { title: "Soil Health Guidelines", desc: "Learn about optimal soil nutrition practices from verified national resources.", linkText: "Check Guidelines", url: "https://icar.org.in/" },
-                    te: { title: "మట్టి ఆరోగ్య మార్గదర్శకాలు", desc: "జాతీయ వనరుల నుండి సరైన మట్టి పోషణ పద్ధతుల గురించి తెలుసుకోండి.", linkText: "માర్గదర్శకాలు చూడండి", url: "https://icar.org.in/" },
-                    hi: { title: "मृदा स्वास्थ्य दिशानिर्देश", desc: "सत्यापित राष्ट्रीय संसाधनों से इष्टतम मिट्टी पोषण प्रथाओं के बारे में जानें।", linkText: "दिशानिर्देश देखें", url: "https://icar.org.in/" }
-                }
+                { icon: "💰", en: { title: "PM-KISAN", desc: "Income support scheme for farmers.", linkText: "Official Portal", url: "https://pmkisan.gov.in" }, te: { title: "పిఎం-కిసాన్", desc: "రైతులకు ఆదాయ మద్దతు పథకం.", linkText: "అధికారిక వెబ్‌సైట్", url: "https://pmkisan.gov.in" }, hi: { title: "पीएम-किसान", desc: "किसानों के लिए आय सहायता योजना।", linkText: "आधिकारिक वेबसाइट", url: "https://pmkisan.gov.in" } },
+                { icon: "🛡", en: { title: "PMFBY", desc: "Crop insurance protection.", linkText: "Official Portal", url: "https://pmfby.gov.in" }, te: { title: "ఫసల్ బీమా యోజన", desc: "పంటల భీమా రక్షణ పథకం.", linkText: "అధికారిక వెబ్‌సైట్", url: "https://pmfby.gov.in" }, hi: { title: "फसल बीमा योजना", desc: "फसल बीमा सुरक्षा।", linkText: "आधिकारिक वेबसाइट", url: "https://pmfby.gov.in" } },
+                { icon: "🌱", en: { title: "Soil Health Card", desc: "Improve soil productivity.", linkText: "Official Portal", url: "https://soilhealth.dac.gov.in" }, te: { title: "సాయిల్ హెల్త్ కార్డ్", desc: "మట్టి సారం పెంపుదల.", linkText: "అధికారిక వెబ్‌సైట్", url: "https://soilhealth.dac.gov.in" }, hi: { title: "मृदा स्वास्थ्य कार्ड", desc: "मिट्टी की उर्वरता बढ़ाएं।", linkText: "आधिकारिक वेबसाइट", url: "https://soilhealth.dac.gov.in" } }
             ],
             services: [
-                {
-                    icon: "🚜",
-                    en: { title: "Kisan Call Center", desc: "Toll-free number 1800-180-1551 for expert agricultural advice.", linkText: "Call Now", url: "tel:18001801551" },
-                    te: { title: "కిసాన్ కాల్ సెంటర్", desc: "వ్యవసాయ సలహాల కోసం టోల్ ఫ్రీ నెంబర్ 1800-180-1551 కు కాల్ చేయండి.", linkText: "కాల్ చేయండి", url: "tel:18001801551" },
-                    hi: { title: "किसान कॉल सेंटर", desc: "विशेषज्ञ कृषि सलाह के लिए टोल-फ्री नंबर 1800-180-1551।", linkText: "अभी कॉल करें", url: "tel:18001801551" }
-                },
-                {
-                    icon: "🏢",
-                    en: { title: "ICAR Agricultural Hub", desc: "Connect with the Indian Council of Agricultural Research for verified farming resources.", linkText: "Visit ICAR", url: "https://icar.org.in/" },
-                    te: { title: "ICAR వ్యవసాయ కేంద్రం", desc: "వ్యవసాయ వనరుల కోసం భారతీయ వ్యవసాయ పరిశోధన మండలిని సంప్రదించండి.", linkText: "ICAR చూడండి", url: "https://icar.org.in/" },
-                    hi: { title: "ICAR कृषि केंद्र", desc: "सत्यापित कृषि संसाधनों के लिए भारतीय कृषि अनुसंधान परिषद से जुड़ें।", linkText: "ICAR पर जाएं", url: "https://icar.org.in/" }
-                },
-                {
-                    icon: "🔬",
-                    en: { title: "NABARD Rural Services", desc: "Access the National Bank for Agriculture and Rural Development for farm financial and soil infrastructure support.", linkText: "Visit NABARD", url: "https://www.nabard.org/" },
-                    te: { title: "నాబార్డ్ గ్రామీణ సేవలు", desc: "వ్యవసాయ ఆర్థిక మరియు మౌలిక సదుపాయాల మద్దతు కోసం నాబార్డ్ ను పొందండి.", linkText: "నాబార్డ్ చూడండి", url: "https://www.nabard.org/" },
-                    hi: { title: "नाबार्ड ग्रामीण सेवाएं", desc: "कृषि वित्तीय और बुनियादी ढांचे के समर्थन के लिए नाबार्ड तक पहुंचें।", linkText: "नाबार्ड पर जाएं", url: "https://www.nabard.org/" }
-                }
+                { icon: "🧪", en: { title: "Soil Testing Centers", desc: "Assess soil nutrients.", linkText: "Find Nearby", url: "https://soilhealth.dac.gov.in" }, te: { title: "మట్టి పరీక్షా కేంద్రాలు", desc: "మట్టి పోషకాల అంచనా.", linkText: "దగ్గర్లో వెతకండి", url: "https://soilhealth.dac.gov.in" }, hi: { title: "मृदा परीक्षण केंद्र", desc: "मिट्टी के पोषक तत्वों का आकलन करें।", linkText: "आस-पास खोजें", url: "https://soilhealth.dac.gov.in" } },
+                { icon: "🏪", en: { title: "Fertilizer Stores", desc: "Buy recommended fertilizers.", linkText: "Find Nearby", url: "https://dbtfert.nic.in/" }, te: { title: "ఎరువుల దుకాణాలు", desc: "విశ్వసనీయ ఎరువులు కొనండి.", linkText: "దగ్గర్లో వెతకండి", url: "https://dbtfert.nic.in/" }, hi: { title: "उर्वरक की दुकानें", desc: "अनुशंसित उर्वरक खरीदें।", linkText: "आस-पास खोजें", url: "https://dbtfert.nic.in/" } },
+                { icon: "🏫", en: { title: "Krishi Vigyan Kendras", desc: "Expert farming advice.", linkText: "Find Nearby", url: "https://icar.org.in/" }, te: { title: "కృషి విజ్ఞాన కేంద్రాలు", desc: "నిపుణులచే సలహాలు పొందండి.", linkText: "దగ్గర్లో వెతకండి", url: "https://icar.org.in/" }, hi: { title: "कृषि विज्ञान केंद्र", desc: "विशेषज्ञ कृषि सलाह।", linkText: "आस-पास खोजें", url: "https://icar.org.in/" } }
             ],
             market: [
-                {
-                    icon: "📊",
-                    en: { title: "e-NAM", desc: "A pan-India electronic trading portal for farm produce. Connects APMCs securely.", linkText: "View Live Prices", url: "https://enam.gov.in" },
-                    te: { title: "ఈ-నామ్ (e-NAM)", desc: "పంట ఉత్పత్తుల కోసం పాన్-ఇండియా ఎలక్ట్రానిక్ ట్రేడింగ్ పోర్టల్.", linkText: "ధరలు చూడండి", url: "https://enam.gov.in" },
-                    hi: { title: "ई-नाम (e-NAM)", desc: "कृषि उपज के लिए भारत का इलेक्ट्रॉनिक ट्रेडिंग पोर्टल।", linkText: "लाइव कीमतें देखें", url: "https://enam.gov.in" }
-                },
-                {
-                    icon: "🏢",
-                    en: { title: "Agmarknet", desc: "Daily market prices and arrivals for agricultural commodities across all states.", linkText: "Check Agmarknet", url: "https://agmarknet.gov.in" },
-                    te: { title: "అగ్మార్‌నెట్ (Agmarknet)", desc: "అన్ని రాష్ట్రాల్లో రోజువారీ వ్యవసాయ మార్కెట్ ధరలు ఇక్కడ పొందండి.", linkText: "అగ్మార్‌నెట్ చూడండి", url: "https://agmarknet.gov.in" },
-                    hi: { title: "एगमार्कनेट", desc: "सभी राज्यों में दैनिक बाजार मूल्य और कृषि वस्तुओं की जानकारी।", linkText: "एगमार्कनेट चेक करें", url: "https://agmarknet.gov.in" }
-                }
+                { icon: "📱", en: { title: "e-NAM", desc: "Pan-India electronic trading portal.", linkText: "Live Prices", url: "https://enam.gov.in" }, te: { title: "e-NAM", desc: "అఖిల-భారత వ్యవసాయ మార్కెట్.", linkText: "లైవ్ ధరలు చూడండి", url: "https://enam.gov.in" }, hi: { title: "ई-नाम", desc: "अखिल भारतीय इलेक्ट्रॉनिक ट्रेडिंग पोर्टल।", linkText: "लाइव कीमतें देखें", url: "https://enam.gov.in" } },
+                { icon: "📈", en: { title: "Agmarknet", desc: "Commodity arrivals and prices.", linkText: "Check Market", url: "https://agmarknet.gov.in/" }, te: { title: "అగ్‌మార్క్‌నెట్", desc: "రైతు ఉత్పత్తుల ధరలు.", linkText: "మార్కెట్ చూడండి", url: "https://agmarknet.gov.in/" }, hi: { title: "एगमार्कनेट", desc: "वस्तु आगमन और कीमतें।", linkText: "बाजार जांचें", url: "https://agmarknet.gov.in/" } }
             ]
         };
 
@@ -187,7 +151,7 @@
             initPage(currentType);
         }
 
-        function initPage(type) {
+        async function initPage(type) {
             currentType = type;
             document.getElementById('interactiveBox').style.display = 'none';
             document.getElementById('cardsContainer').innerHTML = '';
@@ -316,7 +280,7 @@
         async function generateMarketLive() {
              try {
                  let langName = appCurrentLang === 'te' ? 'Telugu' : (appCurrentLang === 'hi' ? 'Hindi' : 'English');
-                 let prompt = "You are AXIOM. Act as a live Indian agricultural market board. Provide today's realistic, estimated wholesale market prices (in ₹/Quintal) for 3 major seasonal crops. Give 3 bullet points with prices and one trend sentence. Output ONLY in " + langName + " without asterisks.";
+                 let prompt = "You are AXIOM. Act as a live Indian agricultural market board. Provide today's realistic, estimated wholesale market prices (in ₹/Quintal) for 3 major seasonal crops. Give 3 bullet points with prices and one trend sentence. Output ONLY strictly in " + langName + " without asterisks. STRICTLY MONOLINGUAL OUTPUT. Do not mix languages.";
                  let apiKey = GEMINI_API_KEY || (typeof config !== 'undefined' ? config.GEMINI_API_KEY : '');
                  let geminiRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`, {
                      method: 'POST',
@@ -369,7 +333,7 @@
 
                  let langName = appCurrentLang === 'te' ? 'Telugu' : (appCurrentLang === 'hi' ? 'Hindi' : 'English');
                  
-                 let prompt = "You are AXIOM, a highly precise agricultural weather intelligence array. The current Local Time is " + currentTime + ". The live localized temperatures are:\n1. Hyderabad (Telangana): " + tempHyd + "°C, " + wNameHyd + "\n2. Amaravati (Andhra Pradesh): " + tempAP + "°C, " + wNameAP + "\n\nProvide a synchronized, time-aware farming advisory. Mention the time and the two cities explicitly. Output entirely in " + langName + " language with no asterisks. Use 4 short bullet points.";
+                 let prompt = "You are AXIOM, a highly precise agricultural weather intelligence array. The current Local Time is " + currentTime + ". Analyze this time exactly (Do NOT write 'morning/afternoon' literally, write ONLY the specific current time of day in a natural phrase). The live localized weather data for Hyderabad is " + tempHyd + "C and Andhra Pradesh is " + tempAP + "C. Provide a 4-bullet-point farming weather advisory. TRANSLATION DIRECTIVE: You MUST output the ENTIRE response flawlessly in " + langName + " language. No asterisks.";
                  
                  let apiKey = GEMINI_API_KEY || (typeof config !== 'undefined' ? config.GEMINI_API_KEY : '');
                  let geminiRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`, {
