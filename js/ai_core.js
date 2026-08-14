@@ -1,5 +1,5 @@
 
-const GEMINI_API_KEY = 'AQ.Ab8RN6IRKSx7AlWB4QY-PSLC5dyLqqOLFYTKPoN7iHplaPo6Uw';
+const GEMINI_API_KEY = 'AQ.Ab8RN6IobRHpmgir1mI3uCnTqsr6bI1w0uqoOdM5F0fFkCvwVA';
 
 let chatHistory = [];
 let currentLang = localStorage.getItem('language') || 'en';
