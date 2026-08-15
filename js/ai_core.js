@@ -245,7 +245,7 @@ async function askGemini(userMessage) {
         let res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: promptText + ' CRITICAL RULE: For Retail Buyers & Market Demand, YOU MUST ONLY USE AUTHENTIC, EXISTING MARKET HUBS AND VERIFIED COMPANIES (e.g., e-NAM markets, Reliance Fresh, ITC Choupal). Do NOT invent fake phone numbers or fake company names; provide real local market locations/buyers instead.' }] }] })
+            body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: promptText + ' CRITICAL RULE FOR MARKETS: You MUST list exactly 3 specific, authentic Retail Buyers/Agricultural Markets located EXCLUSIVELY in Telangana, Andhra Pradesh, and Visakhapatnam (Vizag) (e.g. Bowenpally Market, Guntur Mirchi Yard, Vizag MVP Rythu Bazar). Do NOT suggest markets in Delhi or other distant states. TRANSLATE the names of these Regional Markets natively into the requested language (Hindi/Telugu). Ensure the entire structured table output is fully translated.' }] }] })
         });
 
         let data = await res.json();
