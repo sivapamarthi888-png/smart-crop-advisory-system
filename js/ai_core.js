@@ -1,8 +1,18 @@
 
+// GLOBAL VOICE LOADER - Ensures voices are loaded before AI needs them
+let availableVoices = [];
+if ('speechSynthesis' in window) {
+    availableVoices = window.speechSynthesis.getVoices();
+    window.speechSynthesis.onvoiceschanged = () => {
+        availableVoices = window.speechSynthesis.getVoices();
+    };
+}
+
+
 const GEMINI_API_KEY = 'AQ.Ab8RN6IobRHpmgir1mI3uCnTqsr6bI1w0uqoOdM5F0fFkCvwVA';
 
 let chatHistory = [];
-let currentLang = localStorage.getItem('language') || 'en';
+let currentLang = localStorage.getItem('language') || 'te';
 window.aiState = null;
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -19,11 +29,11 @@ document.addEventListener('DOMContentLoaded', () => {
             rec.interimResults = false;
             
             chatMicBtn.onclick = () => {
-                let currentMicrophoneLang = localStorage.getItem('language') || 'en';
+                let currentMicrophoneLang = localStorage.getItem('language') || 'te';
                 rec.lang = currentMicrophoneLang === 'te' ? 'te-IN' : (currentMicrophoneLang === 'hi' ? 'hi-IN' : 'en-US');
 
                 // Dynamically select microphone language based on CURRENT state every single time they click it!
-                let currentSysLang = localStorage.getItem('language') || 'en';
+                let currentSysLang = localStorage.getItem('language') || 'te';
                 rec.lang = currentSysLang === 'te' ? 'te-IN' : (currentSysLang === 'hi' ? 'hi-IN' : 'en-US');
 
                 // Instantly silence AI so user can speak!
@@ -45,10 +55,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         setTimeout(() => {
-            const greeting = "Good day, Sir. I am AXIOM, your advanced agricultural intelligence system. Please select or speak your preferred communication language: English, Telugu, or Hindi.";
+            let langGreet = 'Hello! I am AXIOM. How can I help with your farming today?';
+            if(currentLanguage === 'te') langGreet = 'నమస్కారం! నేను AXIOM ని. వ్యవసాయంలో మీకు ఎలా సహాయపడగలను?';
+            if(currentLanguage === 'hi') langGreet = 'नमस्ते! मैं AXIOM हूँ। आज मैं आपकी खेती में कैसे मदद कर सकता हूँ?';
             
-            // Autoplay explicitly requested by user 
-            if (typeof speakText === 'function') speakText(greeting);
+            const greeting = langGreet;
+            addMessage(greeting, 'bot');
+            speakText(greeting);
             
             // Fix duplicated greetings
             if (typeof chatHistory !== 'undefined' && (chatHistory.length === 0 || chatHistory[chatHistory.length - 1].text !== greeting)) {
@@ -60,7 +73,10 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function sendChatMessage() {
-    if (window.speechSynthesis) window.speechSynthesis.cancel();
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(new SpeechSynthesisUtterance('')); // Permanent Audio Unlock
+    }
     const chatInput = document.getElementById('chatInput');
     let message = chatInput.value.trim();
     
@@ -99,7 +115,7 @@ async function sendChatMessage() {
         'pasupu': 'పసుపు'
     };
     
-    let currentSysLang = localStorage.getItem('language') || 'en';
+    let currentSysLang = localStorage.getItem('language') || 'te';
     let checkKey = message.toLowerCase();
     
     // Automatically transliterate user's English keyboard input to Telugu UI text!
@@ -134,7 +150,7 @@ function addMessage(role, text) {
     const div = document.createElement("div");
     div.className = role === "user" ? "message message-user" : "message message-bot";
     
-    // Do NOT use text.replace(/\n/g, '<br>')! It physically breaks html tables!
+    // Do NOT use text.replace(/[line break]/g, '<br>')! It physically breaks html tables!
     // We rely on CSS white-space: pre-wrap; to handle regular line breaks gracefully.
     const bubble = document.createElement("div");
     bubble.className = "msg-bubble";
@@ -216,52 +232,11 @@ async function askGemini(userMessage) {
             return;
         }
 
-        let userLang = localStorage.getItem('language') || 'en';
+        let userLang = localStorage.getItem('language') || 'te';
         let langName = userLang === 'te' ? 'Telugu' : (userLang === 'hi' ? 'Hindi' : 'English');
 
         // Universally command Gemini to detect ANY crop inquiry and force the Table format!
-        let promptText = "You are AXIOM, an elite AI Assistant for farmers. Address the user as 'Sir'. " +
-                         "The user's default language is " + langName + ". The user said: " + userMessage + ".\n" +
-                         "CRITICAL RULE 1: If the user's message is a Crop, Fruit, Vegetable, or asks about cultivating a crop, you MUST generate a massive HTML TABLE detailing the crop profile exactly like this template. " +
-"Output RAW HTML ONLY (no markdown backticks). EVERY SINGLE ROW IS MANDATORY:\n" +
-"<table>" +
-"<tr><td><b>Category</b></td><td>...</td></tr>" +
-"<tr><td><b>Scientific Name</b></td><td>...</td></tr>" +
-"<tr><td><b>Family</b></td><td>...</td></tr>" +
-"<tr><td><b>Season</b></td><td>...</td></tr>" +
-"<tr><td><b>Soil Type</b></td><td>...</td></tr>" +
-"<tr><td><b>Water Requirement</b></td><td>...</td></tr>" +
-"<tr><td><b>Temperature</b></td><td>...</td></tr>" +
-"<tr><td><b>Humidity</b></td><td>...</td></tr>" +
-"<tr><td><b>Rainfall</b></td><td>...</td></tr>" +
-"<tr><td><b>pH</b></td><td>...</td></tr>" +
-"<tr><td><b>Duration</b></td><td>...</td></tr>" +
-"<tr><td><b>Seed Rate</b></td><td>...</td></tr>" +
-"<tr><td><b>Spacing</b></td><td>...</td></tr>" +
-"<tr><td><b>Yield</b></td><td>...</td></tr>" +
-"<tr><td><b>Market Price</b></td><td>...</td></tr>" +
-"<tr><td><b>Sowing Months</b></td><td>...</td></tr>" +
-"<tr><td><b>Harvest Months</b></td><td>...</td></tr>" +
-"<tr><td><b>Major Pests</b></td><td>...</td></tr>" + 
-"<tr><td><b>Major Diseases</b></td><td>...</td></tr>" + 
-"<tr><td><b><span style='color:green'>Profit</span></b></td><td><b><span style='color:green'>...</span></b></td></tr>" +
-"<tr><td><b>Investment</b></td><td>...</td></tr>" +
-"<tr><td><b><span style='color:green'>Expected ROI</span></b></td><td><b><span style='color:green'>...</span></b></td></tr>" +
-"<tr><td><b>Description</b></td><td>...</td></tr>" +
-"<tr><td><b>Uses</b></td><td>...</td></tr>" +
-"</table><br>" + 
-"<b>Recommended Fertilizers</b><br><ul><li>...</li><li>...</li><li>...</li></ul><br>" +
-"<b>Retail Buyers & Market Demand</b><br><b>Market State:</b> ...<br>" +
-"<ul>" +
-"<li>⭐⭐⭐⭐⭐ <b>[Authentic Real Buyer Name]</b> - Rate: [Real ₹ Price] (Maximum Profit). 📞 [Real 10-digit Phone] - Location: Hyderabad<br><b>Profit Analysis:</b> Strongly recommend...</li>" +
-"<li>⭐⭐⭐⭐⭐ <b>[Authentic Real Buyer Name]</b> - Rate: [Real ₹ Price] (Maximum Profit). 📞 [Real 10-digit Phone] - Location: Guntur<br><b>Profit Analysis:</b> Strongly recommend...</li>" +
-"<li>⭐⭐⭐⭐⭐ <b>[Authentic Real Buyer Name]</b> - Rate: [Real ₹ Price] (Maximum Profit). 📞 [Real 10-digit Phone] - Location: Vizag<br><b>Profit Analysis:</b> Strongly recommend...</li>" +
-"</ul>\n" +
-"TRANSLATION MANDATE: If the language is NOT English, YOU MUST COMPLETELY TRANSLATE all the bold headers (e.g. Category, Season, Soil Type, Profit, Recommended Fertilizers, Retail Buyers) into the exact native script (Telugu/Hindi) so NO English words remain anywhere!\n" +
-"CRITICAL RULE 4: You MUST generate exactly THREE retail buyers (one for Hyderabad, one for Guntur, one for Vizag) with authentic real-world distributor market names and authentic-looking 10-digit Indian phone numbers.\n" +
-"CRITICAL RULE 2: If the user asks a general farming question, answer normally without a table. Do NOT use Markdown formatting.\n" +
-                         "CRITICAL RULE 3: ALL 'Market Price', 'Profit', and 'Investment' MUST BE EXCLUSIVELY calculated and displayed in Indian Rupees (₹). DO NOT USE DOLLARS ($). " +
-                         "Output EXACTLY and ONLY in " + langName + " language. Do not mix languages! If langName is Telugu, EVERY SINGLE WORD must be in Telugu script. If langName is Hindi, EVERY WORD in Hindi script.";
+        let promptText = `You are AXIOM, an elite AI Assistant for farmers. Address the user as 'Sir'. The user's default language is ${langName}. The user said: ${userMessage}. CRITICAL SPEED RULE: DO NOT EXCEED 100 WORDS OUTSIDE OF THE TABLE. RESPOND FAST. EXTREMELY CRITICAL RULE: YOU MUST REPLY STRICTLY IN THE EXACT FOLLOWING LANGUAGE AND NO OTHER: ${langName.toUpperCase()}. Do not translate literal english words if the user asked in english. CRITICAL RULE 1: If the user's message is a Crop, Fruit, Vegetable, or asks about cultivating a crop, you MUST generate a massive HTML TABLE detailing the crop profile exactly like this template. Output RAW HTML ONLY (no markdown backticks). EVERY SINGLE ROW IS MANDATORY AND MUST MATCH THIS EXACT LIST: <table><tr><td><b>Crop Name</b></td><td>...</td></tr><tr><td><b>Category</b></td><td>...</td></tr><tr><td><b>Season</b></td><td>...</td></tr><tr><td><b>Soil Type</b></td><td>...</td></tr><tr><td><b>Water Requirement</b></td><td>...</td></tr><tr><td><b>Temperature</b></td><td>...</td></tr><tr><td><b>Profit</b></td><td><b><span style='color:green'>...</span></b></td></tr><tr><td><b>Investment</b></td><td>...</td></tr><tr><td><b>Humidity</b></td><td>...</td></tr><tr><td><b>Seed Rate</b></td><td>...</td></tr><tr><td><b>Market Price</b></td><td>...</td></tr><tr><td><b>Sowing Months</b></td><td>...</td></tr><tr><td><b>Harvest Months</b></td><td>...</td></tr><tr><td><b>Major Pests</b></td><td>...</td></tr><tr><td><b>Major Diseases</b></td><td>...</td></tr><tr><td><b>Rainfall</b></td><td>...</td></tr><tr><td><b>Description</b></td><td>...</td></tr></table><br><b>Recommended Fertilizers</b><br><ul><li>...</li><li>...</li></ul><br><b>Retail Buyers & Market Demand</b><br><b>Market State:</b> ...<br><ul><li>⭐⭐⭐⭐⭐ <b>[Authentic Real Buyer Name]</b> - Rate: [Real ₹ Price] (Maximum Profit). 📞 [Real 10-digit Phone] - Location: [Real Indian City]<br><b>Profit Analysis:</b> Recommend...</li></ul>TRANSLATION MANDATE: If the language is NOT English, YOU MUST COMPLETELY TRANSLATE all headers and data into the exact native script (${langName}) so NO English words remain anywhere! CRITICAL RULE 2: If the user asks a general farming question, answer normally without a table. Do NOT use Markdown formatting. CRITICAL RULE 3: ALL 'Market Price', 'Profit', and 'Investment' MUST BE EXCLUSIVELY calculated and displayed in Indian Rupees (₹). DO NOT USE DOLLARS ($).`;
 
         let apiKey = GEMINI_API_KEY || (typeof config !== 'undefined' ? config.GEMINI_API_KEY : '');
         let res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`, {
@@ -305,68 +280,51 @@ function scrollChatBottom() {
 
 function speakText(text) {
     try {
-        if (window.speechSynthesis) window.speechSynthesis.cancel();
         if (!('speechSynthesis' in window)) return;
+        window.speechSynthesis.cancel();
         
-        // Strict Mobile-Only Enforcer: Laptops lack regional voice packs!
+        // Strict Mobile-Only Enforcer revived (silence laptops entirely)
         const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         if (!isMobileDevice) {
-            console.log("Desktop detected: Voice Synthesis mechanically skipped. AI will only speak on Mobile phones.");
+            console.log("Desktop detected: Voice Synthesis mechanically skipped.");
             return;
         }
 
-        // Force pause between table cells
         let cleanText = text.replace(/<\/td>/gi, '. ').replace(/<\/th>/gi, '. ').replace(/<\/tr>/gi, '. ').replace(/<[^>]+>/g, ' ').replace(/\*/g, '');
         
-        let chunkLength = 150;
-        let pattRegex = new RegExp('^[\\s\\S]{1,' + chunkLength + '}(?:[\\.\\,\\?\\!]|$)', 'i');
-        let txtArr = [];
-        
-        while (cleanText.length > 0) {
-            let arr = cleanText.match(pattRegex);
-            if (arr === null || arr[0] === '') {
-                txtArr.push(cleanText.substring(0, chunkLength));
-                cleanText = cleanText.substring(chunkLength);
-            } else {
-                txtArr.push(arr[0]);
-                cleanText = cleanText.substring(arr[0].length);
-            }
-        }
-
+        // Mobile browsers usually stop after 15 seconds. Need simple chunking that supports English + Hindi/Telugu (।)
+        // Strip out any weird unicode/markdown completely and normalize newlines to periods
+        cleanText = cleanText.replace(/[\n\r-]+/g, '. ').replace(/\s{2,}/g, ' ');
+        // Support all universal punctuations, hindi breaks, AND colons for market data
+        let chunks = cleanText.match(/[\s\S]{1,120}(?:[\.\,\?\!\।\:\;]|$)/g) || [cleanText];
         let j = 0;
-        let sysLang = localStorage.getItem('language') || 'en';
         
         function playChunk() {
-            if (j >= txtArr.length) return;
-            let speech = new SpeechSynthesisUtterance(txtArr[j]);
-            
-            // Fluency matching: rigidly bind TTS language to selected language!
-            if (sysLang === 'te') {
-                speech.lang = 'te-IN';
-            } else if (sysLang === 'hi') {
-                speech.lang = 'hi-IN';
-            } else {
-                speech.lang = 'en-US';
-            }
+            if (j >= chunks.length) return;
+            let chunkStr = chunks[j].trim();
+            if(!chunkStr) { j++; return playChunk(); }
+
+            let speech = new SpeechSynthesisUtterance(chunkStr);
             
             let voices = window.speechSynthesis.getVoices();
-            // Enforce Pleasant Female Voice (Zira on Windows, Google on Android)
-            let targetVoice = voices.find(v => v.lang.includes(speech.lang) && (v.name.includes('Zira') || v.name.includes('Shruti') || v.name.includes('Google') || v.name.includes('Female') || v.name.includes('Natural')));
+            if (voices.length === 0) voices = availableVoices;
+            let tLang = currentLang === 'te' ? 'te-IN' : (currentLang === 'hi' ? 'hi-IN' : 'en-IN');
+            speech.lang = tLang;
             
-            // If the found voice happens to be Male (like David), try to skip it
-            if (targetVoice && (targetVoice.name.includes('Male') || targetVoice.name.includes('David') || targetVoice.name.includes('Ravi'))) {
-                let femaleFallback = voices.find(v => v.lang.includes(speech.lang) && (v.name.includes('Female') || v.name.includes('Zira') || v.name.includes('Shruti')));
-                if (femaleFallback) targetVoice = femaleFallback;
-            }
+            // Enforce pleasant female voice (target Google TTS or Native Female)
+            let v = voices.find(v => (v.lang === tLang || v.lang.replace('_','-') === tLang) && (v.name.includes('Female') || v.name.includes('Google') || v.name.includes('Zira') || v.name.includes('Sita') || v.name.includes('Lekha'))) 
+                 || voices.find(v => (v.lang === tLang || v.lang.replace('_','-') === tLang))
+                 || voices.find(v => v.lang.startsWith(tLang.split('-')[0]) && v.name.includes('Female'))
+                 || voices.find(v => v.lang.startsWith(tLang.split('-')[0]));
+            if (v) speech.voice = v;
 
-            if (targetVoice) speech.voice = targetVoice;
-
-            speech.pitch = 1.0; 
-            speech.rate = 1.0;
+            
+            speech.rate = 0.95;
+            speech.pitch = 1.0;
             speech.volume = 1.0;
             
-            // Exactly 0.5s pause after every chunk!
-            speech.onend = () => { j++; setTimeout(playChunk, 500); };
+            speech.onend = () => { j++; setTimeout(playChunk, 200); };
+            speech.onerror = (e) => { console.error('TTS Chunk Error', e); j++; playChunk(); };
             
             window.speechSynthesis.speak(speech);
         }

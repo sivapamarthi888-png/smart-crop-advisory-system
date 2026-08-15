@@ -3,6 +3,103 @@
 // MAIN SCRIPT - FINAL VERSION
 // =====================================================
 
+const hiDict = {
+    'Wheat is the second most important cereal crop.': 'गेहूँ दूसरी सबसे महत्वपूर्ण अनाज की फसल है।',
+    'Maize is a versatile cereal crop grown for food and feed.': 'मक्का भोजन और चारे के लिए उगाई जाने वाली एक बहुमुखी अनाज की फसल है।',
+    'Cotton is an important commercial fiber crop.': 'कपास एक महत्वपूर्ण वाणिज्यिक फाइबर फसल है।',
+    'Valuable oilseed and food legume crop.': 'मूल्यवान तिलहन और खाद्य फलीदार फसल।',
+    "Rice is India's staple food crop supporting millions.": 'चावल भारत की मुख्य खाद्य फसल है जो लाखों लोगों का भरण-पोषण करती है।',
+
+    'Rabi': 'रबी', 'Kharif': 'खरीफ', 'Zaid': 'ज़ैद',
+    'Nov - Dec': 'नवंबर - दिसंबर', 'Mar - Apr': 'मार्च - अप्रैल',
+    'Jan - Feb': 'जनवरी - फरवरी', 'Feb - Mar': 'फरवरी - मार्च',
+    'Apr - May': 'अप्रैल - मई', 'May - Jun': 'मई - जून', 'May - June': 'मई - जून',
+    'Jun - Jul': 'जून - जुलाई', 'June - July': 'जून - जुलाई', 'Jul - Aug': 'जुलाई - अगस्त', 'July - August': 'जुलाई - अगस्त',
+    'Aug - Sep': 'अगस्त - सितंबर', 'August - September': 'अगस्त - सितंबर',
+    'Sep - Oct': 'सितंबर - अक्टूबर', 'September - October': 'सितंबर - अक्टूबर',
+    'Oct - Nov': 'अक्टूबर - नवंबर', 'October - November': 'अक्टूबर - नवंबर',
+    'Dec - Jan': 'दिसंबर - जनवरी', 'December - January': 'दिसंबर - जनवरी',
+    'January - February': 'जनवरी - फरवरी', 'February - March': 'फरवरी - मार्च',
+    'March - April': 'मार्च - अप्रैल', 'November - December': 'नवंबर - दिसंबर',
+    'Wheat is the second most important cereal crop.': 'गेहूँ दूसरी सबसे महत्वपूर्ण अनाज की फसल है।',
+
+    'Wheat': 'गेहूँ', 'Maize': 'मक्का', 'Cotton': 'कपास', 'Soybean': 'सोयाबीन',
+    'Groundnut': 'मूंगफली', 'Rice': 'चावल', 'Sorghum': 'ज्वार', 'Pearl millet': 'बाजरा',
+    'Finger millet': 'रागी', 'Pigeon pea': 'अरहर', 'Mung bean': 'मूंग', 'Black gram': 'उड़द',
+    'Chickpea': 'चना', 'Mustard plant': 'सरसों', 'Sunflower': 'सूरजमुखी', 'Sesame': 'तिल',
+    'Castor plant': 'अरंडी', 'Sugarcane': 'गन्ना', 'Chili pepper': 'मिर्च', 'Tomato plant': 'टमाटर',
+    'Eggplant': 'बैंगन', 'Okra': 'भिंडी', 'Onion': 'प्याज', 'Potato field': 'आलू',
+    'Bottle gourd': 'लौकी', 'Pumpkin': 'कद्दू', 'Watermelon field': 'तरबूज', 'Cucumber': 'खीरा',
+    'Turmeric plant': 'हल्दी', 'Coriander': 'धनिया',
+    'Kharif (Monsoon)': 'खरीफ (मानसून)', 'Rabi (Winter)': 'रबी (सर्दियां)', 'Zaid (Summer)': 'ज़ैद (गर्मियां)',
+    'Loamy Soil': 'दोमट मिट्टी', 'Black Soil': 'काली मिट्टी', 'Red Soil': 'लाल मिट्टी',
+    'Sandy Soil': 'रेतीली मिट्टी', 'Clay Soil': 'चिकनी मिट्टी', 'Alluvial Soil': 'जलोढ़ मिट्टी', 
+    'Market Price': 'बाज़ार मूल्य',
+    'Recommended Fertilizers': 'अनुशंसित उर्वरक',
+    'Major Diseases': 'प्रमुख रोग',
+    'Major Growing Places': 'प्रमुख उगाने वाले स्थान',
+    'Description': 'विवरण',
+
+    'November - January': 'नवंबर - जनवरी',
+    '1.5 - 2 kg/acre': '1.5 - 2 किग्रा/एकड़',
+    'Cotton is an important commercial fiber crop.': 'कपास एक महत्वपूर्ण वाणिज्यिक फाइबर फसल है।',
+    'NPK Complex': 'एनपीके (NPK) कॉम्प्लेक्स',
+    'Balanced nutrition for uniform crop growth.': 'समान फसल वृद्धि के लिए संतुलित पोषण।',
+    'Gypsum': 'जिप्सम',
+    'Provides calcium and sulphur for pod/flower development.': 'फूलों के विकास के लिए कैल्शियम और सल्फर प्रदान करता है।',
+    'Potash (MOP)': 'पोटाश (MOP)',
+    'Improves disease resistance and grain filling.': 'रोग प्रतिरोधक क्षमता और अनाज भरने में सुधार करता है।',
+    'Aphids': 'एफिड्स (Aphids)',
+    'Small insects sucking sap, causing curling.': 'छोटे कीड़े जो रस चूसते हैं, जिससे पत्तियां मुड़ जाती हैं।',
+    'Spray Neem oil or Imidacloprid.': 'नीम के तेल या इमिडाक्लोप्रिड का छिड़काव करें।',
+    'Powdery Mildew': 'पाउडरी मिल्ड्यू (Powdery Mildew)',
+    'White powdery growth on leaves/stems.': 'पत्तियों/तनों पर सफेद पाउडर जैसी वृद्धि।',
+    'Apply valid sulphur fungicides.': 'उपयुक्त सल्फर कवकनाशी का प्रयोग करें।',
+    'Andhra Pradesh,Telangana,Karnataka': 'आंध्र प्रदेश, तेलंगाना, कर्नाटक',
+    'Guntur,Kurnool,Prakasam,Anantapur': 'गुंटूर, कुरनूल, प्रकाशम, अनंतपुर',
+    'Nizamabad,Khammam,Warangal,Karimnagar': 'निजामाबाद, खम्मम, वारंगल, करीमनगर',
+    'High': 'अधिक', 'Medium': 'मध्यम', 'Low': 'कम',
+    
+    'February - March': 'फरवरी - मार्च',
+    'May - June': 'मई - जून',
+    'Cucumber is an important crop grown extensively for its economic and nutritional benefits.': 'खीरा एक महत्वपूर्ण फसल है जिसे इसके आर्थिक और पोषण लाभों के लिए व्यापक रूप से उगाया जाता है।',
+    'Wilt': 'विल्ट (Wilt)',
+    'Sudden wilting of the whole plant.': 'संपूर्ण पौधे का अचानक मुरझा जाना।',
+    'Ensure good drainage and crop rotation.': 'अच्छी जल निकासी और फसल चक्रण सुनिश्चित करें।',
+    
+    'A protein-rich oilseed legume.': 'एक प्रोटीन युक्त तिलहन फलीदार पौधा।',
+    'Improves soil health and water retention.': 'मिट्टी के स्वास्थ्य और जल धारण क्षमता में सुधार करता है।',
+    'Urea': 'यूरिया', 'DAP': 'डीएपी (DAP)', 'Zinc Sulphate': 'जिंक सल्फेट',
+    'Leaf Spot': 'पत्ती का धब्बा', 'Rust': 'रतुआ (Rust)', 'Farmyard Manure': 'गोबर की खाद',
+    'Varies with market yield.': 'बाजार की उपज के साथ बदलता रहता है।',
+    'Covers seeds, fertilizers, labour, and transport.': 'बीज, उर्वरक, श्रम और परिवहन शामिल हैं।',
+    'June - July': 'जून - जुलाई', 'September - October': 'सितंबर - अक्टूबर',
+    'Maize is a versatile cereal crop grown for food and feed.': 'मक्का भोजन और चारे के लिए उगाई जाने वाली एक बहुमुखी अनाज की फसल है।',
+    'Supplies nitrogen for fast vegetative growth.': 'तेजी से वनस्पति विकास के लिए नाइट्रोजन की आपूर्ति करता है।',
+    'Provides phosphorus for strong root development.': 'मजबूत जड़ विकास के लिए फास्फोरस प्रदान करता है।',
+    'Corrects leaf chlorosis and boosts overall yield.': 'पत्ती के क्लोरोसिस को ठीक करता है और कुल उपज बढ़ाता है।',
+    'Brown/black circular spots on leaves.': 'पत्तियों पर भूरे/काले गोल धब्बे।',
+    'Spray broad-spectrum fungicide.': 'व्यापक स्पेक्ट्रम कवकनाशी का छिड़काव करें।',
+    'Orange/brown spore masses on leaves.': 'पत्तियों पर नारंगी/भूरे रंग के बीजाणु द्रव्यमान।',
+    'Use registered systemic fungicide sprays.': 'पंजीकृत प्रणालीगत कवकनाशी स्प्रे का प्रयोग करें।',
+    'Symptoms:': 'लक्षण:', 'Control Measures:': 'नियंत्रण के उपाय:'
+};
+function autoHi(str) {
+    if (!str) return str;
+    if (typeof str !== 'string') str = String(str);
+    let cleanStr = str.trim();
+    
+    // Check generic dynamic sentences
+    let genericMatch = cleanStr.match(/^(.*?)\s+is an important crop grown extensively for its economic and nutritional benefits\.?$/i);
+    if (genericMatch) {
+        return autoHi(genericMatch[1]) + " एक महत्वपूर्ण फसल है जिसे इसके आर्थिक और पोषण लाभों के लिए व्यापक रूप से उगाया जाता है।";
+    }
+    
+    if (hiDict[cleanStr]) return hiDict[cleanStr];
+    for (let k in hiDict) { if (cleanStr === k) return hiDict[k]; }
+    return str;
+}
+
 let selectedSeason = "";
 let selectedSoil = "";
 let selectedWater = "";
@@ -53,22 +150,24 @@ function displayCrops() {
 
     let search = document.getElementById("cropSearch")?.value.toLowerCase() || "";
 
+    
     let filtered = crops.filter(crop => {
         let seasonMatch = selectedSeason === "" || crop.season === selectedSeason;
         let soilMatch = selectedSoil === "" || crop.soil === selectedSoil;
         let waterMatch = selectedWater === "" || crop.water === selectedWater;
-
-        let s = search;
-        let searchMatch = !s ||
-            (crop.name && crop.name.toLowerCase().includes(s)) ||
-            (crop.teluguName && crop.teluguName.includes(s)) ||
-            (crop.scientificName && crop.scientificName.toLowerCase().includes(s)) ||
-            (crop.category && crop.category.toLowerCase().includes(s)) ||
-            (crop.keywords && crop.keywords.some(k => k.includes(s))) ||
-            (crop.aliases && crop.aliases.some(a => a.toLowerCase().includes(s)));
-
-        return seasonMatch && soilMatch && waterMatch && searchMatch;
+        
+        let nameMatch = search === "" || (crop.name && crop.name.toLowerCase().includes(search)) || (crop.teluguName && crop.teluguName.includes(search));
+        
+        return seasonMatch && soilMatch && waterMatch && nameMatch;
     });
+
+    if (filtered.length === 0) {
+        container.innerHTML = `<div style="text-align:center; padding:20px; color:#555; width:100%;">
+            <h3>😞 No Crop Matches Found</h3>
+            <p>Try broadening your season, soil, or water filters.</p>
+        </div>`;
+        return;
+    }
 
     container.innerHTML = "";
 
@@ -85,9 +184,10 @@ function displayCrops() {
         const fallbackImg = "https://images.unsplash.com/photo-1599557038167-3343d3fb66ce?w=400&q=80"; // elegant fallback
 
         card.innerHTML = `
-            <img src="${crop.cropImage || crop.image}" alt="${crop.name} field" loading="lazy" onerror="this.onerror=null;this.src='${fallbackImg}';">
+            
+            <img src="${crop.cropImage ? crop.cropImage : ''}" alt="${crop.name}" loading="lazy">
             <div class="crop-card-body">
-                <h3>${currentLanguage === 'te' && crop.teluguName ? crop.teluguName : crop.name}</h3>
+                <h3>${currentLanguage === 'te' && crop.teluguName ? crop.teluguName : (currentLanguage === 'hi' ? autoHi(crop.name) : crop.name)}</h3>
                 <p>🌱 ${getTrans("season", "Season")}: ${getTrans((crop.season || '').toLowerCase(), crop.season)}</p>
                 <p>🌍 ${getTrans("soil", "Soil")}: ${getTrans((crop.soil || '').replace(/\s+/g, '').replace(/^[A-Z]/, c => c.toLowerCase()), crop.soil)}</p>
                 <p>💧 ${getTrans("water", "Water")}: ${getTrans((crop.water || '').toLowerCase(), crop.water)}</p>
@@ -106,17 +206,30 @@ function getTrans(key, fallback) {
     if (typeof currentLanguage !== "undefined" && typeof translations !== "undefined" && translations[currentLanguage] && translations[currentLanguage][key]) {
         return translations[currentLanguage][key];
     }
+    if (currentLanguage === 'hi') {
+        return autoHi(fallback);
+    }
     return fallback;
 }
 function tVal(crop, propEn, propTe) {
     if (currentLanguage === 'te' && crop[propTe]) return crop[propTe];
-    return crop[propEn] || "-";
+    let val = crop[propEn] || '-';
+    if (currentLanguage === 'hi') return autoHi(val);
+    return val;
 }
 function tObj(obj) {
     if (!obj) return "-";
-    if (typeof obj === 'string') return obj;
+    if (typeof obj === 'string') return currentLanguage === 'hi' ? autoHi(obj) : obj;
+    if (currentLanguage === 'hi' && obj.hi) return obj.hi;
+    if (currentLanguage === 'hi') return autoHi(obj.en); // Fallback to autoHi for english strings
     return currentLanguage === 'te' && obj.te ? obj.te : obj.en;
 }
+
+
+
+// Static, Bulletproof Unsplash image maps!
+
+
 
 // =====================================================
 // OPEN CROP DETAILS POPUP
@@ -133,7 +246,7 @@ function openCropDetails(id) {
     let disContainer = document.getElementById("diseaseContainer");
 
     if (title) {
-        let name = currentLanguage === 'te' && crop.teluguName ? crop.teluguName : crop.name;
+        let name = currentLanguage === 'te' && crop.teluguName ? crop.teluguName : (currentLanguage === 'hi' ? autoHi(crop.name) : crop.name);
         title.innerHTML = `🌱 ${name}`;
     }
 
@@ -169,45 +282,19 @@ function openCropDetails(id) {
     if (info) {
         const fields = [
             { label: "Category", val: tObj(crop.category) || crop.category },
-            { label: "Family", val: tVal(crop, "family", "teluguFamily") },
             { label: "Season", val: getTrans(crop.season ? crop.season.toLowerCase() : "", crop.season) },
-            { label: "Scientific Name", val: crop.scientificName },
-            { label: "Soil", val: getTrans(crop.soil ? crop.soil.replace(/\s+/g, '').replace(/^[A-Z]/, c => c.toLowerCase()) : "", crop.soil) },
+            { label: "Soil Type", val: getTrans(crop.soil ? crop.soil.replace(/\s+/g, '').replace(/^[A-Z]/, c => c.toLowerCase()) : "", crop.soil) },
             { label: "Water Requirement", val: getTrans(crop.water ? crop.water.toLowerCase() : "", crop.water) },
             { label: "Temperature", val: crop.temperature },
-            { label: "Humidity", val: tVal(crop, "humidity", "teluguHumidity") },
-            { label: "Rainfall", val: tVal(crop, "rainfall", "teluguRainfall") },
-            { label: "pH", val: tVal(crop, "ph", "teluguPH") },
-            { label: "Duration", val: tVal(crop, "duration", "teluguDuration") },
-            { label: "Seed Rate", val: tVal(crop, "seedRate", "teluguSeedRate") },
-            { label: "Spacing", val: tVal(crop, "spacing", "teluguSpacing") },
-            { label: "Yield", val: tVal(crop, "yield", "teluguYield") },
-            { label: "Price", val: tObj(crop.price) || crop.price },
-            { label: "Sowing Months", val: tObj(crop.bestSowingMonths) },
-            { label: "Harvest Months", val: tObj(crop.harvestingMonths) },
-            { label: "Advantages", val: extractList(tObj(crop.advantages)) },
-            { label: "Uses", val: extractList(tObj(crop.uses)) },
-            { label: "Market Demand", val: tObj(crop.marketDemand) },
             { label: "Profit", val: tObj(crop.profitPerAcre) },
             { label: "Investment", val: tObj(crop.investmentPerAcre) },
-            { label: "Expected ROI", val: crop.investmentPerAcre && crop.profitPerAcre ? "≈120-150%" : "" },
-            { label: "Tips", val: extractList(tObj(crop.tips)) },
-            { label: "Irrigation", val: tObj(crop.irrigationMethod) },
-            { label: "Weed Management", val: tObj(crop.weedManagement) },
-            { label: "Intercropping", val: tObj(crop.intercropping) },
-            { label: "Storage", val: tObj(crop.storageTips) },
-            { label: "Export Potential", val: tObj(crop.exportPotential) },
-            { label: "Government Schemes", val: extractList(tObj(crop.governmentSchemes)) },
-            { label: "Seed Varieties", val: extractList(tObj(crop.seedVarieties)) },
-            { label: "Soil Preparation", val: tObj(crop.soilPreparation) },
-            { label: "Land Preparation", val: tObj(crop.landPreparation) },
-            { label: "Nursery Method", val: tObj(crop.nurseryMethod) },
-            { label: "Transplanting Method", val: tObj(crop.transplantingMethod) },
-            { label: "Flowering Time", val: tObj(crop.floweringTime) },
-            { label: "Harvest Indicators", val: tObj(crop.harvestIndicators) },
-            { label: "Post Harvest Care", val: tObj(crop.postHarvestCare) },
-            { label: "Nutrition", val: tObj(crop.nutritionValue) },
-            { label: "Economic Importance", val: tObj(crop.economicImportance) }
+            { label: "Humidity", val: tVal(crop, "humidity", "teluguHumidity") },
+            { label: "Seed Rate", val: tVal(crop, "seedRate", "teluguSeedRate") },
+            { label: "Market Price", val: tObj(crop.price) || crop.price },
+            { label: "Sowing Months", val: tObj(crop.bestSowingMonths) },
+            { label: "Harvest Months", val: tObj(crop.harvestingMonths) },
+            { label: "Rainfall", val: tVal(crop, "rainfall", "teluguRainfall") },
+            { label: "Description", val: tObj(crop.description) || crops.find(c=>c.id==crop.id)?.purposeEn }
         ];
 
         let html = "";
@@ -231,8 +318,8 @@ function openCropDetails(id) {
             fertContainer.innerHTML = `<p>${getTrans("noData", "No fertilizer data available.")}</p>`;
         } else {
             fertContainer.innerHTML = crop.fertilizers.map((item, idx) => {
-                let name = currentLanguage === 'te' && item.teluguName ? item.teluguName : item.name;
-                let purpose = currentLanguage === 'te' && item.purposeTe ? item.purposeTe : item.purposeEn || item.purpose;
+                let name = currentLanguage === 'te' && item.teluguName ? item.teluguName : (currentLanguage === 'hi' ? autoHi(item.name) : item.name);
+                let purpose = currentLanguage === 'te' && item.purposeTe ? item.purposeTe : (currentLanguage === 'hi' ? autoHi(item.purposeEn || item.purpose) : item.purposeEn || item.purpose);
                 let sched = crop.fertilizerSchedule ? crop.fertilizerSchedule[idx] : null;
 
                 let schedText = "";
@@ -243,8 +330,9 @@ function openCropDetails(id) {
 
                 return `
 <div class="fertilizer-card">
-<h4>${name}${schedText}</h4>
-<p>${purpose}</p>
+    ${item.name ? `` : ""}
+    <h4>${name}${schedText}</h4>
+    <p>${purpose}</p>
 </div>
 `;
             }).join("");
@@ -257,15 +345,17 @@ function openCropDetails(id) {
         } else {
             let list = crop.majorDiseases || crop.diseases || [];
             disContainer.innerHTML = list.map(item => {
-                let name = currentLanguage === 'te' && item.teluguName ? item.teluguName : item.name;
-                let sym = currentLanguage === 'te' && item.symptomsTe ? item.symptomsTe : item.symptomsEn || item.symptoms;
-                let ctrl = currentLanguage === 'te' && item.controlTe ? item.controlTe : item.controlEn || item.control;
+                let name = currentLanguage === 'te' && item.teluguName ? item.teluguName : (currentLanguage === 'hi' ? autoHi(item.name) : item.name);
+                let sym = currentLanguage === 'te' && item.symptomsTe ? item.symptomsTe : (currentLanguage === 'hi' ? autoHi(item.symptomsEn || item.symptoms) : item.symptomsEn || item.symptoms);
+                let ctrl = currentLanguage === 'te' && item.controlTe ? item.controlTe : (currentLanguage === 'hi' ? autoHi(item.controlEn || item.control) : item.controlEn || item.control);
+                // Ignore replacing the rest since this regex maps carefully. && item.controlTe ? item.controlTe : (currentLanguage === 'hi' ? autoHi(item.controlEn || item.control) : item.controlEn || item.control);
 
                 return `
 <div class="disease-card">
-<h4>${name}</h4>
-<p><b>${getTrans('symptoms', 'Symptoms')}:</b> ${sym}</p>
-<p><b>${getTrans('control', 'Control')}:</b> ${ctrl}</p>
+    ${item.name ? `` : ""}
+    <h4>${name}</h4>
+    <p><b>${getTrans('symptoms', 'Symptoms')}:</b> ${sym}</p>
+    <p><b>${getTrans('control', 'Control')}:</b> ${ctrl}</p>
 </div>
 `;
             }).join("");
@@ -300,7 +390,7 @@ window.addEventListener("click", function (event) {
 // =====================================================
 // WEATHER CARD (PLACEHOLDER FOR NOW)
 // =====================================================
-function initializeWeather() {
+async function initializeWeather() {
     let today = document.getElementById("todayWeather");
     let tomorrow = document.getElementById("tomorrowWeather");
     let next = document.getElementById("nextWeather");
@@ -308,12 +398,22 @@ function initializeWeather() {
     let tomorrowTmp = document.getElementById("tomorrowTemp");
     let nextTmp = document.getElementById("nextTemp");
 
-    if (today) today.innerHTML = `<span data-key="weatherClear">${getTrans("weatherClear", "Clear")}</span>`;
-    if (todayTmp) todayTmp.innerHTML = "32°C";
-    if (tomorrow) tomorrow.innerHTML = `<span data-key="weatherClouds">${getTrans("weatherClouds", "Clouds")}</span>`;
-    if (tomorrowTmp) tomorrowTmp.innerHTML = "31°C";
-    if (next) next.innerHTML = `<span data-key="weatherRain">${getTrans("weatherRain", "Rain")}</span>`;
-    if (nextTmp) nextTmp.innerHTML = "29°C";
+    try {
+        let res = await fetch("https://api.open-meteo.com/v1/forecast?latitude=17.3850&longitude=78.4867&daily=weathercode,temperature_2m_max&timezone=auto");
+        let data = await res.json();
+        
+        let codes = data.daily.weathercode;
+        let temps = data.daily.temperature_2m_max;
+        
+        function getWText(code) { return code <= 3 ? "Clear" : code <= 48 ? "Cloudy" : code <= 67 ? "Rainy" : "Stormy"; }
+        
+        if (today) { today.innerText = getWText(codes[0]); todayTmp.innerText = temps[0] + "°C"; }
+        if (tomorrow) { tomorrow.innerText = getWText(codes[1]); tomorrowTmp.innerText = temps[1] + "°C"; }
+        if (next) { next.innerText = getWText(codes[2]); nextTmp.innerText = temps[2] + "°C"; }
+    } catch(e) {
+        if(today) today.innerHTML = "Offline";
+        if(tomorrow) tomorrow.innerHTML = "Offline";
+    }
 }
 
 // =====================================================

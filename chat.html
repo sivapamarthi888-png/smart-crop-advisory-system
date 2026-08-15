@@ -11,6 +11,45 @@
     <title>AgriAI Assistant</title>
     <link href="css/style.css" rel="stylesheet">
     <style>
+
+        html, body {
+            height: 100dvh; /* For mobile sizing */
+            width: 100vw;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #e5ddd5;
+        }
+        .chat-app {
+            width: 100%;
+            height: 100dvh;
+            max-width: 600px; /* Center like desktop whatsapp */
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            background-color: rgba(255, 255, 255, 0.3); /* Let flag background show through */
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .chat-header {
+            flex-shrink: 0;
+        }
+        .chat-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding-bottom: 20px;
+        }
+        .chat-input-container {
+            flex-shrink: 0;
+            position: relative;
+            background: rgba(255, 255, 255, 0.9); /* Opaque for readability */
+        }
+
+        
+        
+
         /* SKEUOMORPHIC DESIGN */
         body {
             margin: 0;
@@ -456,14 +495,118 @@
             border-radius: 12px;
         }
 
+
+        /* --- injected smart crop ui fixes --- */
+        .chat-message, .chat-bubble {
+            font-size: 1.25rem !important;
+            line-height: 1.6;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .chat-message table, .chat-bubble table {
+            width: 100%;
+            max-width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            font-size: 1.2rem !important;
+        }
+
+        .chat-message th, .chat-message td, .chat-bubble th, .chat-bubble td {
+            text-align: left;
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .chat-message th, .chat-bubble th {
+            background-color: #06D6A0;
+            color: #111;
+            font-weight: bold;
+        }
+        /* --- end injected --- */
+
+        .chat-flag-bg {
+            background: linear-gradient(120deg, #FF9933 0%, #FFFFFF 50%, #138808 100%) !important;
+            background-size: cover !important;
+            min-height: 100vh;
+            width: 100vw;
+            margin: 0;
+            padding: 0;
+            border-radius: 0 !important;
+        }
+
+    
+        .message-user .msg-bubble, .message-bot .msg-bubble {
+            font-size: 16px !important;
+            padding: 12px 18px !important;
+            line-height: 1.5 !important;
+        }
+
+        /* ENLARGE MIC AND SEND BUTTONS */
+        .chat-input-container {
+            padding: 20px !important;
+        }
+        #chatInput {
+            font-size: 18px !important;
+            padding: 15px !important;
+        }
+        #aiMicBtn, .chat-input-container .btn {
+            width: 65px !important;
+            height: 65px !important;
+            font-size: 28px !important;
+            border-radius: 50% !important;
+        }
 </style>
     <link rel="icon" href="data:,">
+
+    <style>
+        /* GIANT FONT OVERRIDES FOR ALL MSG BUBBLES */
+        .message-user .msg-bubble,
+        .message-bot .msg-bubble,
+        .msg-bubble p,
+        .msg-bubble li,
+        .msg-bubble table,
+        .msg-bubble th,
+        .msg-bubble td,
+        .disease-cure-box,
+        .detail-card {
+            font-size: 18px !important;
+            letter-spacing: 0.2px !important;
+            line-height: 1.6 !important;
+        }
+
+        .chat-main {
+            padding-left: 20px !important;
+            padding-right: 20px !important;
+            max-width: 900px !important; /* expand center column */
+            margin: 0 auto;
+        }
+
+        /* Larger on Desktop */
+        @media (min-width: 768px) {
+            .message-user .msg-bubble,
+            .message-bot .msg-bubble,
+            .msg-bubble p,
+            .msg-bubble li,
+            .msg-bubble table {
+                font-size: 21px !important;
+                line-height: 1.7 !important;
+            }
+        }
+    </style>
+
 </head>
 
 <body class="chat-flag-bg">
     <div class="chat-app">
         <div class="chat-header">
             <div class="header-title-container">
+                <span style="font-size: 2rem;">🌾🚜</span>
                 <div class="ai-avatar">🤖</div>
                 <div>
                     <h3>AgriAI Assistant</h3>
@@ -494,6 +637,36 @@
     <script src="js/crops.js"></script>
     <script src="js/translations.js"></script>
     <script src="js/ai_core.js"></script>
+
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const lang = localStorage.getItem("language") || "en";
+            
+            const clearBtn = document.querySelector('button[onclick="clearChat()"]');
+            const backBtn = document.querySelector('a.back-btn[href="index.html"]');
+            const placeholder = document.getElementById("chatInput");
+            
+            const aiTitle = document.querySelector('.chat-header h3');
+            const aiDesc = document.querySelector('.chat-header p');
+            
+            if (lang === "hi") {
+                if(clearBtn) clearBtn.innerHTML = "♻ साफ़ करें";
+                if(backBtn) backBtn.innerHTML = "⬅ वापस";
+                if(placeholder) placeholder.placeholder = "टाइप करें या बोलें...";
+                if(aiTitle) aiTitle.innerHTML = "AgriAI सहायक";
+                if(aiDesc) aiDesc.innerHTML = "उन्नत कृषि बुद्धिमत्ता द्वारा संचालित";
+            } else if (lang === "te") {
+                if(clearBtn) clearBtn.innerHTML = "♻ క్లియర్";
+                if(backBtn) backBtn.innerHTML = "⬅ వెనుకకు";
+                if(placeholder) placeholder.placeholder = "టైప్ చేయండి లేదా మాట్లాడండి...";
+                if(aiTitle) aiTitle.innerHTML = "AgriAI సహాయకుడు";
+                if(aiDesc) aiDesc.innerHTML = "అధునాతన వ్యవసాయ మేధస్సుతో పనిచేస్తుంది";
+            }
+        });
+    </script>
 </body>
+
+
 
 </html>

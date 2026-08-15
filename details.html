@@ -101,10 +101,16 @@
         <h1 class="page-title" id="pageTitle">...</h1>
 
         <div id="interactiveBox" class="interactive-box">
-            <label class="upload-label">
-                📷 Upload Photo Of Crop
-                <input type="file" id="imageUpload" accept="image/*" onchange="handleImage(event)">
-            </label>
+            <div style="display:flex; justify-content:center; gap:10px;">
+                <label class="upload-label" id="lblGallery" style="flex:1; cursor:pointer;" onclick="if('speechSynthesis' in window) window.speechSynthesis.speak(new SpeechSynthesisUtterance(''));">
+                    📁 Gallery
+                    <input type="file" accept="image/*" onchange="handleImage(event)">
+                </label>
+                <label class="upload-label" id="lblCamera" style="flex:1; cursor:pointer;" onclick="if('speechSynthesis' in window) window.speechSynthesis.speak(new SpeechSynthesisUtterance(''));">
+                    📷 Camera
+                    <input type="file" accept="image/*" capture="environment" onchange="handleImage(event)">
+                </label>
+            </div>
             
             <img id="imgPreview" class="preview-img">
             <br>
@@ -122,9 +128,19 @@
 
 
 <script>
+        // CRITICAL FOR MOBILE: Asynchronous TTS unlocks must be primed by a synchronous user gesture!
+        let audioUnlocked = false;
+        document.addEventListener('click', () => {
+            if (!audioUnlocked && 'speechSynthesis' in window) {
+                let u = new SpeechSynthesisUtterance("");
+                window.speechSynthesis.speak(u);
+                audioUnlocked = true;
+            }
+        });
+
         const urlParams = new URLSearchParams(window.location.search);
         let currentType = urlParams.get('type') || 'schemes';
-        var appCurrentLang = localStorage.getItem('language') || 'en';
+        var appCurrentLang = localStorage.getItem('language') || 'te';
         let uploadedImageB64 = null;
 
         const DATA = {
@@ -144,6 +160,17 @@
             ]
         };
 
+        
+        document.addEventListener("DOMContentLoaded", () => {
+            const savedLang = localStorage.getItem("language");
+            if (savedLang) {
+                appCurrentLang = savedLang;
+                document.getElementById('axiomOverlay').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+                initPage(currentType);
+            }
+        });
+        
         function selectLang(l) {
             appCurrentLang = l;
             document.getElementById('axiomOverlay').style.display = 'none';
@@ -151,133 +178,150 @@
             initPage(currentType);
         }
 
-        async function initPage(type) {
-            currentType = type;
+        const titles = {
+            disease: { en: "Disease Detection", te: "తెగుళ్ల నిర్ధారణ", hi: "रोग का पता लगाना" },
+            market: { en: "Market Intelligence", te: "మార్కెట్ ఇంటెలిజెన్స్", hi: "बाजार आसूचना" },
+            weather: { en: "Weather Intelligence", te: "వాతావరణ ఇంటెలిజెన్స్", hi: "मौसम आसूचना" },
+            schemes: { en: "Government Schemes", te: "ప్రభుత్వ పథకాలు", hi: "सरकारी योजनाएं" },
+            services: { en: "Nearby Services", te: "సమీప వ్యవసాయ సేవలు", hi: "पास की कृषि सेवाएं" }
+        };
+
+    function initPage(type) {
+        document.getElementById('cardsContainer').innerHTML = '';
+        
+        let titleBlock = document.getElementById('pageTitle');
+        if (titleBlock && titles[type]) {
+            titleBlock.innerText = appCurrentLang === 'en' ? titles[type].en : (appCurrentLang === 'te' ? titles[type].te : titles[type].hi);
+        }
+
+        if (type === 'schemes' || type === 'services') {
             document.getElementById('interactiveBox').style.display = 'none';
-            document.getElementById('cardsContainer').innerHTML = '';
-            document.getElementById('loadingIndicator').style.display = 'none';
-
-            let lang = appCurrentLang;
-
-            const titles = {
-                'schemes': { en: 'Government Schemes', te: 'ప్రభుత్వ పథకాలు', hi: 'सरकारी योजनाएं' },
-                'services': { en: 'Nearby Services', te: 'సమీప వ్యవసాయ సేవలు', hi: 'आसपास की कृषि सेवाएं' },
-                'disease': { en: 'Disease Detection', te: 'పంట వ్యాధి గుర్తింపు', hi: 'फसल रोग पहचान' },
-                'weather': { en: 'Weather Intelligence', te: 'వాతావరణ నివేదిక', hi: 'मौसम की जानकारी' },
-                'market': { en: 'Market Intelligence', te: 'మార్కెట్ ధరలు', hi: 'बाज़ार मूल्य' }
-            };
-            
-            let titleEl = document.getElementById('pageTitle');
-            if (!titleEl) {
-                titleEl = document.createElement('h1');
-                titleEl.id = 'pageTitle';
-                titleEl.className = 'page-title';
-                document.getElementById('mainContent').insertBefore(titleEl, document.getElementById('loadingIndicator'));
-            }
-            titleEl.innerText = titles[type] ? titles[type][lang] : '';
-
-            if (type === 'schemes' || type === 'services') {
-                buildStatic(DATA[type]);
-                if(typeof speakText === 'function') {
-                    speakText(lang === 'en' ? "Accessing " + titles[type].en : (lang === 'te' ? titles[type].te + " చూస్తున్నాను" : titles[type].hi + " दिखा रहा हूँ"));
-                }
-            } else if (type === 'market') {
-                document.getElementById('loadingIndicator').style.display = 'block';
-                document.getElementById('loadingIndicator').innerText = "AXIOM is connecting to live databases...";
-                if(typeof speakText === 'function') {
-                    speakText(lang === 'en' ? "Accessing live trade markets." : (lang === 'te' ? "లైవ్ మార్కెట్ డేటాను చూస్తున్నాను" : "लाइव मार्केट डेटा एक्सेस कर रहा हूँ"));
-                }
-                setTimeout(() => generateMarketLive(), 1000);
-            } else if (type === 'disease') {
-                document.getElementById('interactiveBox').style.display = 'block';
-                // Silenced greeting for disease detection
-            } else if (type === 'weather') {
-                document.getElementById('loadingIndicator').style.display = 'block';
-                document.getElementById('loadingIndicator').innerText = "AXIOM is activating Regional Radar...";
-                if(typeof speakText === 'function') {
-                    speakText(lang === 'en' ? "Accessing Meteo Satellites." : (lang === 'te' ? "వాతావరణ డేటాను చూస్తున్నాను" : "मौसम डेटा प्राप्त कर रहा हूँ"));
-                }
-                
-                generateWeatherSuggestions();
-            }
-        }
-
-        async function extractBase64(file) {
-            return new Promise((resolve) => {
-                let reader = new FileReader();
-                let fType = file.type || "image/jpeg";
-                reader.onloadend = () => resolve({ b64: reader.result.split(',')[1], mime: fType });
-                reader.readAsDataURL(file);
-            });
-        }
-
-        function handleImage(e) {
-            if(e.target.files[0]) {
-                extractBase64(e.target.files[0]).then(res => {
-                    uploadedImageB64 = res;
-                    let preview = document.getElementById('imgPreview');
-                    preview.src = "data:" + res.mime + ";base64," + res.b64;
-                    preview.style.display = 'block';
-                });
-            }
-        }
-
-        async function askDisease() {
             document.getElementById('loadingIndicator').style.display = 'block';
-            document.getElementById('cardsContainer').innerHTML = '';
+            document.getElementById('loadingIndicator').innerText = "Accessing Database...";
             
-            let query = document.getElementById('diseaseInput').value.trim();
-            if (!query && !uploadedImageB64) {
-                document.getElementById('loadingIndicator').innerText = "Please upload an image or type a query!";
-                return;
-            }
+            buildStatic(DATA[type]);
+        } else if (type === 'market') {
+            document.getElementById('interactiveBox').style.display = 'none';
+            document.getElementById('loadingIndicator').style.display = 'block';
+            document.getElementById('loadingIndicator').innerText = "AXIOM is connecting to live databases...";
+            
+            setTimeout(() => generateMarketLive(), 500);
+        } else if (type === 'disease') {
+            document.getElementById('interactiveBox').style.display = 'block';
+            
+            // UI Translations for the Disease Module
+            const tGallery = appCurrentLang === 'te' ? '📁 గ్యాలరీ' : (appCurrentLang === 'hi' ? '📁 गैलरी' : '📁 Gallery');
+            const tCamera = appCurrentLang === 'te' ? '📷 కెమెరా' : (appCurrentLang === 'hi' ? '📷 कैमरा' : '📷 Camera');
+            const tPlace = appCurrentLang === 'te' ? 'లేదా పంట పేరు & లక్షణాలను ఇక్కడ వ్రాయండి...' : (appCurrentLang === 'hi' ? 'या फसल का नाम और लक्षण यहाँ लिखें...' : 'Or type crop name & symptoms here...');
+            const tAsk = appCurrentLang === 'te' ? 'విశ్లేషించు (Ask)' : (appCurrentLang === 'hi' ? 'विश्लेषण करें (Ask)' : 'Ask AXIOM');
+            
+            if(document.getElementById('lblGallery')) document.getElementById('lblGallery').innerHTML = tGallery + '<input type="file" accept="image/*" onchange="handleImage(event)">';
+            if(document.getElementById('lblCamera')) document.getElementById('lblCamera').innerHTML = tCamera + '<input type="file" accept="image/*" capture="environment" onchange="handleImage(event)">';
+            
+            if(document.getElementById('diseaseInput')) document.getElementById('diseaseInput').placeholder = tPlace;
+            if(document.querySelector('.send-btn')) document.querySelector('.send-btn').innerText = tAsk;
+            
+        } else if (type === 'weather') {
+            document.getElementById('interactiveBox').style.display = 'none';
+            document.getElementById('loadingIndicator').style.display = 'block';
+            document.getElementById('loadingIndicator').innerText = "AXIOM is activating Regional Radar...";
+            
+            setTimeout(() => generateWeatherSuggestions(), 500);
+        }
+    }
 
+    
+
+    function buildStatic(dataArr) {
+        let html = "";
+        let tText = document.getElementById('pageTitle').innerText;
+        let speechContent = appCurrentLang === 'en' ? 'Accessing ' + tText + "   " : (appCurrentLang === 'te' ? tText + ' చూస్తున్నాను   ' : tText + ' दिखा रहा हूँ   ');
+        dataArr.forEach(item => {
+            let data = item[appCurrentLang] || item['en'];
+            speechContent += data.title + "  " + data.desc + "  ";
+            html += `<div class="detail-card">`;
+            html += `<div class="card-header"><div class="card-icon">${item.icon}</div><h2 class="card-title">${data.title}</h2></div>`;
+            html += `<p class="card-desc">${data.desc}</p>`;
+            html += `<a href="${data.url}" class="card-link" target="_blank">${data.linkText} →</a>`;
+            html += `</div>`;
+        });
+        html += `<br><button onclick="if(typeof speakText === 'function') speakText(this.dataset.text);" data-text="${speechContent.replace(/"/g, '&quot;')}" style="background:#22c55e; color:#000; border:none; padding:10px 20px; border-radius:30px; font-weight:bold; font-size:16px; width:100%; cursor:pointer;">🔊 Read Aloud</button>`;
+        document.getElementById('cardsContainer').innerHTML = html;
+        if(typeof speakText === 'function') setTimeout(() => speakText(speechContent), 500);
+    }
+
+    
+    // uploadedImageB64 already declared globally
+    function handleImage(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                uploadedImageB64 = e.target.result.split(',')[1];
+                document.getElementById('imgPreview').src = e.target.result;
+                document.getElementById('imgPreview').style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    async function askDisease() {
+        let query = document.getElementById('diseaseInput').value.trim();
+        if (!uploadedImageB64 && !query) {
+            alert("Please upload/take a photo or type a symptom.");
+            return;
+        }
+        
+        document.getElementById('loadingIndicator').style.display = 'block';
+        
+        try {
             let langName = appCurrentLang === 'te' ? 'Telugu' : (appCurrentLang === 'hi' ? 'Hindi' : 'English');
-            let prompt = "You are AXIOM, an expert agricultural AI. The user is asking about a disease.\nLanguage: " + langName + "\nUser text/query: " + query + "\n\nCRITICAL INSTRUCTION: Analyze the image. If the user mentions a specific crop name, diagnose the disease for THAT crop. Give exact disease name and chemical cures entirely converted to native script.";
+            let promptConfig = "You are AXIOM, an expert agricultural AI. The user is asking about a disease.\nLanguage: " + langName + "\nUser text/query: " + query + "\n\nCRITICAL INSTRUCTION: Analyze the image. Give exact disease name and chemical cures entirely converted to the specified Language. (Stricly output English if requested!). Format neatly.";
             
-            let bodyData = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
-
+            let contents = [];
             if (uploadedImageB64) {
-                bodyData.contents[0].parts.push({ inline_data: { mime_type: uploadedImageB64.mime, data: uploadedImageB64.b64 } });
-            }
-
-            try {
-                let apiKey = GEMINI_API_KEY || (typeof config !== 'undefined' ? config.GEMINI_API_KEY : '');
-                let res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(bodyData)
+                contents.push({
+                    role: "user",
+                    parts: [
+                        { text: promptConfig },
+                        { inlineData: { mimeType: "image/jpeg", data: uploadedImageB64 } }
+                    ]
                 });
-                
-                let data = await res.json();
-                let reply = data.candidates[0].content.parts[0].text;
-                
-                document.getElementById('loadingIndicator').style.display = 'none';
-                let imgHtml = uploadedImageB64 ? `<img src="data:${uploadedImageB64.mime};base64,${uploadedImageB64.b64}" style="max-width:200px; border-radius:10px; margin-bottom:15px; display:block;">` : '';
-                document.getElementById('cardsContainer').innerHTML = `<div class="disease-cure-box">${imgHtml}${reply.replace(/\n/g, '<br>')}</div>`;
-                uploadedImageB64 = null;
-                document.getElementById('imgPreview').style.display = 'none';
-                
-            } catch (e) {
-                document.getElementById('loadingIndicator').innerText = "Network Error. Please try again.";
+            } else {
+                contents.push({ role: "user", parts: [{ text: promptConfig }] });
             }
+            
+            let apiKey = typeof GEMINI_API_KEY !== 'undefined' ? GEMINI_API_KEY : (typeof config !== 'undefined' ? config.GEMINI_API_KEY : 'AQ.Ab8RN6IobRHpmgir1mI3uCnTqsr6bI1w0uqoOdM5F0fFkCvwVA');
+            let res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ contents: contents })
+            });
+            
+            let data = await res.json();
+            let reply = data.candidates[0].content.parts[0].text;
+            
+            reply = reply.replace(/```html/g, '').replace(/```/g, ''); 
+            
+            document.getElementById('loadingIndicator').style.display = 'none';
+            
+            let imgHtml = uploadedImageB64 ? `<img src="data:image/jpeg;base64,${uploadedImageB64}" style="width:100%; max-height:200px; object-fit:cover; border-radius:10px; margin-bottom:15px;">` : '';
+            
+            document.getElementById('cardsContainer').innerHTML = `
+                <div class="disease-cure-box" style="border-color:#22c55e;">
+                    <h2 style="margin-top:0; color:#22c55e;">🦠 Diagnosis Report</h2>
+                    ${imgHtml}
+                    ${reply.replace(/\n/g, '<br>')}
+                    <br><br><button onclick="speakText(this.dataset.text)" data-text="${reply.replace(/"/g, '&quot;')}" style="background:#22c55e; color:#000; border:none; padding:10px 20px; border-radius:30px; font-weight:bold; font-size:16px; width:100%; cursor:pointer; margin-top:20px;">🔊 Read Aloud</button>
+                </div>
+            `;
+            if(typeof speakText === 'function') setTimeout(() => speakText(reply), 500);
+        } catch (e) {
+            document.getElementById('loadingIndicator').innerText = "Detection Error!";
         }
+    }
 
-        function buildStatic(items) {
-             let container = document.getElementById('cardsContainer');
-             let markup = "";
-             items.forEach(item => {
-                 let data = item[appCurrentLang] || item['en'];
-                 markup += `<div class="detail-card">
-                     <div class="card-header"><div class="card-icon">${item.icon}</div><h2 class="card-title">${data.title}</h2></div>
-                     <p class="card-desc">${data.desc}</p>
-                     <a href="${data.url}" class="card-link" target="_blank">${data.linkText} →</a>
-                 </div>`;
-             });
-             container.innerHTML = markup;
-        }
-
-        async function generateMarketLive() {
+    async function generateMarketLive() {
              try {
                  let langName = appCurrentLang === 'te' ? 'Telugu' : (appCurrentLang === 'hi' ? 'Hindi' : 'English');
                  let prompt = "You are AXIOM. Act as a live Indian agricultural market board. Provide today's realistic, estimated wholesale market prices (in ₹/Quintal) for 3 major seasonal crops. Give 3 bullet points with prices and one trend sentence. Output ONLY strictly in " + langName + " without asterisks. STRICTLY MONOLINGUAL OUTPUT. Do not mix languages.";
@@ -306,11 +350,12 @@
                    <div class="disease-cure-box" style="border-color:#fbbf24; margin-bottom:30px;">
                        <h2 style="margin-top:0; color:#fbbf24;">📈 Market Prices Today</h2>
                        ${reply.replace(/\n/g, '<br>')}
+                       <br><br><button onclick="speakText(this.dataset.text)" data-text="${reply.replace(/"/g, '&quot;')}" style="background:#fbbf24; color:#000; border:none; padding:10px 20px; border-radius:30px; font-weight:bold; font-size:16px; width:100%; cursor:pointer;">🔊 Read Aloud</button>
                    </div>
                    ${marketLinks}
                  `;
-                 if(typeof speakText === 'function') speakText(reply);
-             } catch(e) {
+                 if(typeof speakText === 'function') setTimeout(() => speakText(reply), 500);
+                 } catch(e) {
                  document.getElementById('loadingIndicator').innerText = "Market Network Error!";
              }
         }
@@ -333,7 +378,7 @@
 
                  let langName = appCurrentLang === 'te' ? 'Telugu' : (appCurrentLang === 'hi' ? 'Hindi' : 'English');
                  
-                 let prompt = "You are AXIOM, a highly precise agricultural weather intelligence array. The current Local Time is " + currentTime + ". Analyze this time exactly (Do NOT write 'morning/afternoon' literally, write ONLY the specific current time of day in a natural phrase). The live localized weather data for Hyderabad is " + tempHyd + "C and Andhra Pradesh is " + tempAP + "C. Provide a 4-bullet-point farming weather advisory. TRANSLATION DIRECTIVE: You MUST output the ENTIRE response flawlessly in " + langName + " language. No asterisks.";
+                 let prompt = "You are AXIOM, a highly precise agricultural weather intelligence array. The current Local Time is " + currentTime + ". Show the exact current time numerically in the first sentence (format exactly like: 3:09 pm or 11:24 am). The live localized weather data for Hyderabad is " + tempHyd + "C and Andhra Pradesh is " + tempAP + "C. Provide a 4-bullet-point farming weather advisory. TRANSLATION DIRECTIVE: You MUST output the ENTIRE response flawlessly in " + langName + " language. No asterisks.";
                  
                  let apiKey = GEMINI_API_KEY || (typeof config !== 'undefined' ? config.GEMINI_API_KEY : '');
                  let geminiRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`, {
@@ -345,9 +390,9 @@
                  let reply = geminiData.candidates[0].content.parts[0].text;
                  
                  document.getElementById('loadingIndicator').style.display = 'none';
-                 document.getElementById('cardsContainer').innerHTML = `<div class="disease-cure-box" style="border-color:#3b82f6;"><h2 style="margin-top:0; color:#3b82f6;">🌤️ Regional Weather Matrix</h2><p style="font-weight:bold; color:#555;">📍 Hyderabad: ${tempHyd}°C | 📍 Andhra Pradesh: ${tempAP}°C | 🕒 ${currentTime}</p><hr style="border:0; border-top:1px solid #ddd; margin: 10px 0;">${reply.replace(/\n/g, '<br>')}</div>`;
-                 if(typeof speakText === 'function') speakText(reply);
-             } catch(e) {
+                 document.getElementById('cardsContainer').innerHTML = `<div class="disease-cure-box" style="border-color:#3b82f6;"><h2 style="margin-top:0; color:#3b82f6;">🌤️ Regional Weather Matrix</h2><p style="font-weight:bold; color:#555;">📍 Hyderabad: ${tempHyd}°C | 📍 Andhra Pradesh: ${tempAP}°C | 🕒 ${currentTime}</p><hr style="border:0; border-top:1px solid #ddd; margin: 10px 0;">${reply.replace(/\n/g, '<br>')}<br><br><button onclick="speakText(this.dataset.text)" data-text="${reply.replace(/"/g, '&quot;')}" style="background:#38bdf8; color:#000; border:none; padding:10px 20px; border-radius:30px; font-weight:bold; font-size:16px; width:100%; cursor:pointer;">🔊 Read Aloud</button></div>`;
+                 if(typeof speakText === 'function') setTimeout(() => speakText(reply), 500);;
+                 } catch(e) {
                  document.getElementById('loadingIndicator').innerText = "Weather Network Error.";
              }
         }

@@ -9,6 +9,17 @@ const translations = {
 
 
     en: {
+        soilType: "Soil Type",
+        marketPrice: "Market Price",
+
+        today: "Today", todayTitle: "Today",
+        tomorrow: "Tomorrow", tomorrowTitle: "Tomorrow",
+        nextDay: "Day After Tomorrow", dayAfter: "Day After Tomorrow", dayAfterTitle: "Day After Tomorrow",
+
+        todayTitle: "Today",
+        tomorrowTitle: "Tomorrow",
+        dayAfterTitle: "Day After Tomorrow",
+
 
 
         /* NAVBAR */
@@ -448,7 +459,7 @@ const translations = {
         personalAssistant: "Your Personal Farming Assistant",
         aiDescription: "AgriAI provides crop recommendation and fertilizer guidance.",
         voiceConversation: "Voice Conversation",
-        languageSupport: "English Telugu Support",
+        languageSupport: "English • తెలుగు • हिंदी Support",
         fertilizerGuidance: "Fertilizer Guidance",
         marketInfo: "Market Information",
         startConversation: "Start AI Conversation"
@@ -467,6 +478,17 @@ const translations = {
 
 
     te: {
+        soilType: "నేల రకం",
+        marketPrice: "మార్కెట్ ధర",
+
+        today: "నేడు", todayTitle: "నేడు",
+        tomorrow: "రేపు", tomorrowTitle: "రేపు",
+        nextDay: "ఎల్లుండి", dayAfter: "ఎల్లుండి", dayAfterTitle: "ఎల్లుండి",
+
+        todayTitle: "నేడు",
+        tomorrowTitle: "రేపు",
+        dayAfterTitle: "ఎల్లుండి",
+
         /* DASHBOARD FEATURES */
         
         /* STATIC SCHEMES IN INDEX.HTML */
@@ -494,7 +516,7 @@ const translations = {
         weatherDesc: "వాతావరణ పరిస్థితులను బట్టి సలహాలు.",
         marketTitle: "మార్కెట్ సమాచారం",
         marketDesc: "పంటల ధరలు, మార్కెట్ వివరాలు.",
-        diseaseDetection: "తెలుగు గుర్తింపు",
+        diseaseDetection: "తెగుళ్ళ గుర్తింపు",
         diseaseDetectionDesc: "ఆకుపచ్చ గురుతులు, నివారణ పద్ధతులు.",
 
         meetAI: "🤖 AgriAI ని కలవండి",
@@ -545,7 +567,7 @@ const translations = {
 
 
         heroDescription: "Select the best crops based on season, soil type and water availability using intelligent agricultural guidance.",
-        farmerQuote: '"A farmer is a magician who produces money from the mud."',
+        farmerQuote: '"మట్టి నుండి బంగారాన్ని పండించే మాంత్రికుడు రైతు."',
         exploreBtn:
             "పంటలను చూడండి 🌾",
 
@@ -897,16 +919,451 @@ const translations = {
         navigatingToMarket: "మార్కెట్ విభాగానికి వెళ్తున్నాం",
         voiceFallbackMsg: "నేను పంటలు, వాతావరణం మరియు వ్యవసాయం గురించిన సమాచారం సహాయపడగలను",
         noData: "సమాచారం లేదు."
+    },
+    hi: {
+        soilType: "मिट्टी का प्रकार",
+        marketPrice: "बाज़ार मूल्य",
 
-    }
+        today: "आज", todayTitle: "आज",
+        tomorrow: "कल", tomorrowTitle: "कल",
+        nextDay: "परसों", dayAfter: "परसों", dayAfterTitle: "परसों",
+
+        todayTitle: "आज",
+        tomorrowTitle: "कल",
+        dayAfterTitle: "परसों",
 
 
 
+        /* NAVBAR */
+
+        home: "होम",
+        crops: "फसलें",
+        market: "बाज़ार",
+        weather: "मौसम",
+        services: "सेवाएं",
+        about: "हमारे बारे में",
+
+        english: "English",
+        telugu: "తెలుగు",
+
+
+
+        /* HERO */
+
+        heroBadge: "🌱 एआई आधारित कृषि मंच",
+
+        heroTitle: "स्मार्ट खेती की शुरुआत स्मार्ट निर्णयों से होती है",
+
+        heroLine: "एआई आधारित फसल अनुशंसा प्रणाली",
+
+        heroDescription: "मौसम, मिट्टी और पानी की उपलब्धता के आधार पर सर्वोत्तम फसलों का चयन करें।",
+        farmerQuote: '"किसान वह जादूगर है जो मिट्टी से पैसा पैदा करता है।"',
+        exploreBtn: "फसलों का अन्वेषण करें 🌾",
+
+
+
+
+        
+        
+        /* STATIC SCHEMES IN INDEX.HTML */
+        pmKisan: "पीएम-किसान (PM-KISAN)",
+        pmKisanDesc: "किसानों के लिए आय सहायता योजना।",
+        pmfby: "पीएमएफबीवाई (PMFBY)",
+        pmfbyDesc: "फसल बीमा सुरक्षा।",
+        soilCard: "मृदा स्वास्थ्य कार्ड",
+        soilCardDesc: "मिट्टी की उत्पादकता में सुधार करें।",
+        learnMore: "और जानें",
+        
+        nearbyServices: "🌐 आस-पास की कृषि सेवाएं",
+        servicesDesc: "अपने आस-पास उपयोगी कृषि सेवाएं खोजें।",
+        soilTesting: "मिट्टी परीक्षण केंद्र",
+        soilTestingDesc: "मिट्टी के पोषक तत्वों और गुणवत्ता की जांच करें।",
+        fertilizerStore: "उर्वरक स्टोर",
+        fertStoreDesc: "आधिकारिक तौर पर अनुशंसित उर्वरक खरीदें।",
+        kvkCenters: "कृषि विज्ञान केंद्र",
+        kvkDesc: "केवीके वैज्ञानिकों से विशेषज्ञ सलाह लें।",
+        findNearby: "आस-पास खोजें",
+
+        /* DASHBOARD FEATURES */
+        cropRecommendation: "फसल अनुशंसा",
+        cropRecommendationDesc: "मौसम, मिट्टी और पानी की उपलब्धता के आधार पर उपयुक्त फसलें खोजें।",
+        weatherIntelligence: "मौसम की जानकारी",
+        weatherDesc: "मौसम की स्थिति के आधार पर कृषि सुझाव प्राप्त करें।",
+        marketTitle: "बाज़ार की जानकारी",
+        marketDesc: "फसलों के दाम और बाज़ार की जानकारी जानें।",
+        diseaseDetection: "रोग पहचान",
+        diseaseDetectionDesc: "फसलों के रोगों और उपचार के तरीकों की पहचान करें।",
+        
+        meetAgriAI: "AgriAI से मिलें",
+        aiSubT: "आपका AI व्यक्तिगत सहायक",
+        aiDescBox: "AgriAI व्यक्तिगत फसल अनुशंसाएं, रोग निदान और जलवायु बुद्धिमत्ता प्रदान करता है।",
+        speakVoice: "🎤 आवाज़ से बात करें",
+        multiLang: "🌍 Supported Languages (Eng, Tel, Hin)",
+        fertRecommend: "🌱 उर्वरक उपयोग का अनुकूलन करें",
+        cMarketInfo: "📈 रीयल-टाइम बाज़ार की जानकारी",
+        startConv: "AI से बात शुरू करें",
+        
+        meetAI: "🤖 AgriAI से मिलें",
+        personalAssistant: "आपका व्यक्तिगत कृषि सहायक",
+        aiDescription: "AgriAI व्यक्तिगत फसल अनुशंसाएं, रोग प्रबंधन और बाज़ार की जानकारी प्रदान करता है।",
+        voiceConversation: "वॉयस वार्तालाप",
+        languageSupport: "अंग्रेजी, तेलुगु और हिंदी समर्थन",
+        fertilizerGuidance: "उर्वरक मार्गदर्शन",
+        marketInformation: "बाज़ार की जानकारी",
+        startAIBtn: "AI से बात शुरू करें",
+        footerText: "Empowering farmers with advanced technology.",
+
+/* STATS */
+
+        totalCrops:
+            "30+ फसलें",
+
+        seasonCount:
+            "3 मौसम",
+
+        soilCount:
+            "5 मिट्टी के प्रकार",
+
+        smartCount:
+            "100% स्मार्ट मार्गदर्शन",
+
+
+
+
+        /* WEATHER */
+
+        weatherTitle: "🌦 मौसम की जानकारी",
+
+        temperature: "तापमान",
+
+        humidity: "नमी",
+
+        rainfall: "वर्षा",
+
+        wind:
+            "Wind Speed",
+
+
+
+
+        /* RECOMMENDATION */
+
+
+        recommendTitle: "🌾 अनुशंसित फसलें",
+
+        recommendSubtitle: "अपनी खेती की शर्तें चुनें",
+
+
+        season: "मौसम",
+
+        soil:
+            "मिट्टी का प्रकार",
+
+        water:
+            "पानी की उपलब्धता",
+
+
+        selectSeason:
+            "मौसम चुनें",
+
+        selectSoil:
+            "मिट्टी चुनें",
+
+        selectWater:
+            "पानी चुनें",
+
+
+
+        kharif:
+            "खरीफ",
+
+        rabi:
+            "रबी",
+
+        zaid:
+            "ज़ैद",
+
+
+
+        blackSoil:
+            "काली मिट्टी",
+
+        redSoil:
+            "लाल मिट्टी",
+
+        loamySoil:
+            "दोमट मिट्टी",
+
+        sandySoil:
+            "रेतीली मिट्टी",
+
+        alluvialSoil:
+            "जलोढ़ मिट्टी",
+
+
+
+        high:
+            "अधिक",
+
+        medium:
+            "मध्यम",
+
+        low:
+            "कम",
+
+
+
+        searchPlaceholder:
+            "फसल खोजें...",
+
+
+
+
+        /* CROPS */
+
+
+        recommendedCrops:
+            "अनुशंसित फसलें 🌱",
+
+        noCrop:
+            "चयनित स्थितियों के लिए कोई फसल नहीं मिली।",
+
+
+        viewDetails:
+            "विवरण देखें",
+
+
+        duration:
+            "Duration",
+
+        yield:
+            "Yield",
+
+        profit: "मुनाफा",
+
+        price:
+            "बाज़ार मूल्य",
+
+
+
+
+        /* DETAILS */
+
+
+        cropDetails:
+            "Crop Details",
+
+
+        description: "विवरण",
+
+
+        scientificName:
+            "Scientific Name",
+
+
+        family:
+            "Family",
+
+
+        temperatureRange:
+            "Suitable Temperature",
+
+
+        rainfallRange:
+            "Required Rainfall",
+
+
+        soilPH:
+            "Soil pH",
+
+
+        seedRate: "बीज दर",
+
+
+        spacing:
+            "Spacing",
+
+
+        sowing:
+            "Best Sowing Months",
+
+
+        harvesting:
+            "Harvesting Months",
+
+
+
+
+        /* FERTILIZER */
+
+
+        fertilizer:
+            "अनुशंसित उर्वरक",
+
+        fertilizerName:
+            "Fertilizer Name",
+
+        purpose:
+            "Purpose",
+
+
+
+
+        /* DISEASE */
+
+
+        diseases:
+            "प्रमुख रोग",
+
+        diseaseName:
+            "Disease",
+
+        symptoms: "लक्षण",
+
+        control: "नियंत्रण के उपाय",
+
+
+
+
+        /* LOCATION */
+
+
+        growingPlaces:
+            "प्रमुख उगाने वाले स्थान",
+
+        states:
+            "States",
+
+        districtsAP:
+            "Andhra Pradesh Districts",
+
+        districtsTS:
+            "Telangana Districts",
+
+
+
+
+        /* BUTTONS */
+
+
+        close:
+            "बंद करें",
+
+
+        listen:
+            "AI Voice Assistant",
+
+
+
+        /* FOOTER */
+
+
+        footerText:
+            "Smart Crop Advisory System - AI Powered Agriculture Solution",
+
+        /* DYNAMIC NEW FIELDS */
+        category: "Category",
+        waterRequirement: "पानी की आवश्यकता",
+        temperature: "तापमान",
+        pH: "पीएच",
+        durationDays: "अवधि के दिन",
+        harvestMonths: "कटाई के महीने",
+        sowingMonths: "बुवाई के महीने",
+        advantages: "फ़ायदे",
+        uses: "उपयोग",
+        marketDemand: "Market Demand",
+        investment: "निवेश",
+        tips: "सुझाव",
+        growingStates: "रज्य जहां उगाया जाता है",
+        aPDistricts: "आंध्र प्रदेश जिले",
+        telanganaDistricts: "तेलंगाना जिले",
+        irrigation: "सिंचाई",
+        weedManagement: "खरपतवार प्रबंधन",
+        intercropping: "Intercropping",
+        storage: "भंडारण",
+        exportPotential: "निर्यात क्षमता",
+        governmentSchemes: "सरकारी योजनाएं",
+        seedVarieties: "Seed Varieties",
+        soilPreparation: "Soil Preparation",
+        landPreparation: "Land Preparation",
+        nurseryMethod: "Nursery Method",
+        transplantingMethod: "Transplanting Method",
+        floweringTime: "Flowering Time",
+        harvestIndicators: "Harvest Indicators",
+        postHarvestCare: "Post Harvest Care",
+        nutrition: "Nutrition",
+        economicImportance: "Economic Importance",
+        weatherClear: "साफ़",
+        weatherClouds: "बादल छाए रहेंगे",
+        weatherRain: "वर्षा",
+        voiceNotSupported: "Voice assistant is not supported in this browser",
+        navigatingToCrops: "Navigating to crops section",
+        navigatingToWeather: "Navigating to weather section",
+        navigatingToMarket: "Navigating to market section",
+        voiceFallbackMsg: "I can help with crops, weather and farming information",
+        noData: "No data available.",
+
+        /* Stages & Details */
+        stage: "Stage",
+        BasalSowing: "Basal / Sowing",
+        Vegetative: "Vegetative",
+        FloweringPodDevelopment: "Flowering / Pod Development",
+
+        allSeasons: "सभी मौसम",
+        kharif: "खरीफ",
+        rabi: "रबी",
+        zaid: "ज़ैद",
+
+        allSoils: "सभी प्रकार की मिट्टी",
+        blackSoil: "काली मिट्टी",
+        redSoil: "लाल मिट्टी",
+        loamySoil: "दोमट मिट्टी",
+        sandySoil: "रेतीली मिट्टी",
+        alluvialSoil: "जलोढ़ मिट्टी",
+
+        allWater: "सभी जल स्तर",
+        high: "अधिक",
+        medium: "मध्यम",
+        low: "कम",
+
+        claySoil: "Clay Soil",
+        aiOnline: "AI Online",
+        marketCurrent: "वर्तमान फसल बाज़ार मूल्य",
+        marketTitle: "बाज़ार की जानकारी",
+        riceCrop: "चावल",
+        maizeCrop: "मक्का",
+        cottonCrop: "कपास",
+        apMarket: "आंध्र प्रदेश बाज़ार",
+        tsMarket: "तेलंगाना बाज़ार",
+        gunturMarket: "गुंटूर बाज़ार",
+        weatherGuidance: "वास्तविक समय कृषि मौसम मार्गदर्शन",
+        learnMore: "और जानें",
+        findNearby: "आस-पास खोजें",
+        soilTestingDesc: "मिट्टी के पोषक तत्वों और गुणवत्ता की जांच करें।",
+        fertStoreDesc: "अनुशंसित उर्वरक खरीदें।",
+        kvkDesc: "विशेषज्ञ कृषि मार्गदर्शन प्राप्त करें।",
+        priceRice: "₹2200 / क्विंटल",
+        priceMaize: "₹1900 / क्विंटल",
+        priceCotton: "₹7500 / क्विंटल",
+        aiAssistant: "AgriAI सहायक",
+        aiAssistantDesc: "आवाज़ या टेक्स्ट के ज़रिए कृषि से जुड़े सवाल पूछें।",
+        cropRecommendationDesc: "मौसम, मिट्टी और पानी के आधार पर उपयुक्त फसलें खोजें।",
+        weatherDesc: "मौसम की स्थिति के आधार पर कृषि सुझाव प्राप्त करें।",
+        marketDesc: "फसलों के दाम और बाज़ार की जानकारी जानें।",
+        diseaseDetectionDesc: "फसलों के रोगों और उपचार के तरीकों की पहचान करें।",
+        meetAI: "AgriAI से मिलें",
+        personalAssistant: "आपका व्यक्तिगत कृषि सहायक",
+        aiDescription: "AgriAI फसल अनुशंसा और उर्वरक मार्गदर्शन प्रदान करता है।",
+        voiceConversation: "वॉयस वार्तालाप",
+        languageSupport: "अंग्रेजी और तेलुगु समर्थन",
+        fertilizerGuidance: "उर्वरक मार्गदर्शन",
+        marketInfo: "बाज़ार की जानकारी",
+        startConversation: "AI से बात शुरू करें"
+
+
+
+        }
 };
-
-
-
-
 
 // =====================================================
 // LANGUAGE CONTROL
