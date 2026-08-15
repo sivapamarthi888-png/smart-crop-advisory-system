@@ -2866,3 +2866,5 @@ h2[data-key="recommendedCrops"] {
 .disease-cure-box th {
     background-color: #e8f5e9 !important;
 }
+
+html, body { -webkit-overflow-scrolling: touch; overscroll-behavior-y: contain; }
