@@ -75,7 +75,7 @@
         
         .loading { font-size: 20px; color: #4ade80; font-weight: bold; display: none; margin-top: 20px; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
         
-        .disease-cure-box { background: rgba(30, 60, 40, 0.9); border: 1px solid #4ade80; border-radius: 15px; padding: 25px; margin-top: 20px; color: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.3); font-size: 1.25rem; line-height: 1.8; min-height: calc(100dvh - 150px); display: flex; flex-direction: column; }
+        .disease-cure-box { justify-content: space-between; overflow-y: auto; background: rgba(30, 60, 40, 0.9); border: 1px solid #4ade80; border-radius: 15px; padding: 25px; margin-top: 20px; color: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.3); font-size: 1.25rem; line-height: 1.8; min-height: calc(100dvh - 150px); display: flex; flex-direction: column; }
         .preview-img { max-width: 200px; border-radius: 15px; border: 3px solid #22c55e; box-shadow: 0 4px 15px rgba(0,0,0,0.3); display: none; margin: 15px auto; }
 
     </style>
@@ -311,8 +311,8 @@
                 <div class="disease-cure-box" style="border-color:#22c55e;">
                     <h2 style="margin-top:0; color:#22c55e;">🦠 Diagnosis Report</h2>
                     ${imgHtml}
-                    ${reply.replace(/\n/g, '<br>')}
-                    <br><br><button onclick="speakText(this.dataset.text)" data-text="${reply.replace(/"/g, '&quot;')}" style="background:#22c55e; color:#000; border:none; padding:10px 20px; border-radius:30px; font-weight:bold; font-size:16px; width:100%; cursor:pointer; margin-top:20px;">${appCurrentLang === "te" ? "🔊 బిగ్గరగా చదవండి (Read)" : (appCurrentLang === "hi" ? "🔊 जोर से पढ़ें (Read)" : "🔊 Read Aloud")}</button>
+                    <div style="flex-grow: 1; font-size: 1.3rem; line-height: 2.2; margin-top: 15px; margin-bottom: 25px;"><div style="flex-grow: 1; font-size: 1.3rem; line-height: 2.2; margin-top: 15px; margin-bottom: 25px;">${reply.replace(/\n/g, '<br><br>').replace(/- /g, '<br>🟢 ').replace(/\n/g, '<br><br>').replace(/- /g, '<br>👉 ')}</div></div>
+                    <br><br><button onclick="speakText(this.dataset.text)" data-text="${reply.replace(/"/g, '&quot;')}" style="background:#fbbf24; color:#000; border:none; padding:20px; border-radius:15px; font-weight:bold; font-size: 1.4rem; width:100%; cursor:pointer; margin-top: auto; margin-bottom: 15px; box-shadow: 0 -4px 15px rgba(0,0,0,0.2);">🔊 Read Aloud</button>
                 </div>
             `;
             if(typeof speakText === 'function') setTimeout(() => speakText(reply), 500);
@@ -349,8 +349,8 @@
                  document.getElementById('cardsContainer').innerHTML = `
                    <div class="disease-cure-box" style="border-color:#fbbf24; margin-bottom:30px;">
                        <h2 style="margin-top:0; color:#fbbf24;">📈 Market Prices Today</h2>
-                       ${reply.replace(/\n/g, '<br>')}
-                       <br><br><button onclick="speakText(this.dataset.text)" data-text="${reply.replace(/"/g, '&quot;')}" style="margin-top: auto; font-size: 1.1rem; padding: 15px; background:#fbbf24; color:#000; border:none; padding:10px 20px; border-radius:30px; font-weight:bold; font-size:16px; width:100%; cursor:pointer;">${appCurrentLang === "te" ? "🔊 బిగ్గరగా చదవండి (Read)" : (appCurrentLang === "hi" ? "🔊 जोर से पढ़ें (Read)" : "🔊 Read Aloud")}</button>
+                       <div style="flex-grow: 1; font-size: 1.3rem; line-height: 2.2; margin-top: 15px; margin-bottom: 25px;"><div style="flex-grow: 1; font-size: 1.3rem; line-height: 2.2; margin-top: 15px; margin-bottom: 25px;">${reply.replace(/\n/g, '<br><br>').replace(/- /g, '<br>🟢 ').replace(/\n/g, '<br><br>').replace(/- /g, '<br>👉 ')}</div></div>
+                       <br><br><button onclick="speakText(this.dataset.text)" data-text="${reply.replace(/"/g, '&quot;')}" style="background:#fbbf24; color:#000; border:none; padding:20px; border-radius:15px; font-weight:bold; font-size: 1.4rem; width:100%; cursor:pointer; margin-top: auto; margin-bottom: 15px; box-shadow: 0 -4px 15px rgba(0,0,0,0.2);">🔊 Read Aloud</button>
                    </div>
                    ${marketLinks}
                  `;
@@ -390,7 +390,7 @@
                  let reply = geminiData.candidates[0].content.parts[0].text;
                  
                  document.getElementById('loadingIndicator').style.display = 'none';
-                 document.getElementById('cardsContainer').innerHTML = `<div class="disease-cure-box" style="border-color:#3b82f6;"><h2 style="margin-top:0; color:#3b82f6;">🌤️ Regional Weather Matrix</h2><p style="font-weight:bold; color:#555;">📍 Hyderabad: ${tempHyd}°C | 📍 Andhra Pradesh: ${tempAP}°C | 🕒 ${currentTime}</p><hr style="border:0; border-top:1px solid #ddd; margin: 10px 0;">${reply.replace(/\n/g, '<br>')}<br><br><button onclick="speakText(this.dataset.text)" data-text="${reply.replace(/"/g, '&quot;')}" style="margin-top: auto; font-size: 1.1rem; padding: 15px; background:#38bdf8; color:#000; border:none; padding:10px 20px; border-radius:30px; font-weight:bold; font-size:16px; width:100%; cursor:pointer;">${appCurrentLang === "te" ? "🔊 బిగ్గరగా చదవండి (Read)" : (appCurrentLang === "hi" ? "🔊 जोर से पढ़ें (Read)" : "🔊 Read Aloud")}</button></div>`;
+                 document.getElementById('cardsContainer').innerHTML = `<div class="disease-cure-box" style="border-color:#3b82f6;"><h2 style="margin-top:0; color:#3b82f6;">🌤️ Regional Weather Matrix</h2><p style="font-weight:bold; color:#555;">📍 Hyderabad: ${tempHyd}°C | 📍 Andhra Pradesh: ${tempAP}°C | 🕒 ${currentTime}</p><hr style="border:0; border-top:1px solid #ddd; margin: 10px 0;"><div style="flex-grow: 1; font-size: 1.3rem; line-height: 2.2; margin-top: 15px; margin-bottom: 25px;"><div style="flex-grow: 1; font-size: 1.3rem; line-height: 2.2; margin-top: 15px; margin-bottom: 25px;">${reply.replace(/\n/g, '<br><br>').replace(/- /g, '<br>🟢 ').replace(/\n/g, '<br><br>').replace(/- /g, '<br>👉 ')}</div></div><br><br><button onclick="speakText(this.dataset.text)" data-text="${reply.replace(/"/g, '&quot;')}" style="background:#fbbf24; color:#000; border:none; padding:20px; border-radius:15px; font-weight:bold; font-size: 1.4rem; width:100%; cursor:pointer; margin-top: auto; margin-bottom: 15px; box-shadow: 0 -4px 15px rgba(0,0,0,0.2);">🔊 Read Aloud</button></div>`;
                  if(typeof speakText === 'function') setTimeout(() => speakText(reply), 500);;
                  } catch(e) {
                  document.getElementById('loadingIndicator').innerText = "Weather Network Error.";
