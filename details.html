@@ -96,11 +96,11 @@
 
         <div id="interactiveBox" class="interactive-box">
             <div style="display:flex; justify-content:center; gap:10px;">
-                <label class="upload-label" id="lblGallery" style="flex:1; cursor:pointer;" onclick="if('speechSynthesis' in window) window.speechSynthesis.speak(new SpeechSynthesisUtterance(''));">
+                <label class="upload-label" id="lblGallery" style="flex:1; height:40vh; border-radius:20px; font-size:2.2rem; background:#3b82f6; display:flex; flex-direction:column; align-items:center; justify-content:center; cursor:pointer;"><span style="font-size:4rem; margin-bottom:15px;">📁</span>
                     📁 Gallery
                     <input type="file" accept="image/*" onchange="handleImage(event)">
                 </label>
-                <label class="upload-label" id="lblCamera" style="flex:1; cursor:pointer;" onclick="if('speechSynthesis' in window) window.speechSynthesis.speak(new SpeechSynthesisUtterance(''));">
+                <label class="upload-label" id="lblCamera" style="flex:1; height:40vh; border-radius:20px; font-size:2.2rem; background:#3b82f6; display:flex; flex-direction:column; align-items:center; justify-content:center; cursor:pointer;"><span style="font-size:4rem; margin-bottom:15px;">📸</span>
                     📷 Camera
                     <input type="file" accept="image/*" capture="environment" onchange="handleImage(event)">
                 </label>
