@@ -20,6 +20,9 @@ window.fetch = async function(url, options) {
     return originalFetch(url, options);
 };
 
+
+// Engine Memory
+window.globalAiMemory = window.globalAiMemory || [];
 let availableVoices = [];
 if ('speechSynthesis' in window) {
     availableVoices = window.speechSynthesis.getVoices();
@@ -100,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadChatHistory();
 });
 
-async function sendChatMessage() {
+async function sendChatMessage() { if("speechSynthesis" in window){window.speechSynthesis.cancel();} 
     if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
         window.speechSynthesis.speak(new SpeechSynthesisUtterance('')); // Permanent Audio Unlock
@@ -226,7 +229,7 @@ function loadChatHistory() {
     }
 }
 
-async function askGemini(userMessage) {
+async function askGemini(userMessage, isDiagnostic = false) { if("speechSynthesis" in window){window.speechSynthesis.cancel();} 
     const cQuery = userMessage.toLowerCase().trim();
     const loadingRing = document.getElementById('aiLoadingRing');
     
@@ -264,7 +267,13 @@ async function askGemini(userMessage) {
         let langName = userLang === 'te' ? 'Telugu' : (userLang === 'hi' ? 'Hindi' : 'English');
 
         // Universally command Gemini to detect ANY crop inquiry and force the Table format!
-        let promptText = `You are AXIOM, an elite AI Assistant for farmers. Address the user as 'Sir'. The user's default language is ${langName}. The user said: ${userMessage}. CRITICAL SPEED RULE: DO NOT EXCEED 100 WORDS OUTSIDE OF THE TABLE. RESPOND FAST. EXTREMELY CRITICAL RULE: YOU MUST REPLY STRICTLY IN THE EXACT FOLLOWING LANGUAGE AND NO OTHER: ${langName.toUpperCase()}. Do not translate literal english words if the user asked in english. CRITICAL RULE 1: If the user's message is a Crop, Fruit, Vegetable, or asks about cultivating a crop, you MUST generate a massive HTML TABLE detailing the crop profile exactly like this template. Output RAW HTML ONLY (no markdown backticks). EVERY SINGLE ROW IS MANDATORY AND MUST MATCH THIS EXACT LIST: <table><tr><td><b>Crop Name</b></td><td>...</td></tr><tr><td><b>Category</b></td><td>...</td></tr><tr><td><b>Season</b></td><td>...</td></tr><tr><td><b>Soil Type</b></td><td>...</td></tr><tr><td><b>Water Requirement</b></td><td>...</td></tr><tr><td><b>Temperature</b></td><td>...</td></tr><tr><td><b>Profit</b></td><td><b><span style='color:green'>...</span></b></td></tr><tr><td><b>Investment</b></td><td>...</td></tr><tr><td><b>Humidity</b></td><td>...</td></tr><tr><td><b>Seed Rate</b></td><td>...</td></tr><tr><td><b>Market Price</b></td><td>...</td></tr><tr><td><b>Sowing Months</b></td><td>...</td></tr><tr><td><b>Harvest Months</b></td><td>...</td></tr><tr><td><b>Major Pests</b></td><td>...</td></tr><tr><td><b>Major Diseases</b></td><td>...</td></tr><tr><td><b>Rainfall</b></td><td>...</td></tr><tr><td><b>Description</b></td><td>...</td></tr></table><br><b>Recommended Fertilizers</b><br><ul><li>...</li><li>...</li></ul><br><b>Retail Buyers & Market Demand</b><br><b>Market State:</b> ...<br><ul><li>⭐⭐⭐⭐⭐ <b>[Authentic Real Buyer Name]</b> - Rate: [Real ₹ Price] (Maximum Profit). 📞 [Real 10-digit Phone] - Location: [Real Indian City]<br><b>Profit Analysis:</b> Recommend...</li></ul>TRANSLATION MANDATE: If the language is NOT English, YOU MUST COMPLETELY TRANSLATE all headers and data into the exact native script (${langName}) so NO English words remain anywhere! CRITICAL RULE 2: If the user asks a general farming question, answer normally without a table. Do NOT use Markdown formatting. 
+        
+        window.globalAiMemory.push("User explicitly asked: " + userMessage);
+        if (window.globalAiMemory.length > 4) window.globalAiMemory.shift(); // Keep last 4 chunks
+        let memoryString = "PAST CONTEXT (IF USER ASKS 'GIVE DETAILS ALSO'): " + window.globalAiMemory.join(" | ");
+        
+        // Let's inject memory directly into the user message segment
+        let promptText = memoryString + "\n\nCRITICAL: YOU MUST USE THE PAST CONTEXT IF THE USER ASKS FOR DETAILS OF A PREVIOUS ANSWER (e.g. if they say 'give details', you provide the details for the exact 10 crops you previously generated!).\n\n" + `You are AXIOM, an elite AI Assistant for farmers. Address the user as 'Sir'. The user's default language is ${langName}. The user said: ${userMessage}. CRITICAL SPEED RULE: DO NOT EXCEED 100 WORDS OUTSIDE OF THE TABLE. RESPOND FAST. EXTREMELY CRITICAL RULE: YOU MUST REPLY STRICTLY IN THE EXACT FOLLOWING LANGUAGE AND NO OTHER: ${langName.toUpperCase()}. Do not translate literal english words if the user asked in english. CRITICAL RULE 1: If the user's message is a Crop, Fruit, Vegetable, or asks about cultivating a crop, you MUST generate a massive HTML TABLE detailing the crop profile exactly like this template. Output RAW HTML ONLY (no markdown backticks). EVERY SINGLE ROW IS MANDATORY AND MUST MATCH THIS EXACT LIST: <table><tr><td><b>Crop Name</b></td><td>...</td></tr><tr><td><b>Category</b></td><td>...</td></tr><tr><td><b>Season</b></td><td>...</td></tr><tr><td><b>Soil Type</b></td><td>...</td></tr><tr><td><b>Water Requirement</b></td><td>...</td></tr><tr><td><b>Temperature</b></td><td>...</td></tr><tr><td><b>Profit</b></td><td><b><span style='color:green'>...</span></b></td></tr><tr><td><b>Investment</b></td><td>...</td></tr><tr><td><b>Humidity</b></td><td>...</td></tr><tr><td><b>Seed Rate</b></td><td>...</td></tr><tr><td><b>Market Price</b></td><td>...</td></tr><tr><td><b>Sowing Months</b></td><td>...</td></tr><tr><td><b>Harvest Months</b></td><td>...</td></tr><tr><td><b>Major Pests</b></td><td>...</td></tr><tr><td><b>Major Diseases</b></td><td>...</td></tr><tr><td><b>Rainfall</b></td><td>...</td></tr><tr><td><b>Description</b></td><td>...</td></tr></table><br><b>Recommended Fertilizers</b><br><ul><li>...</li><li>...</li></ul><br><b>Retail Buyers & Market Demand</b><br><b>Market State:</b> ...<br><ul><li>⭐⭐⭐⭐⭐ <b>[Authentic Real Buyer Name]</b> - Rate: [Real ₹ Price] (Maximum Profit). 📞 [Real 10-digit Phone] - Location: [Real Indian City]<br><b>Profit Analysis:</b> Recommend...</li></ul>TRANSLATION MANDATE: If the language is NOT English, YOU MUST COMPLETELY TRANSLATE all headers and data into the exact native script (${langName}) so NO English words remain anywhere! CRITICAL RULE 2: If the user asks a general farming question, answer normally without a table. Do NOT use Markdown formatting. 
 CRITICAL RULE: YOU MUST ANSWER ANY QUESTION THE USER ASKS, NO MATTER WHAT IT IS. Do NOT restrict yourself. If they ask general knowledge or conversational questions, answer them accurately and beautifully! 
 CRITICAL RULE: If the user asks for "Top 10 crops" in Summer/Rainy(Kharif)/Winter(Rabi) season, you MUST provide an accurate Top 10 numbered list of crops that cultivate in that season! 
 CRITICAL RULE: If the user asks for today's Date or Day, answer using this system date: (System Date: ${new Date().toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}). 
