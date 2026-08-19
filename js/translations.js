@@ -212,8 +212,13 @@ const translations = {
 
 
 
-        searchPlaceholder:
-            "Search crop...",
+        
+        exploreCategory: "Explore Agriculture",
+        catVegetables: "Vegetables",
+        catFlowers: "Flowers",
+        catFertilizers: "Fertilizers",
+        catDiseases: "Diseases",
+        searchPlaceholder: "Search crop...",
 
 
 
@@ -1113,8 +1118,13 @@ const translations = {
 
 
 
-        searchPlaceholder:
-            "फसल खोजें...",
+        
+        exploreCategory: "कृषि अन्वेषण",
+        catVegetables: "सब्जियां",
+        catFlowers: "फूल",
+        catFertilizers: "उर्वरक",
+        catDiseases: "बीमारियां",
+        searchPlaceholder: "फसल खोजें...",
 
 
 
