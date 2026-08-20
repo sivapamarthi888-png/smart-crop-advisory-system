@@ -290,7 +290,7 @@ CRITICAL RULE: If the user asks for Seed rates or Fertilizer rates, securely pro
  CRITICAL RULE 3: ALL 'Market Price', 'Profit', and 'Investment' MUST BE EXCLUSIVELY calculated and displayed in Indian Rupees (₹). DO NOT USE DOLLARS ($).`;
 
         let apiKey = GEMINI_API_KEY || (typeof config !== 'undefined' ? config.GEMINI_API_KEY : '');
-        let res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${window.apiKeys[window.activeKeyIndex]}`, {
+        let res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${window.apiKeys[window.activeKeyIndex]}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: promptText + ' CRITICAL RULE FOR MARKETS: You MUST list exactly 3 specific, authentic Retail Buyers/Agricultural Markets located EXCLUSIVELY in Telangana, Andhra Pradesh, and Visakhapatnam (Vizag) (e.g. Bowenpally Market, Guntur Mirchi Yard, Vizag MVP Rythu Bazar). Do NOT suggest markets in Delhi or other distant states. TRANSLATE the names of these Regional Markets natively into the requested language (Hindi/Telugu). Ensure the entire structured table output is fully translated.' }] }] })
