@@ -23,6 +23,16 @@ window.fetch = async function(url, options) {
 
 // Engine Memory
 window.globalAiMemory = window.globalAiMemory || [];
+
+// Universal scroll lock
+function scrollToBottom() {
+    let cb = document.getElementById('chatBody') || document.querySelector('.chat-body');
+    if (cb) {
+        cb.scrollTop = cb.scrollHeight + 500;
+    }
+}
+setInterval(scrollToBottom, 500); // Enforce continuous lock during rendering
+
 let availableVoices = [];
 if ('speechSynthesis' in window) {
     availableVoices = window.speechSynthesis.getVoices();

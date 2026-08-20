@@ -214,10 +214,14 @@ const translations = {
 
         
         exploreCategory: "Explore Agriculture",
-        catVegetables: "Vegetables",
+        
+        
+        catGrains: "Grains",
         catFlowers: "Flowers",
-        catFertilizers: "Fertilizers",
-        catDiseases: "Diseases",
+        catFruits: "Fruits",
+        catPulse: "Pulse",
+        catOilseeds: "Oilseeds",
+        catSpice: "Spice crops",
         searchPlaceholder: "Search crop...",
 
 
@@ -1120,10 +1124,14 @@ const translations = {
 
         
         exploreCategory: "कृषि अन्वेषण",
-        catVegetables: "सब्जियां",
+        
+        
+        catGrains: "अनाज",
         catFlowers: "फूल",
-        catFertilizers: "उर्वरक",
-        catDiseases: "बीमारियां",
+        catFruits: "फल",
+        catPulse: "दलहन",
+        catOilseeds: "तिलहन",
+        catSpice: "मसाला फसलें",
         searchPlaceholder: "फसल खोजें...",
 
 

@@ -554,37 +554,9 @@
 
 
     
-    <!-- PHASE 1: CATEGORY HUB -->
-    <section id="categoryHub" style="padding: 30px 20px; text-align: center; background: linear-gradient(135deg, #e8f5e9, #c8e6c9); border-bottom: 2px solid #81c784; margin-top: 20px;">
-        <h2 data-key="exploreCategory" style="font-size: 2.2rem; color: #1b5e20; margin-bottom: 25px; font-weight: 800;">Explore Agriculture</h2>
-        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; max-width: 600px; margin: 0 auto;">
-            
-            <!-- Vegetables -->
-            <a href="chat.html?q=vegetables" style="background: #ffffff; border-radius: 20px; padding: 30px 10px; text-decoration: none; box-shadow: 0 8px 20px rgba(0,0,0,0.08); display: flex; flex-direction: column; align-items: center; transition: transform 0.2s;">
-                <span style="font-size: 4rem; margin-bottom: 15px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">🍅</span>
-                <h3 data-key="catVegetables" style="color: #2e7d32; margin:0; font-size: 1.4rem;">Vegetables</h3>
-            </a>
+    
+    
 
-            <!-- Flowers -->
-            <a href="chat.html?q=flowers" style="background: #ffffff; border-radius: 20px; padding: 30px 10px; text-decoration: none; box-shadow: 0 8px 20px rgba(0,0,0,0.08); display: flex; flex-direction: column; align-items: center; transition: transform 0.2s;">
-                <span style="font-size: 4rem; margin-bottom: 15px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">🌻</span>
-                <h3 data-key="catFlowers" style="color: #2e7d32; margin:0; font-size: 1.4rem;">Flowers</h3>
-            </a>
-
-            <!-- Fertilizers -->
-            <a href="chat.html?q=fertilizers" style="background: #ffffff; border-radius: 20px; padding: 30px 10px; text-decoration: none; box-shadow: 0 8px 20px rgba(0,0,0,0.08); display: flex; flex-direction: column; align-items: center; transition: transform 0.2s;">
-                <span style="font-size: 4rem; margin-bottom: 15px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">🧪</span>
-                <h3 data-key="catFertilizers" style="color: #2e7d32; margin:0; font-size: 1.4rem;">Fertilizers</h3>
-            </a>
-
-            <!-- Diseases -->
-            <a href="details.html" style="background: #ffffff; border-radius: 20px; padding: 30px 10px; text-decoration: none; box-shadow: 0 8px 20px rgba(0,0,0,0.08); display: flex; flex-direction: column; align-items: center; transition: transform 0.2s;">
-                <span style="font-size: 4rem; margin-bottom: 15px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">🦠</span>
-                <h3 data-key="catDiseases" style="color: #2e7d32; margin:0; font-size: 1.4rem;">Diseases</h3>
-            </a>
-
-        </div>
-    </section>
 \n    <section class="recommend-section" id="crops">
 
 
@@ -719,11 +691,25 @@
         <div class="crop-result-header">
 
 
-            <h2 data-key="recommendedCrops">
+            
+        <!-- Horizontal Scrollable Category Chips beside Header -->
+        <div class="header-chip-container" style="display: flex; align-items: center; overflow-x: auto; white-space: nowrap; gap: 20px; padding: 10px 0; width: 100%; -webkit-overflow-scrolling: touch; margin-bottom: 10px;">
+            <h2 data-key="recommendedCrops" style="margin: 0; flex-shrink: 0;">Recommended Crops 🌱</h2>
+            <div style="display: flex; gap: 10px; flex-shrink: 0; padding-right: 20px;">
+                <a href="chat.html?q=Grains" style="background:#ffffff; color:#2e7d32; padding:8px 18px; border-radius:25px; text-decoration:none; box-shadow:0 2px 8px rgba(0,0,0,0.1); font-weight:bold; display:flex; align-items:center; gap:8px;"><span style="font-size:1.3rem;">🌾</span> <span data-key="catGrains">Grains</span></a>
+                <a href="chat.html?q=Flowers" style="background:#ffffff; color:#2e7d32; padding:8px 18px; border-radius:25px; text-decoration:none; box-shadow:0 2px 8px rgba(0,0,0,0.1); font-weight:bold; display:flex; align-items:center; gap:8px;"><span style="font-size:1.3rem;">🌻</span> <span data-key="catFlowers">Flowers</span></a>
+                <a href="chat.html?q=Fruits" style="background:#ffffff; color:#2e7d32; padding:8px 18px; border-radius:25px; text-decoration:none; box-shadow:0 2px 8px rgba(0,0,0,0.1); font-weight:bold; display:flex; align-items:center; gap:8px;"><span style="font-size:1.3rem;">🍎</span> <span data-key="catFruits">Fruits</span></a>
+                <a href="chat.html?q=Pulse" style="background:#ffffff; color:#2e7d32; padding:8px 18px; border-radius:25px; text-decoration:none; box-shadow:0 2px 8px rgba(0,0,0,0.1); font-weight:bold; display:flex; align-items:center; gap:8px;"><span style="font-size:1.3rem;">🌱</span> <span data-key="catPulse">Pulse</span></a>
+                <a href="chat.html?q=Oilseeds" style="background:#ffffff; color:#2e7d32; padding:8px 18px; border-radius:25px; text-decoration:none; box-shadow:0 2px 8px rgba(0,0,0,0.1); font-weight:bold; display:flex; align-items:center; gap:8px;"><span style="font-size:1.3rem;">🫘</span> <span data-key="catOilseeds">Oilseeds</span></a>
+                <a href="chat.html?q=Spice crops" style="background:#ffffff; color:#2e7d32; padding:8px 18px; border-radius:25px; text-decoration:none; box-shadow:0 2px 8px rgba(0,0,0,0.1); font-weight:bold; display:flex; align-items:center; gap:8px;"><span style="font-size:1.3rem;">🌶️</span> <span data-key="catSpice">Spice crops</span></a>
+            </div>
+            <!-- Hack to hide the weird slash user found: -->
+            <style>
+            .header-chip-container::-webkit-scrollbar { display: none; }
+            .header-chip-container { -ms-overflow-style: none; scrollbar-width: none; }
+            </style>
+        </div>
 
-                Recommended Crops 🌱
-
-            </h2>
 
 
 
