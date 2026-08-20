@@ -183,7 +183,7 @@
 
         .chat-container::-webkit-scrollbar-track {
             background: #e0e0e0;
-            border-left: 1px solid #ccc;
+            
         }
 
         .chat-container::-webkit-scrollbar-thumb {
@@ -263,7 +263,7 @@
             background: #e8ecd8;
             border: 2px solid #888;
             border-bottom: 1px solid #eee;
-            border-right: 1px solid #eee;
+            
             box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.3);
             border-radius: 4px;
             outline: none;
@@ -583,7 +583,7 @@
         /* 3. True WhatsApp Input Bar */
         .chat-input-container {
             position: fixed !important;
-            bottom: 0 !important;
+            bottom: 18px !important;
             width: 100% !important;
             max-width: inherit !important;
             background: transparent !important;
@@ -644,10 +644,10 @@
         
         .chat-app {
             background-color: rgba(255, 255, 255, 0.4) !important;
-            max-width: 900px !important;  /* Centers the chat like Whatsapp Web */
-            margin: 0 auto !important;
-            border-left: 1px solid rgba(0,0,0,0.1) !important;
-            border-right: 1px solid rgba(0,0,0,0.1) !important;
+            width: 100% !important; max-width: 100% !important;  /* Centers the chat like Whatsapp Web */
+            
+            
+            
             box-shadow: 0 0 30px rgba(0,0,0,0.1) !important;
         }
 
@@ -699,7 +699,7 @@
         .chat-main {
             padding-left: 20px !important;
             padding-right: 20px !important;
-            max-width: 900px !important; /* expand center column */
+            width: 100% !important; max-width: 100% !important; /* expand center column */
             margin: 0 auto;
         }
 
@@ -791,7 +791,7 @@
                 setTimeout(() => {
                     let chatInput = document.getElementById('chatInput');
                     if (chatInput) {
-                        chatInput.value = `Provide a detailed list of the best types of ${queryCategory} to cultivate. Rank them from best to least based on profitability and yield. Show exactly what types fall under this category in a clear list.`;
+                        chatInput.value = `Strictly list and rank the top 10 most profitable ${queryCategory} to cultivate. DO NOT greet. Create a strict HTML table as requested in the system prompt.`;
                         
                         let sendBtn = document.getElementById('sendMessage');
                         if (sendBtn) {
