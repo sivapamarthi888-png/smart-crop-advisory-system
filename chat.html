@@ -42,56 +42,10 @@
             padding-bottom: 20px;
         }
         .chat-input-container {
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            background: transparent;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            max-width: 100%;
-            gap: 10px;
-            box-sizing: border-box;
-        }
-        
-        .chat-input-container #chatInput {
-            flex: 0.85; 
-            height: 45px;
-            border-radius: 25px !important;
-            background: #ffffff;
-            border: 1px solid #ddd;
-            padding: 10px 20px !important;
-            font-size: 16px !important;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            outline: none;
-            margin-right: 15px;
-        }
-
-        .chat-input-container .btn {
-            width: 70px !important;
-            height: 70px !important;
-            border-radius: 50% !important;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px !important;
-            cursor: pointer;
-            border: none;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
             flex-shrink: 0;
-            margin-left: 5px;
+            position: relative;
+            background: rgba(255, 255, 255, 0.9); /* Opaque for readability */
         }
-        
-        #aiMicBtn {
-            background: #128c7e !important;
-            color: white;
-            transition: transform 0.2s;
-        }
-        #btnChatSend {
-            background: #128c7e !important;
-            color: white;
-        }
-        
 
         
         
@@ -607,7 +561,123 @@
             font-size: 28px !important;
             border-radius: 50% !important;
         }
-</style>
+
+        /* === SURGICAL UI UPGRADES (Do not break layout) === */
+        
+        /* 1. Animate Indian Flag Background */
+        body {
+            background: linear-gradient(-45deg, #FF9933, #FFFFFF, #000080, #FFFFFF, #138808, #FF9933) !important;
+            background-size: 400% 400% !important;
+            animation: farmerGradient 15s ease infinite !important;
+        }
+
+        .chat-app {
+            background-color: rgba(255, 255, 255, 0.25) !important; /* Let animated flag show through */
+        }
+
+        /* 2. Fix the overlap by providing deep padding at the bottom */
+        .chat-container {
+            padding-bottom: 120px !important; 
+        }
+
+        /* 3. True WhatsApp Input Bar */
+        .chat-input-container {
+            position: fixed !important;
+            bottom: 0 !important;
+            width: 100% !important;
+            max-width: inherit !important;
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            padding: 8px 10px !important;
+            padding-bottom: env(safe-area-inset-bottom, 12px) !important;
+            z-index: 9999 !important;
+            height: auto !important;
+        }
+
+        .input-wrapper {
+            display: flex !important;
+            align-items: flex-end !important;
+            width: 100% !important;
+            gap: 10px !important;
+            background: transparent !important;
+            box-shadow: none !important;
+            border: none !important;
+            padding: 0 !important;
+        }
+
+        .input-wrapper #chatInput {
+            flex: 1 !important;
+            min-height: 52px !important;
+            height: auto !important;
+            background: #ffffff !important;
+            border: 1px solid #ccc !important;
+            border-radius: 26px !important;
+            padding: 15px 20px !important;
+            font-size: 17px !important;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1) !important;
+            color: #000 !important;
+        }
+
+        .input-wrapper .btn {
+            width: 55px !important;
+            height: 55px !important;
+            background: #128c7e !important; /* WhatsApp Green */
+            color: #ffffff !important;
+            border-radius: 50% !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-size: 26px !important;
+            flex-shrink: 0 !important;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2) !important;
+            border: none !important;
+            transition: transform 0.1s !important;
+        }
+
+        .input-wrapper .btn:active {
+            transform: scale(0.9) !important;
+        }
+
+    
+        /* === WHATSAPP WEB LAYOUT === */
+        
+        .chat-app {
+            background-color: rgba(255, 255, 255, 0.4) !important;
+            max-width: 900px !important;  /* Centers the chat like Whatsapp Web */
+            margin: 0 auto !important;
+            border-left: 1px solid rgba(0,0,0,0.1) !important;
+            border-right: 1px solid rgba(0,0,0,0.1) !important;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1) !important;
+        }
+
+        /* Perfectly rounded chatting bubbles */
+        .message {
+            max-width: 75% !important;
+            margin: 15px !important;
+            border-radius: 18px !important;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1) !important;
+            padding: 15px 20px !important;
+        }
+
+        .message.bot {
+            float: left !important;
+            background: #ffffff !important;
+            border-top-left-radius: 4px !important; /* Authentic Whatsapp left-tail */
+            color: #222 !important;
+            width: auto !important;
+            clear: both !important;
+        }
+
+        .message.user {
+            float: right !important;
+            background: #dcf8c6 !important; /* Authentic Whatsapp light green */
+            border-top-right-radius: 4px !important; /* Authentic Whatsapp right-tail */
+            color: #222 !important;
+            clear: both !important;
+        }
+
+    </style>
     <link rel="icon" href="data:,">
 
     <style>
@@ -711,6 +781,32 @@
             }
         });
     </script>
+
+    <!-- SECURE AUTO ROUTING ALGORITHM -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const queryCategory = urlParams.get('q');
+            if (queryCategory) {
+                setTimeout(() => {
+                    let chatInput = document.getElementById('chatInput');
+                    if (chatInput) {
+                        chatInput.value = `Provide a detailed list of the best types of ${queryCategory} to cultivate. Rank them from best to least based on profitability and yield. Show exactly what types fall under this category in a clear list.`;
+                        
+                        let sendBtn = document.getElementById('sendMessage');
+                        if (sendBtn) {
+                            sendBtn.click();
+                        } else if (typeof sendChatMessage === 'function') {
+                            sendChatMessage();
+                        }
+                    }
+                    // Strip the URL so refreshing doesn't re-trigger it endlessly
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                }, 600);
+            }
+        });
+    </script>
+
 </body>
 
 

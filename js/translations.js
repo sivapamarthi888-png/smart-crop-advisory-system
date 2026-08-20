@@ -698,6 +698,12 @@ const translations = {
 
 
 
+                catGrains: "ధాన్యాలు",
+        catFlowers: "పూలు",
+        catFruits: "పండ్లు",
+        catPulse: "పప్పు ధాన్యాలు",
+        catOilseeds: "నూనె గింజలు",
+        catSpice: "సుగంధ ద్రవ్యాలు",
         searchPlaceholder:
             "పంటను వెతకండి...",
 
