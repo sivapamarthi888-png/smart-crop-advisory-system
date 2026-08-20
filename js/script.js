@@ -394,25 +394,69 @@ async function initializeWeather() {
     let today = document.getElementById("todayWeather");
     let tomorrow = document.getElementById("tomorrowWeather");
     let next = document.getElementById("nextWeather");
+    
     let todayTmp = document.getElementById("todayTemp");
     let tomorrowTmp = document.getElementById("tomorrowTemp");
     let nextTmp = document.getElementById("nextTemp");
 
-    try {
-        let res = await fetch("https://api.open-meteo.com/v1/forecast?latitude=17.3850&longitude=78.4867&daily=weathercode,temperature_2m_max&timezone=auto");
-        let data = await res.json();
+    let weatherTitle = document.querySelector('[data-key="weatherTitle"]');
+    
+    // Default fallback coordinates (Hyderabad)
+    let lat = 17.3850;
+    let lon = 78.4867;
+    let locationName = "Hyderabad";
+
+    const fetchMeteo = async (latitude, longitude, locName) => {
+        try {
+            let res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&daily=weathercode,temperature_2m_max&timezone=auto`);
+            let data = await res.json();
+            
+            let codes = data.daily.weathercode;
+            let temps = data.daily.temperature_2m_max;
+            
+            function getWText(code) { return code <= 3 ? "Clear" : code <= 48 ? "Cloudy" : code <= 67 ? "Rainy" : "Stormy"; }
+            function transW(text) { return (typeof getTrans === 'function') ? getTrans('weather' + text, text) : text; }
+            
+            if (today && codes[0] !== undefined) { today.innerText = transW(getWText(codes[0])); todayTmp.innerText = temps[0] + "°C"; }
+            if (tomorrow && codes[1] !== undefined) { tomorrow.innerText = transW(getWText(codes[1])); tomorrowTmp.innerText = temps[1] + "°C"; }
+            if (next && codes[2] !== undefined) { next.innerText = transW(getWText(codes[2])); nextTmp.innerText = temps[2] + "°C"; }
+            
+            if (weatherTitle && locName) {
+                // Attach hyper-local name to the header
+                let baseTitle = typeof getTrans === 'function' ? getTrans('weatherTitle', '🌦 Weather Intelligence') : '🌦 Weather Intelligence';
+                weatherTitle.innerHTML = baseTitle + ` <span style="font-size:1.1rem; color:#128c7e;">(📍 ${locName})</span>`;
+            }
+        } catch(e) {
+            console.error('Weather Fail:', e);
+            if(today) today.innerHTML = "Offline";
+            if(tomorrow) tomorrow.innerHTML = "Offline";
+        }
+    };
+
+    if (navigator.geolocation) {
+        if (weatherTitle) {
+            let baseTitle = typeof getTrans === 'function' ? getTrans('weatherTitle', '🌦 Weather Intelligence') : '🌦 Weather Intelligence';
+            weatherTitle.innerHTML = baseTitle + ` <span style="font-size:1.0rem; color:#888;">(Locating...)</span>`;
+        }
         
-        let codes = data.daily.weathercode;
-        let temps = data.daily.temperature_2m_max;
-        
-        function getWText(code) { return code <= 3 ? "Clear" : code <= 48 ? "Cloudy" : code <= 67 ? "Rainy" : "Stormy"; }
-        
-        if (today) { today.innerText = getWText(codes[0]); todayTmp.innerText = temps[0] + "°C"; }
-        if (tomorrow) { tomorrow.innerText = getWText(codes[1]); tomorrowTmp.innerText = temps[1] + "°C"; }
-        if (next) { next.innerText = getWText(codes[2]); nextTmp.innerText = temps[2] + "°C"; }
-    } catch(e) {
-        if(today) today.innerHTML = "Offline";
-        if(tomorrow) tomorrow.innerHTML = "Offline";
+        navigator.geolocation.getCurrentPosition(async (position) => {
+            lat = position.coords.latitude;
+            lon = position.coords.longitude;
+            
+            // Phase 2: Reverse Geocoding API (OpenStreetMap Nominatim)
+            try {
+                let geoRes = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
+                let geoData = await geoRes.json();
+                locationName = geoData.address.village || geoData.address.suburb || geoData.address.neighbourhood || geoData.address.town || geoData.address.city || geoData.address.state_district || "Your Location";
+            } catch(e) { console.log('Reverse Geo Failed'); }
+            
+            fetchMeteo(lat, lon, locationName);
+        }, (error) => {
+            console.warn("Geolocation Denied or Failed. Falling back to Hyderabad.");
+            fetchMeteo(lat, lon, locationName);
+        }, { timeout: 8000 });
+    } else {
+        fetchMeteo(lat, lon, locationName);
     }
 }
 

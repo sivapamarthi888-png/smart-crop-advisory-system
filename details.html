@@ -354,25 +354,20 @@
              }
         }
 
-        async function generateWeatherSuggestions() {
-             try {
+        
+        async function runGeolocatedWeather(lat, lon, locName) {
+            try {
                  let currentTime = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', hour12: true });
                  
-                 let res1 = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=17.3850&longitude=78.4867&current_weather=true`);
+                 let res1 = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
                  let data1 = await res1.json();
-                 let tempHyd = data1.current_weather.temperature;
+                 let temp = data1.current_weather.temperature;
                  let wc1 = data1.current_weather.weathercode;
-                 let wNameHyd = wc1 <= 3 ? "Clear" : wc1 <= 48 ? "Cloudy" : wc1 <= 67 ? "Rainy" : "Stormy";
-
-                 let res2 = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=16.5062&longitude=80.6480&current_weather=true`);
-                 let data2 = await res2.json();
-                 let tempAP = data2.current_weather.temperature;
-                 let wc2 = data2.current_weather.weathercode;
-                 let wNameAP = wc2 <= 3 ? "Clear" : wc2 <= 48 ? "Cloudy" : wc2 <= 67 ? "Rainy" : "Stormy";
+                 let wName = wc1 <= 3 ? "Clear" : wc1 <= 48 ? "Cloudy" : wc1 <= 67 ? "Rainy" : "Stormy";
 
                  let langName = appCurrentLang === 'te' ? 'Telugu' : (appCurrentLang === 'hi' ? 'Hindi' : 'English');
                  
-                 let prompt = "You are AXIOM, a highly precise agricultural weather intelligence array. The current Local Time is " + currentTime + ". Show the exact current time numerically in the first sentence (format exactly like: 3:09 pm or 11:24 am). The live localized weather data for Hyderabad is " + tempHyd + "C and Andhra Pradesh is " + tempAP + "C. Provide a 4-bullet-point farming weather advisory. TRANSLATION DIRECTIVE: You MUST output the ENTIRE response flawlessly in " + langName + " language. No asterisks.";
+                 let prompt = "You are AXIOM, a highly precise agricultural weather intelligence array. The current Local Time is " + currentTime + ". Show the exact current time numerically in the first sentence (format exactly like: 3:09 pm or 11:24 am). The live localized weather data for " + locName + " is " + temp + "C. CRITICAL SPEED RULE: RESPOND EXTREMELY FAST. Provide ONLY 2 very short bullet points for a farming advisory localized exclusively for this exact microscopic farm area. Do not talk about other regions. TRANSLATION DIRECTIVE: You MUST output the ENTIRE response flawlessly in " + langName + " language. No asterisks.";
                  
                  let apiKey = GEMINI_API_KEY || (typeof config !== 'undefined' ? config.GEMINI_API_KEY : '');
                  let geminiRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`, {
@@ -383,12 +378,40 @@
                  let geminiData = await geminiRes.json();
                  let reply = geminiData.candidates[0].content.parts[0].text;
                  
+                 reply = reply.replace(/\n/g, "<br><br>🟢 ");
+                 
                  document.getElementById('loadingIndicator').style.display = 'none';
-                 document.getElementById('cardsContainer').innerHTML = `<div class="disease-cure-box" style="border-color:#3b82f6;"><h2 style="margin-top:0; color:#3b82f6;">🌤️ Regional Weather Matrix</h2><p style="font-weight:bold; color:#555;">📍 Hyderabad: ${tempHyd}°C | 📍 Andhra Pradesh: ${tempAP}°C | 🕒 ${currentTime}</p><hr style="border:0; border-top:1px solid #ddd; margin: 10px 0;"><div style="flex-grow: 1; font-size: 1.3rem; line-height: 2.2; margin-top: 15px; margin-bottom: 25px;"><div style="flex-grow: 1; font-size: 1.3rem; line-height: 2.2; margin-top: 15px; margin-bottom: 25px;">${reply.replace(/\n/g, '<br><br>').replace(/- /g, '<br>🟢 ').replace(/\n/g, '<br><br>').replace(/- /g, '<br>👉 ')}</div></div><br><br><button onclick="speakText(this.dataset.text)" data-text="${reply.replace(/"/g, '&quot;')}" style="background:#fbbf24; color:#000; border:none; padding:20px; border-radius:15px; font-weight:bold; font-size: 1.4rem; width:100%; cursor:pointer; margin-top: auto; margin-bottom: 15px; box-shadow: 0 -4px 15px rgba(0,0,0,0.2);">🔊 Read Aloud</button></div>`;
-                 if(typeof speakText === 'function') setTimeout(() => speakText(reply), 500);;
-                 } catch(e) {
-                 document.getElementById('loadingIndicator').innerText = "Weather Network Error.";
-             }
+                 document.getElementById('cardsContainer').innerHTML = `<div class="disease-cure-box" style="border-color:#3b82f6;"><h2 style="margin-top:0; color:#3b82f6;">🌤️ Regional Weather Matrix</h2><p style="font-weight:bold; color:#555;">📍 ${locName}: ${temp}°C | 🕒 ${currentTime}</p><hr style="border:0; border-top:1px solid #ddd; margin: 10px 0;"><div style="flex-grow: 1; font-size: 1.3rem; line-height: 2.2; margin-top: 15px; margin-bottom: 25px;"><div id="aiWeatherReport">${reply}</div></div><button class="call-expert" style="margin-top:0; background:#3b82f6;" onclick="window.speechSynthesis.cancel(); let u = new SpeechSynthesisUtterance(document.getElementById('aiWeatherReport').innerText); u.lang=appCurrentLang==='te'?'te-IN':(appCurrentLang==='hi'?'hi-IN':'en-IN'); window.speechSynthesis.speak(u);">🔊 Read Aloud</button></div>`;
+            } catch(e) {
+                 document.getElementById('loadingIndicator').innerText = "System Error: AXIOM Weather Matrix unreachable.";
+            }
+        }
+        
+        async function generateWeatherSuggestions() {
+            let loading = document.getElementById('loadingIndicator');
+            loading.innerText = "AXIOM is acquiring your precise satellite coordinates...";
+            let lat = 17.3850; let lon = 78.4867; let locName = "Hyderabad"; 
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(async (position) => {
+                    lat = position.coords.latitude;
+                    lon = position.coords.longitude;
+                    loading.innerText = "AXIOM is initiating reverse-geocoding for precise local weather...";
+                    try {
+                        let geoRes = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
+                        if(geoRes.ok) {
+                            let geoData = await geoRes.json();
+                            locName = geoData.address.village || geoData.address.suburb || geoData.address.neighbourhood || geoData.address.town || geoData.address.city || geoData.address.state_district || "Your Exact Location";
+                        }
+                    } catch(e) {}
+                    loading.innerText = "AXIOM is processing hyper-local meteorological telemetry...";
+                    runGeolocatedWeather(lat, lon, locName);
+                }, (error) => {
+                    loading.innerText = "AXIOM is processing regional meteorological telemetry...";
+                    runGeolocatedWeather(lat, lon, locName);
+                }, { timeout: 4000, maximumAge: 600000 });
+            } else {
+                runGeolocatedWeather(lat, lon, locName);
+            }
         }
     </script>
 </body>
